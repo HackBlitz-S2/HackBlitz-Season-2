@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eco-Swap</title>
+    <style>
+        div{
+            border: #ffcc00;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html, body {
+            height: 100%;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            overflow-y: auto;
+        }
+        .section {
+            height: 100vh;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .section:nth-child(1) { width: 100%;
+      height: 100%;
+      background-image: url(ecoswap/eco-frindly.jpg);
+      background-size: cover;
+      background-position: center;
+      border: 2px solid black; } 
+        .section:nth-child(2) { background-color: #d8bfd8; } 
+        .section:nth-child(3) { background-color: #997ca1; } 
+        .section:nth-child(4) { background-color: #ffffff; } 
+        .section h1 {
+            margin-bottom: 20px;
+        }
+       .section p {
+            max-width: 800px;
+            text-align: center;
+            line-height: 1.6;
+        }
+        .categories {
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+            margin-bottom: 20px;
+        }
+        .category {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .category-icon {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background-color: #ddd;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .product-scroll {
+            display: flex;
+            overflow-x: auto;
+            gap: 10px;
+            padding: 10px;
+            width: 80%;
+        }
+        .product {
+            min-width: 150px;
+            height: 150px;
+            background-color: #ccc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 14px;
+        }
+        .section ol {
+            max-width: 800px;
+            text-align: left;
+            line-height: 1.8;
+        }
+        .feedback-form {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            max-width: 600px;
+            gap: 10px;
+        }
+
+        .feedback-form textarea {
+            width: 100%;
+            height: 100px;
+            padding: 10px;
+            resize: none;
+        }
+
+        .feedback-form input[type="submit"] {
+            align-self: flex-end;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .contact-info, .faq {
+            max-width: 800px;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .faq dt {
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        .category-icon {
+    font-weight: bold; /* Make the text bold */
+    padding: 5px;
+  }
+  .category-icon:nth-child(1) { background-color: #e9eeed; } /* Electronics */
+.category-icon:nth-child(2) { background-color: #33aaff; } 
+.category-icon:nth-child(3) { background-color: #ffcc00; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="section"> 
+            <h1>Eco-Swap</h1>
+            <p>Welcome to Eco-Swap, your trusted platform for exchanging pre-loved items. Our mission is to promote sustainability by facilitating the trade of electronics, stationery, and clothes among our community members. Join us in reducing waste and giving items a second life.</p>
+            <button >login</button>
+        </div>
+        <div class="section">
+            <div class="categories">
+                <div class="category">
+                    <div class="category-icon" aria-setsize="30%">Electronics</div>
+                    <div class="product-scroll">
+                        <div class="product">
+                            <img src="ecoswap/5d35f3bd-b865-4152-9f0e-4bc6cfb3d150.jpg" alt="AC" width="100%" height="100%">
+                            
+                        </div>
+                        <div class="product">
+                            <img src="ecoswap/fe5b20f2-44bb-46ca-8290-245b9c7d5867.jpg" alt="Washing Machine" width="100%" height="100%">
+                           
+                        </div>
+                        <div class="product">
+                            <img src="ecoswap/004cfa48-a83a-4f70-92c9-a7ce3dbdb1a5.jpg" alt="TV" width="100%" height="100%">
+                            
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="category">
+                    <div class="category-icon">Stationary</div>
+                    <div class="product-scroll">
+                        <div class="product">
+                            <img src="ecoswap/43622eed-59a1-4340-ab3c-29709fc5d26c.jpg" alt="Books" width="100%" height="100%" >
+                           
+                        </div>
+                        <div class="product">
+                            <img src="ecoswap/356980b1-d6e7-4dc3-83bc-880a5dbf5b91.jpg"" alt="Pencils" width="100%" height="100%">
+                            
+                        </div>
+                        <div class="product">
+                            <img src="ecoswap/a1ed4dbe-128a-4e80-8fce-7eacdad748e1.jpg" alt="Crayons" width="100%" height="100%">
+                            
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="category">
+                    <div class="category-icon">Clothes</div>
+                    <div class="product-scroll">
+                        <div class="product">
+                            <img src="ecoswap/1b779b5d-9d10-4c21-9d00-ec5c9f97ac1b.jpg" alt="Pajama" width="100%" height="100%" >
+                            
+                        </div>
+                        <div class="product">
+                            <img src="ecoswap/3162f59e-d3c9-444e-9f69-38ac442b7522.jpg" alt="Jeans" width="100%" height="100%">
+                        </div>
+                        <div class="product">
+                            <img src="ecoswap/e175d862-8c1d-4022-83c4-b9f748504af1.jpg" alt="T-Shirt" width="100%" height="100%">
+                           
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <div class="section">
+            <h2>How It Works</h2>
+            <ol>
+                <div><li><strong>Sign Up:</strong> Create a free account to start swapping.</li>
+                <li><strong>sell Product:</strong> Upload details and images of items you wish to sell.</li>
+                <li><strong>buy product:</strong> you can buy productform it in resenable price.</li>
+                <li><strong>Swap:</strong> you can contact to exchanger fot exchange.</li>
+                <li><strong>donate product:</strong> you can donate product to the the needy peoples.</li>
+            </ol></div>
+        </div>
+        <div class="section">
+                
+            <h2>Feedback</h2>
+            <form class="feedback-form">
+                <textarea placeholder="Your feedback..."></textarea>
+                <input type="submit" value="Submit">
+            </form>
+            <div class="contact-info">
+                <h3>Contact Us</h3>
+                <p>Email: support@eco-swap.com</p>
+                <p>Phone: +123 456 7890</p>
+                    </body>
+                    </html>
