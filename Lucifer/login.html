@@ -1,0 +1,42 @@
+<?php
+
+$simple_string = $_POST["t1"];
+$simple_stringg = $_POST["t2"];
+
+$ciphering = "AES-128-CTR";
+
+$iv_length = openssl_cipher_iv_length($ciphering);
+$options = 0;
+
+$encryption_iv = '1234567891011121';
+
+$encryption_key = "GeeksforGeeks";
+
+$r1= openssl_encrypt($simple_string, $ciphering,$encryption_key, $options, $encryption_iv);
+$r2= openssl_encrypt($simple_stringg, $ciphering,$encryption_key, $options, $encryption_iv);
+
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "lucifer";
+
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+if ($conn->connect_error) 
+{
+  die("Connection failed: " . $conn->connect_error);
+}
+
+$sql = "SELECT *  FROM register WHERE Name='".$r1."' and Password='".$r2."'";
+$result = $conn->query($sql);
+
+if ($result->num_rows > 0) 
+{
+ echo "Login Succesfull";
+} 
+else 
+{
+  echo "0 results";
+}
+$conn->close();
+?>
