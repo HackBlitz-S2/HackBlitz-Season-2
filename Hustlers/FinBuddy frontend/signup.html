@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup - FinBuddy</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Font family for the page */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f9f9f9;
+            
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+        }
+
+        /* Gradient animation for smooth color transitions */
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Styling for the signup container */
+        .signup-container {
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 450px;
+            animation: fadeIn 1s ease-out;
+        }
+
+        /* Adding animation for smooth entrance */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .signup-container h3 {
+            margin-bottom: 30px;
+            text-align: center;
+            color: #2575fc;
+            font-size: 28px;
+            font-weight: 600;
+        }
+
+        /* Styling the form control elements */
+        .form-control {
+            border-radius: 30px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            padding: 15px;
+            font-size: 16px;
+        }
+
+        .form-control:focus {
+            border-color: #2575fc;
+            box-shadow: 0 0 8px rgba(37, 117, 252, 0.5);
+        }
+
+        /* Submit button styling */
+        .btn {
+            width: 100%;
+            border-radius: 30px;
+            padding: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            background-color: #2575fc;
+            border: none;
+            color: white;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #6a11cb;
+            cursor: pointer;
+        }
+
+        /* Styling the social buttons */
+        .social-btns {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .social-btns a {
+            width: 48%;
+            padding: 12px;
+            border-radius: 30px;
+            text-align: center;
+            font-size: 16px;
+            font-weight: bold;
+            color: #fff;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-btns .facebook {
+            background-color: #3b5998;
+        }
+
+        .social-btns .google {
+            background-color: #db4437;
+        }
+
+        .social-btns a:hover {
+            opacity: 0.9;
+        }
+
+        /* Footer text for small links */
+        .footer-text {
+            text-align: center;
+            margin-top: 20px;
+            color: #333;
+        }
+
+        .footer-text a {
+            text-decoration: none;
+            color: #2575fc;
+        }
+
+        /* Responsive design adjustments */
+        @media (max-width: 576px) {
+            .signup-container {
+                padding: 30px;
+            }
+
+            .signup-container h3 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="signup-container">
+    <h3>Sign Up</h3>
+    <form id="signupForm">
+        <div class="mb-3">
+            <input type="text" class="form-control" id="signupName" placeholder="Full Name" required>
+        </div>
+        <div class="mb-3">
+            <input type="email" class="form-control" id="signupEmail" placeholder="Email" required>
+        </div>
+        <div class="mb-3">
+            <input type="password" class="form-control" id="signupPassword" placeholder="Password" required>
+        </div>
+        <div class="mb-3">
+            <input type="password" class="form-control" id="signupConfirmPassword" placeholder="Confirm Password" required>
+        </div>
+        <div class="d-flex justify-content-between mb-3">
+            <div>
+                <input type="checkbox" id="termsAgreement"> I agree to the Terms & Conditions
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Sign Up</button>
+    </form>
+
+    <div class="footer-text">
+        <p>Already have an account? <a href="#">Login</a></p>
+    </div>
+</div>
+
+<!-- Bootstrap JS and dependencies -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    document.getElementById('signupForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        let name = document.getElementById('signupName').value;
+        let email = document.getElementById('signupEmail').value;
+        let password = document.getElementById('signupPassword').value;
+        let confirmPassword = document.getElementById('signupConfirmPassword').value;
+        let termsAgreement = document.getElementById('termsAgreement').checked;
+
+        if(password !== confirmPassword) {
+            alert("Passwords do not match!");
+            return;
+        }
+
+        if (!termsAgreement) {
+            alert("Please agree to the Terms & Conditions.");
+            return;
+        }
+
+        let response = await fetch('http://localhost:8000/api/signup/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ name, email, password })
+        });
+
+        let result = await response.json();
+        if (response.ok) {
+            alert("Signup Successful!");
+            // Redirect to login or dashboard page
+        } else {
+            alert("Signup Failed: " + result.detail);
+        }
+    });
+</script>
+
+</body>
+</html>

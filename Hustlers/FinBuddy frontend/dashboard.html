@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FinBuddy Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+
+    <!-- Header -->
+    <nav class="navbar navbar-dark bg-primary">
+        <div class="d-flex align-items-center">
+            <button   10px; class="btn " id="sidebarToggle"><i class="fas fa-bars"></i></button>
+            <h3 class="navbar-brand mb-0">FinBuddy</h3>
+        </div>
+        <div class="d-flex align-items-center">
+            <div class="d-flex align-items-center me-3">
+                <span class="text-white me-2">Hi, Rajesh</span>
+                <i class="fas fa-user-circle fa-2x text-white"></i>
+            </div>
+            <button class="btn btn-outline-light btn-sm"><i class="fas fa-bell me-1"></i> 3</button>
+        </div>
+    </nav>
+
+    <!-- Sidebar -->
+    <div id="sidebar" class="sidebar">
+        <button class="close-btn" id="closeSidebar">&times;</button>
+        <ul class="list-unstyled">
+            <li><a href="dashboard.html" class="active"><i class="fas fa-chart-pie me-2"></i> Dashboard</a></li>
+            <li><a href="#"><i class="fas fa-exchange-alt me-2"></i> Transactions</a></li>
+            <li><a href="budget.html"><i class="fas fa-wallet me-2"></i> Budget Planner</a></li>
+            <li><a href="#"><i class="fas fa-bullseye me-2"></i> Savings Goals</a></li>
+            <li><a href="aichatbot.html"><i class="fas fa-robot me-2"></i> AI Chatbot</a></li>
+            <li><a href="#"><i class="fas fa-chart-line me-2"></i> Reports & Insights</a></li>
+            <li><a href="#"><i class="fas fa-cog me-2"></i> Settings</a></li>
+            <li><a href="#" class="text-danger"><i class="fas fa-sign-out-alt me-2"></i> Logout</a></li>
+        </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div id="content" class="container-fluid mt-4">
+        <div class="dashboard-header">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h4 class="fw-bold mb-0">Financial Dashboard</h4>
+                <div class="d-flex align-items-center">
+                    <div class="dropdown me-2">
+                        <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="timeframeDropdown" data-bs-toggle="dropdown">
+                            April 2025
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">March 2025</a></li>
+                            <li><a class="dropdown-item" href="#">February 2025</a></li>
+                            <li><a class="dropdown-item" href="#">January 2025</a></li>
+                        </ul>
+                    </div>
+                    <button class="btn btn-primary"><i class="fas fa-sync-alt me-1"></i> Refresh</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Finance Summary Cards -->
+        <div class="row">
+            <div class="col-md-3 col-sm-6">
+                <div class="card summary-card shadow">
+                    <h5><i class="fas fa-wallet me-2 text-primary"></i> Total Balance</h5>
+                    <h3>₹85,750</h3>
+                    <p class="text-success mb-0"><i class="fas fa-arrow-up me-1"></i> 12% from last month</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="card summary-card shadow">
+                    <h5><i class="fas fa-arrow-down me-2 text-danger"></i> Monthly Expenses</h5>
+                    <h3>₹37,280</h3>
+                    <div class="progress">
+                        <div class="progress-bar bg-danger" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    <p class="mt-2 mb-0">70% of monthly budget</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="card summary-card shadow">
+                    <h5><i class="fas fa-arrow-up me-2 text-success"></i> Monthly Income</h5>
+                    <h3>₹65,000</h3>
+                    <p class="text-muted mb-0">Same as last month</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="card summary-card shadow bg-danger text-white">
+                    <h5><i class="fas fa-exclamation-triangle me-2"></i> Alert</h5>
+                    <p class="mb-0">High spending in "Entertainment" category!</p>
+                    <button class="btn btn-outline-light btn-sm mt-2">View Details</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="text-center mt-4">
+            <button class="btn btn-primary btn-lg"><i class="fas fa-plus me-2"></i> Add Transaction</button>
+            <a href="budget.html"><button class="btn btn-success btn-lg" ><i class="fas fa-tasks me-2"></i>Set Budget</button></a>
+            <a href="aichatbot.html"><button class="btn btn-info btn-lg text-white"><i class="fas fa-comments me-2"></i> Financial Chat</button></a>
+        </div>
+
+        <!-- Financial Overview Section -->
+        <div class="financial-overview">
+            <h4>Financial Overview</h4>
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="chart-container">
+                        <!-- Placeholder for chart -->
+                        <div style="width: 100%; height: 100%; background: linear-gradient(to right, #f5f7fa, #e5e9f0); display: flex; align-items: center; justify-content: center; border-radius: 10px;">
+                            <span style="font-size: 1.2rem; color: #666;">Income vs. Expenses Chart</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <h5 class="mb-3">Expense Categories</h5>
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between mb-1">
+                            <span>Housing</span>
+                            <span>₹12,000 (32%)</span>
+                        </div>
+                        <div class="progress">
+                            <div class="progress-bar bg-primary" style="width: 32%"></div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between mb-1">
+                            <span>Food</span>
+                            <span>₹8,500 (23%)</span>
+                        </div>
+                        <div class="progress">
+                            <div class="progress-bar bg-success" style="width: 23%"></div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between mb-1">
+                            <span>Entertainment</span>
+                            <span>₹5,600 (15%)</span>
+                        </div>
+                        <div class="progress">
+                            <div class="progress-bar bg-warning" style="width: 15%"></div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between mb-1">
+                            <span>Transport</span>
+                            <span>₹4,200 (11%)</span>
+                        </div>
+                        <div class="progress">
+                            <div class="progress-bar bg-info" style="width: 11%"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="d-flex justify-content-between mb-1">
+                            <span>Others</span>
+                            <span>₹6,980 (19%)</span>
+                        </div>
+                        <div class="progress">
+                            <div class="progress-bar bg-secondary" style="width: 19%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Features Section -->
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card feature-card shadow">
+                    <div class="d-flex align-items-center">
+                        <div class="me-3 p-3 bg-primary text-white rounded">
+                            <i class="fas fa-robot fa-2x"></i>
+                        </div>
+                        <div>
+                            <h5 class="mb-2">Financial AI Assistant</h5>
+                            <p class="mb-0">Ask finance questions and get personalized advice based on your spending patterns.</p>
+                            <button class="btn btn-sm btn-outline-primary mt-2">Chat Now</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card feature-card shadow">
+                    <div class="d-flex align-items-center">
+                        <div class="me-3 p-3 bg-warning text-white rounded">
+                            <i class="fas fa-lightbulb fa-2x"></i>
+                        </div>
+                        <div>
+                            <h5 class="mb-2">Smart Savings Insights</h5>
+                            <p class="mb-0">Our AI suggests personalized saving opportunities based on your spending habits.</p>
+                            <button class="btn btn-sm btn-outline-warning mt-2">View Insights</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-3">
+            <div class="col-md-6">
+                <div class="card feature-card shadow">
+                    <div class="d-flex align-items-center">
+                        <div class="me-3 p-3 bg-success text-white rounded">
+                            <i class="fas fa-piggy-bank fa-2x"></i>
+                        </div>
+                        <div>
+                            <h5 class="mb-2">Savings Goals</h5>
+                            <p class="mb-0">Track your progress towards financial milestones with our goal tracker.</p>
+                            <button class="btn btn-sm btn-outline-success mt-2">Set New Goal</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card feature-card shadow">
+                    <div class="d-flex align-items-center">
+                        <div class="me-3 p-3 bg-info text-white rounded">
+                            <i class="fas fa-chart-line fa-2x"></i>
+                        </div>
+                        <div>
+                            <h5 class="mb-2">Investment Recommendations</h5>
+                            <p class="mb-0">Get AI-driven investment suggestions tailored to your risk profile.</p>
+                            <button class="btn btn-sm btn-outline-info mt-2">Explore Options</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Transactions -->
+        <div class="transactions">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h4 class="mb-0">Recent Transactions</h4>
+                <a href="#" class="btn btn-outline-primary btn-sm">View All</a>
+            </div>
+            
+            <div class="transaction-item">
+                <div class="d-flex align-items-center">
+                    <div class="transaction-icon bg-danger">
+                        <i class="fas fa-utensils"></i>
+                    </div>
+                    <div class="transaction-info">
+                        <div class="transaction-title">Dinner at Bistro</div>
+                        <div class="transaction-date">Apr 2, 2025</div>
+                        <span class="category-badge bg-light text-dark">Food</span>
+                    </div>
+                </div>
+                <div class="transaction-amount expense">-₹1,250</div>
+            </div>
+            
+            <div class="transaction-item">
+                <div class="d-flex align-items-center">
+                    <div class="transaction-icon bg-success">
+                        <i class="fas fa-briefcase"></i>
+                    </div>
+                    <div class="transaction-info">
+                        <div class="transaction-title">Salary Credit</div>
+                        <div class="transaction-date">Apr 1, 2025</div>
+                        <span class="category-badge bg-light text-dark">Income</span>
+                    </div>
+                </div>
+                <div class="transaction-amount income">+₹65,000</div>
+            </div>
+            
+            <div class="transaction-item">
+                <div class="d-flex align-items-center">
+                    <div class="transaction-icon bg-danger">
+                        <i class="fas fa-shopping-bag"></i>
+                    </div>
+                    <div class="transaction-info">
+                        <div class="transaction-title">Shopping Mall</div>
+                        <div class="transaction-date">Mar 29, 2025</div>
+                        <span class="category-badge bg-light text-dark">Shopping</span>
+                    </div>
+                </div>
+                <div class="transaction-amount expense">-₹3,620</div>
+            </div>
+            
+            <div class="transaction-item">
+                <div class="d-flex align-items-center">
+                    <div class="transaction-icon bg-danger">
+                        <i class="fas fa-home"></i>
+                    </div>
+                    <div class="transaction-info">
+                        <div class="transaction-title">Rent Payment</div>
+                        <div class="transaction-date">Mar 28, 2025</div>
+                        <span class="category-badge bg-light text-dark">Housing</span>
+                    </div>
+                </div>
+                <div class="transaction-amount expense">-₹12,000</div>
+            </div>
+        </div>
+
+        <!-- Savings Goals -->
+        <div class="financial-overview">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h4 class="mb-0">Savings Goals</h4>
+                <button class="btn btn-outline-primary btn-sm"><i class="fas fa-plus me-1"></i> Add Goal</button>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="savings-goal">
+                        <h5>🏝 Vacation Fund</h5>
+                        <div class="savings-goal-progress">
+                            <span>₹35,000 / ₹60,000</span>
+                            <span>58%</span>
+                        </div>
+                        <div class="progress mt-2">
+                            <div class="progress-bar bg-info" role="progressbar" style="width: 58%" aria-valuenow="58" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="savings-goal">
+                        <h5>🚗 New Car</h5>
+                        <div class="savings-goal-progress">
+                            <span>₹250,000 / ₹800,000</span>
+                            <span>31%</span>
+                        </div>
+                        <div class="progress mt-2">
+                            <div class="progress-bar bg-warning" role="progressbar" style="width: 31%" aria-valuenow="31" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="savings-goal">
+                        <h5>💻 Tech Gadgets</h5>
+                        <div class="savings-goal-progress">
+                            <span>₹45,000 / ₹50,000</span>
+                            <span>90%</span>
+                        </div>
+                        <div class="progress mt-2">
+                            <div class="progress-bar bg-success" role="progressbar" style="width: 90%" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        <div class="text-end mt-2">
+                            <span class="badge bg-success">Almost there!</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- View Full Report -->
+        <div class="text-center mt-4 mb-5">
+            <button class="btn btn-dark btn-lg"><i class="fas fa-file-alt me-2"></i> View Full Financial Report</button>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Sidebar toggle functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const sidebar = document.getElementById('sidebar');
+            const sidebarToggle = document.getElementById('sidebarToggle');
+            const closeSidebar = document.getElementById('closeSidebar');
+            const content = document.getElementById('content');
+            
+            sidebarToggle.addEventListener('click', function() {
+                sidebar.classList.toggle('active');
+                content.classList.toggle('shifted');
+            });
+            
+            closeSidebar.addEventListener('click', function() {
+                sidebar.classList.remove('active');
+                content.classList.remove('shifted');
+            });
+            
+            // Close sidebar when clicking outside
+            document.addEventListener('click', function(event) {
+                const isClickInsideSidebar = sidebar.contains(event.target);
+                const isClickOnToggle = sidebarToggle.contains(event.target);
+                
+                if (!isClickInsideSidebar && !isClickOnToggle && sidebar.classList.contains('active')) {
+                    sidebar.classList.remove('active');
+                    content.classList.remove('shifted');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

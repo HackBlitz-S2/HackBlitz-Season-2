@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - FinBuddy</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Font family for the page */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f9f9f9;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+        }
+
+        /* Gradient animation for smooth color transitions */
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Styling for the login container */
+        .login-container {
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            animation: fadeIn 1s ease-out;
+        }
+
+        /* Adding animation for smooth entrance */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .login-container h3 {
+            margin-bottom: 30px;
+            text-align: center;
+            color: #2575fc;
+            font-size: 28px;
+            font-weight: 600;
+        }
+
+        /* Styling the form control elements */
+        .form-control {
+            border-radius: 30px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            padding: 15px;
+            font-size: 16px;
+        }
+
+        .form-control:focus {
+            border-color: #2575fc;
+            box-shadow: 0 0 8px rgba(37, 117, 252, 0.5);
+        }
+
+        /* Submit button styling */
+        .btn {
+            width: 100%;
+            border-radius: 30px;
+            padding: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            background-color: #2575fc;
+            border: none;
+            color: white;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #6a11cb;
+            cursor: pointer;
+        }
+
+        /* Styling the social buttons */
+        .social-btns {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .social-btns a {
+            width: 48%;
+            padding: 12px;
+            border-radius: 30px;
+            text-align: center;
+            font-size: 16px;
+            font-weight: bold;
+            color: #fff;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-btns .facebook {
+            background-color: #3b5998;
+        }
+
+        .social-btns .google {
+            background-color: #db4437;
+        }
+
+        .social-btns a:hover {
+            opacity: 0.9;
+        }
+
+        /* Footer text for small links */
+        .footer-text {
+            text-align: center;
+            margin-top: 20px;
+            color: #333;
+        }
+
+        .footer-text a {
+            text-decoration: none;
+            color: #2575fc;
+        }
+
+        /* Responsive design adjustments */
+        @media (max-width: 576px) {
+            .login-container {
+                padding: 30px;
+            }
+
+            .login-container h3 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="login-container">
+    <h3>Login</h3>
+        <div class="mb-3">
+            <input type="email" class="form-control" id="loginEmail" placeholder="Email" required>
+        </div>
+        <div class="mb-3">
+            <input type="password" class="form-control" id="loginPassword" placeholder="Password" required>
+        </div>
+        <div class="d-flex justify-content-between mb-3">
+            <div>
+                <input type="checkbox" id="rememberMe"> Remember me
+            </div>
+            <a href="#">Forgot password?</a>
+        </div>
+        <a href="dashboard.html"><button class="btn btn-primary">Login</button></a>
+    
+    
+    <div class="footer-text">
+        <p>Don't have an account? <a href="#">Sign up</a></p>
+    </div>
+</div>
+
+
+</body>
+</html>
