@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Finance Analyzer</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .transaction-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .budget-form {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        input, select, button {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        button {
+            background: #4361ee;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background: #3a56d4;
+        }
+
+        .transaction-list {
+            list-style: none;
+            padding: 0;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .transaction-item {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            align-items: center;
+            padding: 12px 10px;
+            border-bottom: 1px solid #eee;
+            transition: background 0.2s;
+        }
+
+        .transaction-item:hover {
+            background-color: #f8f9fa;
+        }
+
+        .alert {
+            color: #d00000;
+            padding: 12px;
+            margin: 10px 0;
+            background-color: #ffe5e5;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .warning {
+            color: #ff9e00;
+            background-color: #fff3e0;
+        }
+
+        .success {
+            color: #2b9348;
+            background-color: #e6f4ea;
+        }
+
+        .info {
+            color: #4361ee;
+            background-color: #e6f0ff;
+        }
+
+        .category-select {
+            padding: 6px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+
+        .summary-card {
+            grid-column: span 2;
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+
+        .summary-item {
+            text-align: center;
+            padding: 15px;
+            border-radius: 8px;
+            background-color: #f1f8ff;
+        }
+
+        .summary-value {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 5px 0;
+            color: #4361ee;
+        }
+
+        canvas {
+            max-height: 300px;
+        }
+
+        .progress-container {
+            margin: 15px 0;
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+
+        .progress-bar {
+            height: 10px;
+            background-color: #e9ecef;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background-color: #4cc9f0;
+            transition: width 0.5s ease;
+        }
+
+        .analysis-section {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .analysis-item {
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+            .summary-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .transaction-form {
+                grid-template-columns: 1fr;
+            }
+            .transaction-item {
+                grid-template-columns: 1fr 1fr;
+                gap: 5px;
+            }
+            .budget-form {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>MONEY-MIND ANALYZER</h1>
+    
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                <h2>Transaction Management</h2>
+            </div>
+            <form class="transaction-form" id="transactionForm">
+                <div class="form-group">
+                    <label for="amount">Amount</label>
+                    <input type="number" id="amount" placeholder="0.00" step="0.01" required>
+                </div>
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <input type="text" id="description" placeholder="What was this for?" required>
+                </div>
+                <div class="form-group">
+                    <label for="date">Date</label>
+                    <input type="date" id="date" required>
+                </div>
+                <div class="form-group">
+                    <label for="type">Type</label>
+                    <select id="type" required>
+                        <option value="expense">Expense</option>
+                        <option value="income">Income</option>
+                    </select>
+                </div>
+                <button type="submit" style="grid-column: span 2;">Add Transaction</button>
+            </form>
+            
+            <h3>Recent Transactions</h3>
+            <ul class="transaction-list" id="transactionList">
+                <li class="transaction-item" style="font-weight: bold; background-color: #f1f3f5;">
+                    <span>Description</span>
+                    <span>Amount</span>
+                    <span>Category</span>
+                    <span>Date</span>
+                </li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h2>Budget Management</h2>
+            </div>
+            <div id="budgetInfo"></div>
+            <form class="budget-form" id="budgetForm">
+                <select id="budgetCategory" required>
+                    <option value="">Select Category</option>
+                    <!-- Will be populated by JavaScript -->
+                </select>
+                <input type="number" id="budgetAmount" placeholder="Budget Amount" step="0.01" required>
+                <button type="submit">Set Budget</button>
+            </form>
+            <div id="alerts"></div>
+            <div class="analysis-section">
+                <h3>Spending Analysis</h3>
+                <div id="spendingAnalysis"></div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h2>Expense Breakdown</h2>
+                <select id="timePeriod" onchange="updateCharts()">
+                    <option value="month">This Month</option>
+                    <option value="year">This Year</option>
+                </select>
+            </div>
+            <canvas id="categoryChart"></canvas>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h2>Financial Trends</h2>
+            </div>
+            <canvas id="trendChart"></canvas>
+        </div>
+
+        <div class="card summary-card">
+            <div class="card-header">
+                <h2>Financial Summary</h2>
+            </div>
+            <div class="summary-grid">
+                <div class="summary-item">
+                    <div>Total Income</div>
+                    <div class="summary-value" id="totalIncome">$0.00</div>
+                    <div>this month</div>
+                </div>
+                <div class="summary-item">
+                    <div>Total Expenses</div>
+                    <div class="summary-value" id="totalExpenses">$0.00</div>
+                    <div>this month</div>
+                </div>
+                <div class="summary-item">
+                    <div>Savings Rate</div>
+                    <div class="summary-value" id="savingsRate">0%</div>
+                    <div>of income</div>
+                </div>
+                <div class="summary-item">
+                    <div>Net Worth</div>
+                    <div class="summary-value" id="netWorth">$0.00</div>
+                    <div>current</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Enhanced financial data structure
+        let finances = {
+            transactions: [],
+            categories: {
+                expense: ['housing', 'food', 'transportation', 'utilities', 'healthcare', 
+                        'entertainment', 'education', 'personal', 'debt', 'other'],
+                income: ['salary', 'business', 'investments', 'gifts', 'other']
+            },
+            budgets: {}, // User-defined budgets will be stored here
+            savings: 0,
+            assets: 0,
+            debts: 0
+        };
+
+        // Initialize with sample transactions (no initial budgets)
+        function initializeSampleData() {
+            const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+            const currentMonth = new Date().getMonth();
+            
+            // Sample transactions
+            for (let i = 0; i < 30; i++) {
+                const isExpense = Math.random() > 0.3;
+                const category = isExpense ? 
+                    finances.categories.expense[Math.floor(Math.random() * finances.categories.expense.length)] :
+                    finances.categories.income[Math.floor(Math.random() * finances.categories.income.length)];
+                
+                const month = Math.floor(Math.random() * (currentMonth + 1));
+                
+                finances.transactions.push({
+                    id: Date.now() + i,
+                    amount: isExpense ? 
+                        -(50 + Math.random() * 450).toFixed(2) : 
+                        (500 + Math.random() * 2000).toFixed(2),
+                    description: isExpense ? 
+                        `Payment for ${category}` : 
+                        `Income from ${category}`,
+                    category: category,
+                    type: isExpense ? 'expense' : 'income',
+                    date: new Date(new Date().getFullYear(), month, Math.floor(Math.random() * 28) + 1)
+                });
+            }
+            
+            // Initial savings and assets (no initial budgets)
+            finances.savings = 5000;
+            finances.assets = 25000;
+            finances.debts = 15000;
+        }
+
+        // Initialize charts
+        const categoryCtx = document.getElementById('categoryChart').getContext('2d');
+        const trendCtx = document.getElementById('trendChart').getContext('2d');
+        
+        const categoryChart = new Chart(categoryCtx, {
+            type: 'doughnut',
+            data: { labels: [], datasets: [{ data: [], backgroundColor: [] }] }
+        });
+        
+        const trendChart = new Chart(trendCtx, {
+            type: 'line',
+            data: { 
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'], 
+                datasets: [
+                    {
+                        label: 'Income',
+                        data: [],
+                        borderColor: '#4cc9f0',
+                        backgroundColor: 'rgba(76, 201, 240, 0.1)',
+                        tension: 0.3,
+                        fill: true
+                    },
+                    {
+                        label: 'Expenses',
+                        data: [],
+                        borderColor: '#f72585',
+                        backgroundColor: 'rgba(247, 37, 133, 0.1)',
+                        tension: 0.3,
+                        fill: true
+                    }
+                ] 
+            },
+            options: {
+                responsive: true,
+                interaction: {
+                    mode: 'index',
+                    intersect: false,
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        // Enhanced AI Categorization
+        function categorizeTransaction(description, type) {
+            const expenseKeywords = {
+                housing: ['rent', 'mortgage', 'property tax', 'home insurance'],
+                food: ['grocery', 'restaurant', 'supermarket', 'dining', 'coffee'],
+                transportation: ['gas', 'fuel', 'car payment', 'auto insurance', 'uber', 'lyft'],
+                utilities: ['electric', 'water', 'gas bill', 'internet', 'phone'],
+                healthcare: ['doctor', 'hospital', 'pharmacy', 'insurance', 'medical'],
+                entertainment: ['movie', 'concert', 'game', 'netflix', 'spotify'],
+                education: ['tuition', 'book', 'course', 'school'],
+                personal: ['clothing', 'haircut', 'gym', 'subscription'],
+                debt: ['loan payment', 'credit card', 'student loan']
+            };
+            
+            const incomeKeywords = {
+                salary: ['paycheck', 'salary', 'wages'],
+                business: ['freelance', 'contract', 'business income'],
+                investments: ['dividend', 'interest', 'capital gain'],
+                gifts: ['gift', 'bonus', 'present']
+            };
+            
+            const keywords = type === 'expense' ? expenseKeywords : incomeKeywords;
+            const desc = description.toLowerCase();
+            
+            for (const [category, terms] of Object.entries(keywords)) {
+                if (terms.some(term => desc.includes(term))) {
+                    return category;
+                }
+            }
+            return 'other';
+        }
+
+        // Add Transaction
+        document.getElementById('transactionForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const amount = parseFloat(document.getElementById('amount').value);
+            const description = document.getElementById('description').value;
+            const date = document.getElementById('date').value;
+            const type = document.getElementById('type').value;
+            
+            const category = categorizeTransaction(description, type);
+            const transactionAmount = type === 'expense' ? -Math.abs(amount) : Math.abs(amount);
+            
+            const transaction = {
+                id: Date.now(),
+                amount: transactionAmount,
+                description,
+                category,
+                type,
+                date: new Date(date)
+            };
+
+            finances.transactions.push(transaction);
+            updateUI();
+            e.target.reset();
+            document.getElementById('date').valueAsDate = new Date();
+        });
+
+        // Set Budget
+        document.getElementById('budgetForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const category = document.getElementById('budgetCategory').value;
+            const amount = parseFloat(document.getElementById('budgetAmount').value);
+            
+            if (!finances.budgets) finances.budgets = {};
+            finances.budgets[category] = amount;
+            
+            updateUI();
+            e.target.reset();
+        });
+
+        // Populate budget category dropdown
+        function populateBudgetCategories() {
+            const select = document.getElementById('budgetCategory');
+            select.innerHTML = '<option value="">Select Category</option>';
+            
+            finances.categories.expense.forEach(category => {
+                const option = document.createElement('option');
+                option.value = category;
+                option.textContent = category.charAt(0).toUpperCase() + category.slice(1);
+                select.appendChild(option);
+            });
+        }
+
+        // Update UI
+        function updateUI() {
+            updateTransactionList();
+            updateFinancialSummary();
+            updateBudgetManagement();
+            updateSpendingAnalysis();
+            updateCharts();
+        }
+
+        function updateTransactionList() {
+            const list = document.getElementById('transactionList');
+            const currentMonth = new Date().getMonth();
+            const currentYear = new Date().getFullYear();
+            
+            // Filter transactions for current month
+            const recentTransactions = finances.transactions
+                .filter(t => t.date.getMonth() === currentMonth && t.date.getFullYear() === currentYear)
+                .sort((a, b) => b.date - a.date)
+                .slice(0, 15);
+            
+            // Clear existing items except header
+            while (list.children.length > 1) {
+                list.removeChild(list.lastChild);
+            }
+            
+            // Add transactions
+            recentTransactions.forEach(transaction => {
+                const item = document.createElement('li');
+                item.className = 'transaction-item';
+                
+                const amountClass = transaction.amount > 0 ? 'income' : 'expense';
+                const amountDisplay = transaction.amount > 0 ? 
+                    `+$${Math.abs(transaction.amount).toFixed(2)}` : 
+                    `-$${Math.abs(transaction.amount).toFixed(2)}`;
+                
+                item.innerHTML = `
+                    <span>${transaction.description}</span>
+                    <span class="${amountClass}">${amountDisplay}</span>
+                    <select class="category-select" onchange="updateTransactionCategory(${transaction.id}, this.value)">
+                        ${finances.categories[transaction.type].map(cat => 
+                            `<option ${transaction.category === cat ? 'selected' : ''}>${cat}</option>`
+                        ).join('')}
+                    </select>
+                    <span>${transaction.date.toLocaleDateString()}</span>
+                `;
+                
+                list.appendChild(item);
+            });
+        }
+
+        function updateFinancialSummary() {
+            const currentMonth = new Date().getMonth();
+            const currentYear = new Date().getFullYear();
+            
+            const monthlyTransactions = finances.transactions.filter(t => 
+                t.date.getMonth() === currentMonth && t.date.getFullYear() === currentYear
+            );
+            
+            const income = monthlyTransactions
+                .filter(t => t.type === 'income')
+                .reduce((sum, t) => sum + Math.abs(t.amount), 0);
+            
+            const expenses = monthlyTransactions
+                .filter(t => t.type === 'expense')
+                .reduce((sum, t) => sum + Math.abs(t.amount), 0);
+            
+            const savings = income > 0 ? ((income - expenses) / income * 100).toFixed(1) : 0;
+            const netWorth = finances.assets - finances.debts + finances.savings;
+            
+            document.getElementById('totalIncome').textContent = `$${income.toFixed(2)}`;
+            document.getElementById('totalExpenses').textContent = `$${expenses.toFixed(2)}`;
+            document.getElementById('savingsRate').textContent = `${savings}%`;
+            document.getElementById('netWorth').textContent = `$${netWorth.toFixed(2)}`;
+        }
+
+        function updateBudgetManagement() {
+            const currentMonth = new Date().getMonth();
+            const currentYear = new Date().getFullYear();
+            
+            const monthlyExpenses = finances.transactions
+                .filter(t => t.type === 'expense' && 
+                            t.date.getMonth() === currentMonth && 
+                            t.date.getFullYear() === currentYear)
+                .reduce((acc, t) => {
+                    acc[t.category] = (acc[t.category] || 0) + Math.abs(t.amount);
+                    return acc;
+                }, {});
+            
+            const budgetInfo = document.getElementById('budgetInfo');
+            budgetInfo.innerHTML = '<h3>Budget Tracking</h3>';
+            
+            // Check if any budgets are set
+            if (!finances.budgets || Object.keys(finances.budgets).length === 0) {
+                const info = document.createElement('div');
+                info.className = 'info';
+                info.textContent = 'No budgets set. Add budgets to track your spending.';
+                budgetInfo.appendChild(info);
+                return;
+            }
+            
+            // Add progress bars for each budget category
+            Object.entries(finances.budgets).forEach(([category, budget]) => {
+                const spent = monthlyExpenses[category] || 0;
+                const percentage = budget > 0 ? Math.min(100, (spent / budget) * 100) : 0;
+                
+                const progressBar = document.createElement('div');
+                progressBar.className = 'progress-container';
+                progressBar.innerHTML = `
+                    <div class="progress-label">
+                        <span>${category.charAt(0).toUpperCase() + category.slice(1)}</span>
+                        <span>$${spent.toFixed(2)} / $${budget.toFixed(2)}</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: ${percentage}%; 
+                            ${percentage > 90 ? 'background-color: #f72585' : ''}"></div>
+                    </div>
+                `;
+                
+                budgetInfo.appendChild(progressBar);
+            });
+            
+            // Add alerts
+            const alerts = document.getElementById('alerts');
+            alerts.innerHTML = '';
+            
+            // Budget alerts
+            Object.entries(monthlyExpenses).forEach(([category, spent]) => {
+                const budget = finances.budgets[category];
+                if (budget && spent > budget) {
+                    const alert = document.createElement('div');
+                    alert.className = 'alert';
+                    alert.innerHTML = `
+                        ⚠️ You've exceeded your ${category} budget by $${(spent - budget).toFixed(2)}
+                    `;
+                    alerts.appendChild(alert);
+                }
+            });
+            
+            // Savings alert
+            const income = finances.transactions
+                .filter(t => t.type === 'income' && 
+                            t.date.getMonth() === currentMonth && 
+                            t.date.getFullYear() === currentYear)
+                .reduce((sum, t) => sum + Math.abs(t.amount), 0);
+            
+            const expenses = Object.values(monthlyExpenses).reduce((sum, amount) => sum + amount, 0);
+            
+            if (income > 0) {
+                const savingsRate = ((income - expenses) / income * 100).toFixed(1);
+                
+                const savingsAlert = document.createElement('div');
+                savingsAlert.className = savingsRate >= 20 ? 'success' : 'warning';
+                savingsAlert.innerHTML = `
+                    ${savingsRate >= 20 ? '✓' : '⚠️'} 
+                    Your savings rate is ${savingsRate}% this month
+                    ${savingsRate >= 20 ? '' : '(recommended: 20% or more)'}
+                `;
+                alerts.appendChild(savingsAlert);
+            }
+        }
+
+        function updateSpendingAnalysis() {
+            const currentMonth = new Date().getMonth();
+            const currentYear = new Date().getFullYear();
+            
+            const monthlyExpenses = finances.transactions
+                .filter(t => t.type === 'expense' && 
+                            t.date.getMonth() === currentMonth && 
+                            t.date.getFullYear() === currentYear)
+                .reduce((acc, t) => {
+                    acc[t.category] = (acc[t.category] || 0) + Math.abs(t.amount);
+                    return acc;
+                }, {});
+            
+            const totalExpenses = Object.values(monthlyExpenses).reduce((sum, amount) => sum + amount, 0);
+            const analysis = document.getElementById('spendingAnalysis');
+            analysis.innerHTML = '';
+            
+            if (totalExpenses === 0) return;
+            
+            // Find top spending categories
+            const topCategories = Object.entries(monthlyExpenses)
+                .sort((a, b) => b[1] - a[1])
+                .slice(0, 3);
+            
+            if (topCategories.length > 0) {
+                const analysisItem = document.createElement('div');
+                analysisItem.className = 'analysis-item';
+                analysisItem.innerHTML = `
+                    <strong>Top Spending Categories:</strong> 
+                    ${topCategories.map(([cat, amount]) => 
+                        `${cat} (${((amount / totalExpenses) * 100).toFixed(1)}%)`).join(', ')}
+                `;
+                analysis.appendChild(analysisItem);
+            }
+            
+            // Compare to previous month
+            const prevMonth = currentMonth === 0 ? 11 : currentMonth - 1;
+            const prevYear = currentMonth === 0 ? currentYear - 1 : currentYear;
+            
+            const prevMonthExpenses = finances.transactions
+                .filter(t => t.type === 'expense' && 
+                            t.date.getMonth() === prevMonth && 
+                            t.date.getFullYear() === prevYear)
+                .reduce((sum, t) => sum + Math.abs(t.amount), 0);
+            
+            if (prevMonthExpenses > 0) {
+                const change = ((totalExpenses - prevMonthExpenses) / prevMonthExpenses * 100).toFixed(1);
+                const analysisItem = document.createElement('div');
+                analysisItem.className = 'analysis-item';
+                analysisItem.innerHTML = `
+                    <strong>Monthly Change:</strong> 
+                    ${Math.abs(change)}% ${change > 0 ? 'increase' : 'decrease'} from last month
+                `;
+                analysis.appendChild(analysisItem);
+            }
+            
+            // Spending pace analysis
+            const today = new Date().getDate();
+            const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+            const projectedExpenses = (totalExpenses / today) * daysInMonth;
+            
+            const analysisItem = document.createElement('div');
+            analysisItem.className = 'analysis-item';
+            analysisItem.innerHTML = `
+                <strong>Spending Pace:</strong> 
+                On track to spend $${projectedExpenses.toFixed(2)} this month
+            `;
+            analysis.appendChild(analysisItem);
+        }
+
+        function updateCharts() {
+            const timePeriod = document.getElementById('timePeriod').value;
+            const currentYear = new Date().getFullYear();
+            
+            // Update category chart
+            const categoryData = finances.transactions
+                .filter(t => t.type === 'expense' && 
+                            (timePeriod === 'year' || t.date.getMonth() === new Date().getMonth()) &&
+                            t.date.getFullYear() === currentYear)
+                .reduce((acc, t) => {
+                    acc[t.category] = (acc[t.category] || 0) + Math.abs(t.amount);
+                    return acc;
+                }, {});
+            
+            const categoryLabels = Object.keys(categoryData);
+            const categoryValues = Object.values(categoryData);
+            
+            // Generate distinct colors for categories
+            const categoryColors = categoryLabels.map((_, i) => {
+                const hue = (i * 137.508) % 360; // Golden angle for distinct colors
+                return `hsl(${hue}, 70%, 60%)`;
+            });
+            
+            categoryChart.data.labels = categoryLabels;
+            categoryChart.data.datasets[0].data = categoryValues;
+            categoryChart.data.datasets[0].backgroundColor = categoryColors;
+            categoryChart.update();
+            
+            // Update trend chart
+            const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+            const currentMonth = new Date().getMonth();
+            
+            const monthlyData = Array(12).fill().map((_, month) => {
+                if (month > currentMonth) return null;
+                
+                const monthIncome = finances.transactions
+                    .filter(t => t.type === 'income' && 
+                                t.date.getMonth() === month && 
+                                t.date.getFullYear() === currentYear)
+                    .reduce((sum, t) => sum + Math.abs(t.amount), 0);
+                
+                const monthExpenses = finances.transactions
+                    .filter(t => t.type === 'expense' && 
+                                t.date.getMonth() === month && 
+                                t.date.getFullYear() === currentYear)
+                    .reduce((sum, t) => sum + Math.abs(t.amount), 0);
+                
+                return { income: monthIncome, expenses: monthExpenses };
+            });
+            
+            trendChart.data.labels = months.slice(0, currentMonth + 1);
+            trendChart.data.datasets[0].data = monthlyData.slice(0, currentMonth + 1).map(d => d?.income || 0);
+            trendChart.data.datasets[1].data = monthlyData.slice(0, currentMonth + 1).map(d => d?.expenses || 0);
+            trendChart.update();
+        }
+
+        function updateTransactionCategory(id, newCategory) {
+            const transaction = finances.transactions.find(t => t.id === id);
+            if (transaction) {
+                transaction.category = newCategory;
+                updateUI();
+            }
+        }
+
+        // Initialize
+        document.getElementById('date').valueAsDate = new Date();   
+        populateBudgetCategories();
+        initializeSampleData();
+        updateUI();
+    </script>
+</body>
+</html>
