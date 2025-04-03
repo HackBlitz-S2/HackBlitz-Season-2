@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkillMatch - Career Guidance & Portfolio Platform</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+        nav a:hover {
+            color: #3498db;
+        }
+        section {
+            padding: 20px;
+            margin: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        h1, h2, h3 {
+            color: #2c3e50;
+        }
+        button, input[type="submit"] {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover, input[type="submit"]:hover {
+            background-color: #2980b9;
+        }
+        input[type="text"], textarea, select {
+            width: 100%;
+            max-width: 400px;
+            padding: 8px;
+            margin: 5px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .career-card, .portfolio-item {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            background-color: #fafafa;
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #2c3e50;
+            color: white;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        ul li a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        ul li a:hover {
+            text-decoration: underline;
+        }
+        @media (max-width: 600px) {
+            section {
+                margin: 10px;
+                padding: 15px;
+            }
+            nav a {
+                display: block;
+                margin: 5px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <h1>SkillMatch</h1>
+        <nav>
+            <a href="#home">Home</a> |
+            <a href="#assessment">Skills Assessment</a> |
+            <a href="#careers">Career Paths</a> |
+            <a href="#portfolio">Portfolio</a> |
+            <a href="#resources">Learning Resources</a>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Welcome Section -->
+        <section id="home">
+            <h2>Welcome to SkillMatch</h2>
+            <p>Discover your ideal career path and build a stunning portfolio!</p>
+            <button onclick="document.getElementById('assessment').scrollIntoView()">Get Started</button>
+        </section>
+
+        <!-- Skills Assessment Section -->
+        <section id="assessment">
+            <h2>Skills Assessment</h2>
+            <form id="skillsForm" onsubmit="analyzeSkills(event)">
+                <h3>Tell us about yourself</h3>
+                <label>Current Skills:</label><br>
+                <input type="text" id="skills" placeholder="e.g., HTML, Python, Design" required><br>
+                
+                <label>Interests:</label><br>
+                <input type="text" id="interests" placeholder="e.g., Web Development, Data Science" required><br>
+                
+                <label>Experience Level:</label><br>
+                <select id="experience" required>
+                    <option value="beginner">Beginner</option>
+                    <option value="intermediate">Intermediate</option>
+                    <option value="advanced">Advanced</option>
+                </select><br>
+                
+                <input type="submit" value="Analyze My Profile">
+            </form>
+        </section>
+
+        <!-- Career Recommendations Section -->
+        <section id="careers">
+            <h2>Recommended Career Paths</h2>
+            <div id="careerResults"></div>
+        </section>
+
+        <!-- Portfolio Builder Section -->
+        <section id="portfolio">
+            <h2>Build Your Portfolio</h2>
+            <form id="portfolioForm" onsubmit="addPortfolioItem(event)">
+                <label>Project Title:</label><br>
+                <input type="text" id="projectTitle" placeholder="e.g., Personal Website" required><br>
+                
+                <label>Description:</label><br>
+                <textarea id="projectDesc" placeholder="Describe your project..." required></textarea><br>
+                
+                <label>Upload Project Image (URL):</label><br>
+                <input type="text" id="projectImage" placeholder="e.g., https://example.com/image.jpg"><br>
+                
+                <input type="submit" value="Add to Portfolio">
+            </form>
+            <h3>Your Portfolio Preview</h3>
+            <div id="portfolioItems"></div>
+        </section>
+
+        <!-- Learning Resources Section -->
+        <section id="resources">
+            <h2>Recommended Learning Resources</h2>
+            <ul id="resourceList">
+                <li><a href="#">HTML Basics Course</a> - FreeCodeCamp</li>
+                <li><a href="#">Python for Beginners</a> - Coursera</li>
+                <li><a href="#">JavaScript Tutorial</a> - W3Schools</li>
+            </ul>
+        </section>
+    </main>
+
+    <!-- Footer Section -->
+    <footer>
+        <p>© 2025 SkillMatch. All rights reserved.</p>
+        <p>Contact: support@skillmatch.com</p>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+            function analyzeSkills(event) {
+            event.preventDefault();
+            const skills = document.getElementById('skills').value.toLowerCase();
+            const interests = document.getElementById('interests').value.toLowerCase();
+            const experience = document.getElementById('experience').value;
+
+            // Simple career recommendation logic (replace with AI/ML in a real app)
+            let careers = [];
+            if (skills.includes('html') || skills.includes('css') || interests.includes('web')) {
+                careers.push({
+                    title: 'Web Developer',
+                    score: experience === 'beginner' ? 75 : experience === 'intermediate' ? 85 : 95,
+                    skills: 'HTML, CSS, JavaScript',
+                    demand: 'High'
+                });
+            }
+            if (skills.includes('python') || skills.includes('sql') || interests.includes('data')) {
+                careers.push({
+                    title: 'Data Analyst',
+                    score: experience === 'beginner' ? 70 : experience === 'intermediate' ? 80 : 90,
+                    skills: 'Python, SQL, Statistics',
+                    demand: 'Very High'
+                });
+            }
+            if (careers.length === 0) {
+                careers.push({
+                    title: 'Generalist',
+                    score: 60,
+                    skills: 'Varies',
+                    demand: 'Moderate'
+                });
+            }
+
+            // Display results
+            const careerResults = document.getElementById('careerResults');
+            careerResults.innerHTML = careers.map(career => `
+                <div class="career-card">
+                    <h3>${career.title}</h3>
+                    <p>Match Score: ${career.score}%</p>
+                    <p>Skills Needed: ${career.skills}</p>
+                    <p>Market Demand: ${career.demand}</p>
+                </div>
+            `).join('');
+        }
+
+        function addPortfolioItem(event) {
+            event.preventDefault();
+            const title = document.getElementById('projectTitle').value;
+            const desc = document.getElementById('projectDesc').value;
+            const image = document.getElementById('projectImage').value || 'https://via.placeholder.com/200';
+
+            const portfolioItems = document.getElementById('portfolioItems');
+            portfolioItems.innerHTML += `
+                <div class="portfolio-item">
+                    <h4>${title}</h4>
+                    <p>${desc}</p>
+                    <img src="${image}" alt="${title}" width="200">
+                </div>
+            `;
+
+            // Clear form
+            document.getElementById('portfolioForm').reset();
+        }
+    </script>
+</body>
+</html>
