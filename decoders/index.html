@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login and Signup</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3f37c9;
+            --light-color: #f8f9fa;
+            --dark-color: #2b2d42;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .form-box {
+            position: relative;
+        }
+        
+        h2 {
+            color: var(--primary-color);
+            margin-bottom: 30px;
+            font-size: 28px;
+        }
+        
+        .input-group {
+            position: relative;
+            margin-bottom: 20px;
+        }
+        
+        .input-field {
+            width: 100%;
+            padding: 15px 15px 15px 45px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        
+        .input-field:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+        }
+        
+        .input-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #adb5bd;
+        }
+        
+        .btn {
+            width: 100%;
+            padding: 15px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+        
+        .btn:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3);
+        }
+        
+        .btn:active {
+            transform: translateY(0);
+        }
+        
+        .toggle-text {
+            margin-top: 20px;
+            color: #6c757d;
+        }
+        
+        .toggle-btn {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .toggle-btn:hover {
+            text-decoration: underline;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .password-toggle {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #adb5bd;
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                padding: 30px 20px;
+            }
+            
+            h2 {
+                font-size: 24px;
+                margin-bottom: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="form-box">
+            <h2 id="form-title">Login</h2>
+            <form id="auth-form">
+                <div class="input-group" id="name-group">
+                    <i class="fas fa-user input-icon"></i>
+                    <input type="text" id="name" placeholder="Full Name" class="input-field" required>
+                </div>
+                
+                <div class="input-group">
+                    <i class="fas fa-envelope input-icon"></i>
+                    <input type="email" id="email" placeholder="Email" class="input-field" required>
+                </div>
+                
+                <div class="input-group">
+                    <i class="fas fa-lock input-icon"></i>
+                    <input type="password" id="password" placeholder="Password" class="input-field" required>
+                    <i class="fas fa-eye password-toggle" id="toggle-password"></i>
+                </div>
+                
+                <button type="submit" class="btn" id="submit-btn">Login</button>
+            </form>
+            
+            <p class="toggle-text" id="toggle-text">Don't have an account? 
+                <a class="toggle-btn" id="toggle-btn">Sign up</a>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const form = document.getElementById("auth-form");
+            const formTitle = document.getElementById("form-title");
+            const toggleText = document.getElementById("toggle-text");
+            const toggleBtn = document.getElementById("toggle-btn");
+            const nameGroup = document.getElementById("name-group");
+            const submitBtn = document.getElementById("submit-btn");
+            const passwordToggle = document.getElementById("toggle-password");
+            const passwordField = document.getElementById("password");
+
+            let isSignup = false;
+
+            // Toggle between login and signup
+            toggleBtn.addEventListener("click", (e) => {
+                e.preventDefault();
+                isSignup = !isSignup;
+                
+                formTitle.textContent = isSignup ? "Sign Up" : "Login";
+                submitBtn.textContent = isSignup ? "Sign Up" : "Login";
+                toggleText.innerHTML = isSignup 
+                    ? 'Already have an account? <a class="toggle-btn" id="toggle-btn">Login</a>' 
+                    : "Don't have an account? <a class='toggle-btn' id='toggle-btn'>Sign up</a>";
+                
+                nameGroup.classList.toggle("hidden", !isSignup);
+            });
+
+            // Password visibility toggle
+            passwordToggle.addEventListener("click", () => {
+                const type = passwordField.getAttribute("type") === "password" ? "text" : "password";
+                passwordField.setAttribute("type", type);
+                passwordToggle.classList.toggle("fa-eye");
+                passwordToggle.classList.toggle("fa-eye-slash");
+            });
+
+            // Form submission
+            form.addEventListener("submit", (e) => {
+                e.preventDefault();
+                
+                const email = document.getElementById("email").value;
+                const password = document.getElementById("password").value;
+                const name = isSignup ? document.getElementById("name").value : null;
+                
+                // Basic validation
+                if (isSignup && !name) {
+                    alert("Please enter your name");
+                    return;
+                }
+                
+                if (!email || !password) {
+                    alert("Please fill in all fields");
+                    return;
+                }
+                
+                // In a real app, you would send this data to your server
+                if (isSignup) {
+                    localStorage.setItem("userData", JSON.stringify({
+                        name: name,
+                        email: email,
+                        password: password 
+                    }));
+                    alert("Account created successfully! You can now login.");
+                    // Switch back to login form
+                    isSignup = false;
+                    formTitle.textContent = "Login";
+                    submitBtn.textContent = "Login";
+                    toggleText.innerHTML = "Don't have an account? <a class='toggle-btn' id='toggle-btn'>Sign up</a>";
+                    nameGroup.classList.add("hidden");
+                } else {
+                    // Check login credentials (in a real app, this would be an API call)
+                    const storedData = localStorage.getItem("userData");
+                    if (storedData) {
+                        const userData = JSON.parse(storedData);
+                        if (userData.email === email && userData.password === password) {
+                            alert("Login successful! Redirecting...");
+                            // Redirect to home page after successful login
+                            // <a href="homepage.html" class="nav-link">Home</a>
+                            window.location.href = "homepage.html";
+                        } else {
+                            alert("Invalid email or password");
+                        }
+                    } else {
+                        alert("No account found with this email. Please sign up first.");
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login and Signup</title>
+    <link rel="stylesheet" href="styles.css">
+
+
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(to right, #ffffff, #c4dafa);
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            text-align: center;
+        }
+        .input-field {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .hidden {
+            display: none;
+        }
+        .btn {
+            width: 100%;
+            padding: 10px;
+            background: #6aa3f7;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .btn:hover {
+            background: #5858ff;
+        }
+        #toggle-text {
+            margin-top: 10px;
+        }
+        a {
+            color: #8996ef;
+            text-decoration: none;
+            font-weight: bold;
+        }
+    </style>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const form = document.getElementById("auth-form");
+            const formTitle = document.getElementById("form-title");
+            const toggleText = document.getElementById("toggle-text");
+            const toggleBtn = document.getElementById("toggle-btn");
+            const nameField = document.getElementById("name");
+
+            let isSignup = false;
+
+            toggleBtn.addEventListener("click", (e) => {
+                e.preventDefault();
+                isSignup = !isSignup;
+                formTitle.textContent = isSignup ? "Sign Up" : "Login";
+                toggleText.innerHTML = isSignup ? 'Already have an account? <a href="#" id="toggle-btn">Login</a>' : "Don't have an account? <a href='#' id='toggle-btn'>Sign up</a>";
+                nameField.classList.toggle("hidden", !isSignup);
+            });
+
+            form.addEventListener("submit", (e) => {
+                e.preventDefault();
+                alert(isSignup ? "Sign-up successful!" : "Login successful!");
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="form-box">
+            <h2 id="form-title">Login</h2>
+            <form id="auth-form">
+                <input type="text" id="name" placeholder="Full Name" class="input-field hidden">
+                <input type="email" id="email" placeholder="Email" class="input-field" required>
+                <input type="password" id="password" placeholder="Password" class="input-field" required>
+                <button type="submit" class="btn">Submit</button>
+            </form>
+            <p id="toggle-text">Don't have an account? <a href="" id="toggle-btn">Sign up</a></p>
+        </div>
+    </div>
+</body>
+</html> -->
+
+
+
+
+
+
+
+
+
+
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hackathon Prototype</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <div id="auth-container" class="container">
+        <div class="auth-box">
+            <h2 id="auth-title">Login</h2>
+            <form id="auth-form">
+                <input type="email" id="email" placeholder="Email" required>
+                <input type="password" id="password" placeholder="Password" required>
+                <button type="submit" id="auth-submit">Login</button>
+            </form>
+            <p id="auth-switch">New user? <a href="#" onclick="toggleAuth()">Register here</a></p>
+            <p id="auth-error" class="error"></p>
+        </div>
+    </div>
+
+    <div id="home-container" class="container hidden">
+        <nav class="navbar">
+            <h1>Welcome <span id="user-email"></span></h1>
+            <div class="nav-links">
+                <a href="#" class="nav-link" onclick="showSection('dashboard')">Dashboard</a>
+                <a href="#" class="nav-link" onclick="showSection('profile')">Profile</a>
+                <a href="#" class="nav-link" onclick="showSection('settings')">Settings</a>
+                <a href="#" class="nav-link" onclick="logout()">Logout</a>
+            </div>
+        </nav>
+        
+        <div id="dashboard" class="section">
+            <h2>Dashboard</h2>
+            <div class="content-placeholder">
+                <p>Main dashboard content will go here</p>
+                <div class="placeholder-box"></div>
+            </div>
+        </div>
+
+        <div id="profile" class="section hidden">
+            <h2>Profile</h2>
+            <div class="content-placeholder">
+                <p>Profile content will go here</p>
+                <div class="placeholder-box"></div>
+            </div>
+        </div>
+
+        <div id="settings" class="section hidden">
+            <h2>Settings</h2>
+            <div class="content-placeholder">
+                <p>Settings content will go here</p>
+                <div class="placeholder-box"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+    <script src="/config.js"></script>
+    <script src="/app.js"></script>
+</body>
+</html> -->

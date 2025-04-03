@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tech Skill Assessment</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <style>
+        :root {
+            --primary: #6a5acd;
+            --secondary: #ff9800;
+            --dark: #2c3e50;
+            --light: #ecf0f1;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a2980 0%, #26d0ce 100%);
+            color: var(--light);
+            text-align: center;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .quiz-container {
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 700px;
+            margin: auto;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .quiz-container:hover {
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+        }
+        
+        h2 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        #welcomeText {
+            font-size: 1.3rem;
+            margin-bottom: 25px;
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .question {
+            margin: 20px 0;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            text-align: left;
+            cursor: pointer;
+            border-left: 4px solid transparent;
+        }
+        
+        .question:hover {
+            background: rgba(0, 0, 0, 0.3);
+            transform: translateY(-3px);
+            border-left: 4px solid var(--secondary);
+        }
+        
+        .question p {
+            font-weight: 700;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+            color: white;
+        }
+        
+        .options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .option {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px 15px;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
+        
+        .option:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .option input {
+            margin-right: 10px;
+            cursor: pointer;
+            transform: scale(1.2);
+        }
+        
+        .btn {
+            background: var(--secondary);
+            color: white;
+            border: none;
+            padding: 14px 35px;
+            cursor: pointer;
+            border-radius: 50px;
+            margin-top: 25px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 152, 0, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .btn:hover {
+            background: #e68900;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 152, 0, 0.4);
+        }
+        
+        #result {
+            margin-top: 25px;
+            font-size: 1.4rem;
+            font-weight: 600;
+            min-height: 30px;
+            padding: 20px;
+            border-radius: 8px;
+            background: rgba(0, 0, 0, 0.2);
+            display: none;
+            color: white;
+        }
+        
+        .progress-container {
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            margin: 20px 0;
+            height: 10px;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #ff9800, #ff5722);
+            width: 0%;
+            transition: width 0.4s ease;
+        }
+        
+        .skill-suggestion {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 8px;
+            background: rgba(0, 0, 0, 0.2);
+            display: none;
+            text-align: center;
+            animation: fadeIn 0.8s ease-out;
+        }
+        
+        .skill-suggestion h3 {
+            margin-top: 0;
+            color: var(--secondary);
+            font-size: 1.5rem;
+        }
+        
+        .skill-suggestion p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @media (max-width: 600px) {
+            .quiz-container {
+                padding: 20px;
+            }
+            
+            .options {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            h2 {
+                font-size: 2rem;
+            }
+            
+            .question p {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="quiz-container animate__animated animate__fadeIn">
+        <h2>Tech Skill Explorer</h2>
+        <p id="welcomeText"></p>
+        
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+        
+        <div id="quiz"></div>
+        <button class="btn" id="submitQuiz">Get My Results</button>
+        <p id="result"></p>
+        <div class="skill-suggestion" id="skillSuggestion"></div>
+    </div>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const name = localStorage.getItem("name") || "Tech Explorer";
+            document.getElementById("welcomeText").innerText = `Welcome, ${name}! Discover your ideal tech career path:`;
+            
+            const questions = [
+                {
+                    text: "Which programming language do you enjoy the most?",
+                    options: ["JavaScript/Python", "Java/C#", "SQL/R", "HTML/CSS", "I don't have a preference"]
+                },
+                {
+                    text: "What excites you more: building apps or analyzing data?",
+                    options: ["Building apps", "Analyzing data", "Both equally", "Neither particularly"]
+                },
+                {
+                    text: "Do you love designing user interfaces or working with databases?",
+                    options: ["Designing interfaces", "Working with databases", "Both", "Neither"]
+                },
+                {
+                    text: "Would you like to create AI-powered applications?",
+                    options: ["Yes, very much!", "Somewhat interested", "Not particularly", "Not at all"]
+                },
+                {
+                    text: "Do you enjoy solving complex mathematical problems?",
+                    options: ["Yes, love it!", "Sometimes", "Rarely", "No, not my thing"]
+                },
+                {
+                    text: "Are you interested in cloud technologies and deployment?",
+                    options: ["Very interested", "Somewhat interested", "Neutral", "Not interested"]
+                },
+                {
+                    text: "Do you prefer working on security aspects of software?",
+                    options: ["Yes, very much", "Somewhat", "Not particularly", "Not at all"]
+                },
+                {
+                    text: "Would you enjoy automating tasks using scripting languages?",
+                    options: ["Yes, love automation!", "Sometimes useful", "Rarely", "Not my thing"]
+                },
+                {
+                    text: "Do you like working on large-scale software architectures?",
+                    options: ["Yes, very much", "It's interesting", "Not particularly", "No"]
+                },
+                {
+                    text: "Would you enjoy working in ethical hacking and cybersecurity?",
+                    options: ["Absolutely!", "Sounds interesting", "Maybe", "Not for me"]
+                }
+            ];
+            
+            let quizHtml = "";
+            questions.forEach((q, index) => {
+                let optionsHtml = "";
+                q.options.forEach((option, optIndex) => {
+                    optionsHtml += `
+                        <div class="option">
+                            <input type="radio" id="q${index}opt${optIndex}" name="q${index}" value="${optIndex}">
+                            <label for="q${index}opt${optIndex}">${option}</label>
+                        </div>
+                    `;
+                });
+                
+                quizHtml += `
+                    <div class='question animate__animated'>
+                        <p>${index + 1}. ${q.text}</p>
+                        <div class="options">
+                            ${optionsHtml}
+                        </div>
+                    </div>
+                `;
+            });
+            
+            document.getElementById("quiz").innerHTML = quizHtml;
+            
+            // Add animation to questions
+            const questionElements = document.querySelectorAll('.question');
+            questionElements.forEach((el, index) => {
+                setTimeout(() => {
+                    el.classList.add('animate__fadeInUp');
+                }, index * 100);
+            });
+            
+            // Update progress bar
+            document.querySelectorAll('input[type="radio"]').forEach(radio => {
+                radio.addEventListener('change', updateProgress);
+            });
+            
+            function updateProgress() {
+                const totalQuestions = questions.length;
+                const answered = document.querySelectorAll('input[type="radio"]:checked').length;
+                const progress = (answered / totalQuestions) * 100;
+                document.getElementById('progressBar').style.width = `${progress}%`;
+            }
+            
+            document.getElementById("submitQuiz").addEventListener("click", function() {
+                const answered = document.querySelectorAll('input[type="radio"]:checked').length;
+                if (answered < questions.length) {
+                    alert(`Please answer all ${questions.length} questions before submitting.`);
+                    return;
+                }
+                
+                // Calculate scores
+                let scores = {
+                    frontend: 0,
+                    backend: 0,
+                    data: 0,
+                    devops: 0,
+                    security: 0,
+                    ai: 0
+                };
+                
+                // Question scoring logic
+                const q1 = parseInt(document.querySelector('input[name="q0"]:checked').value);
+                if (q1 === 0) scores.frontend += 2, scores.backend += 1, scores.data += 1;
+                if (q1 === 1) scores.backend += 2;
+                if (q1 === 2) scores.data += 2;
+                if (q1 === 3) scores.frontend += 2;
+                
+                const q2 = parseInt(document.querySelector('input[name="q1"]:checked').value);
+                if (q2 === 0) scores.frontend += 1, scores.backend += 1;
+                if (q2 === 1) scores.data += 2;
+                if (q2 === 2) scores.frontend += 1, scores.backend += 1, scores.data += 1;
+                
+                const q3 = parseInt(document.querySelector('input[name="q2"]:checked').value);
+                if (q3 === 0) scores.frontend += 2;
+                if (q3 === 1) scores.backend += 2;
+                if (q3 === 2) scores.frontend += 1, scores.backend += 1;
+                
+                const q4 = parseInt(document.querySelector('input[name="q3"]:checked').value);
+                if (q4 === 0) scores.ai += 3;
+                if (q4 === 1) scores.ai += 1;
+                
+                const q5 = parseInt(document.querySelector('input[name="q4"]:checked').value);
+                if (q5 === 0) scores.data += 1, scores.ai += 1;
+                
+                const q6 = parseInt(document.querySelector('input[name="q5"]:checked').value);
+                if (q6 === 0) scores.devops += 3;
+                if (q6 === 1) scores.devops += 1;
+                
+                const q7 = parseInt(document.querySelector('input[name="q6"]:checked').value);
+                if (q7 === 0) scores.security += 3;
+                if (q7 === 1) scores.security += 1;
+                
+                const q8 = parseInt(document.querySelector('input[name="q7"]:checked').value);
+                if (q8 === 0) scores.devops += 2;
+                
+                const q9 = parseInt(document.querySelector('input[name="q8"]:checked').value);
+                if (q9 === 0) scores.backend += 2;
+                
+                const q10 = parseInt(document.querySelector('input[name="q9"]:checked').value);
+                if (q10 === 0) scores.security += 3;
+                if (q10 === 1) scores.security += 1;
+                
+                // Determine primary skill
+                let maxScore = 0;
+                let primarySkill = "";
+                
+                for (const [skill, score] of Object.entries(scores)) {
+                    if (score > maxScore) {
+                        maxScore = score;
+                        primarySkill = skill;
+                    }
+                }
+                
+                // Display results
+                const resultElement = document.getElementById('result');
+                resultElement.style.display = 'block';
+                resultElement.textContent = `Your Assessment Results`;
+                resultElement.classList.add('animate__animated', 'animate__bounceIn');
+                
+                // Show personalized suggestion
+                const suggestionElement = document.getElementById('skillSuggestion');
+                suggestionElement.style.display = 'block';
+                
+                let suggestion = "";
+                let resources = "";
+                
+                switch(primarySkill) {
+                    case "frontend":
+                        suggestion = "Frontend Development";
+                        resources = "Your creative and visual approach makes you ideal for building user interfaces. Focus on mastering modern frameworks like React or Vue.js, along with responsive design principles and accessibility standards.";
+                        break;
+                    case "backend":
+                        suggestion = "Backend Development";
+                        resources = "Your logical thinking and interest in systems architecture suggest you'd excel at server-side development. Explore technologies like Node.js, databases (SQL/NoSQL), and API design to build powerful backend systems.";
+                        break;
+                    case "data":
+                        suggestion = "Data Science & Analytics";
+                        resources = "Your analytical mindset and problem-solving skills are perfect for extracting insights from data. Develop your skills in Python, SQL, statistical analysis, and data visualization tools to uncover valuable patterns.";
+                        break;
+                    case "devops":
+                        suggestion = "DevOps & Cloud Engineering";
+                        resources = "Your interest in automation and infrastructure makes you well-suited for optimizing development workflows. Learn about containerization (Docker), orchestration (Kubernetes), and cloud platforms (AWS/Azure).";
+                        break;
+                    case "security":
+                        suggestion = "Cybersecurity";
+                        resources = "Your attention to detail and systems thinking align perfectly with security roles. Explore ethical hacking, network security, cryptography, and security best practices to protect digital assets.";
+                        break;
+                    case "ai":
+                        suggestion = "Artificial Intelligence";
+                        resources = "Your mathematical inclination and interest in intelligent systems suggest a bright future in AI. Dive into machine learning algorithms, neural networks, and frameworks like TensorFlow or PyTorch.";
+                        break;
+                    default:
+                        suggestion = "Versatile Tech Professional";
+                        resources = "Your balanced skillset allows you to adapt to various tech roles. Consider exploring different specialties to find your perfect niche in the tech industry.";
+                }
+                
+                suggestionElement.innerHTML = `
+                    <h3>Your Ideal Path: ${suggestion}</h3>
+                    <p>${resources}</p>
+                `;
+                
+                // Scroll to results
+                setTimeout(() => {
+                    suggestionElement.scrollIntoView({ behavior: 'smooth' });
+                }, 500);
+            });
+        });
+    </script>
+</body>
+</html>

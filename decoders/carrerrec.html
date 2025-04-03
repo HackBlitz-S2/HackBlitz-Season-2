@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Career Recommendations</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+   
+    <div class="scroll-container">
+        <img src="C:\Users\swara\OneDrive\Desktop\Hackathon_prototype\firebaseproject\1star.jpg" alt="career">
+        <img src="C:\Users\swara\OneDrive\Desktop\Hackathon_prototype\firebaseproject\balance_(1).jpg" alt="career">
+        <img src="C:\Users\swara\OneDrive\Desktop\Hackathon_prototype\firebaseproject\car.jpg" alt="career">
+        <img src="C:\Users\swara\OneDrive\Desktop\Hackathon_prototype\firebaseproject\money.jpg" alt="career">
+        <img src="C:\Users\swara\OneDrive\Desktop\Hackathon_prototype\firebaseproject\transform.jpg" alt="career">
+      </div>
+
+    <div class="container mt-5">
+
+        <h2 class="text-center heading-box">Top Career Recommendations</h2>
+        <p class="text-center">Look for what you are searching...Here are the best Trending Careers</p>
+        
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Web Developer</h5>
+                        <p class="card-text">Build and maintain websites with front-end and back-end technologies.</p>
+                        <a href="https://www.computerscience.org/careers/web-developer/" class="btn btn-primary">Explore</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Data Scientist</h5>
+                        <p class="card-text">Analyze and interpret complex data to help businesses make decisions.</p>
+                        <a href="https://www.prospects.ac.uk/job-profiles/data-scientist" class="btn btn-primary">Explore</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Cybersecurity Analyst</h5>
+                        <p class="card-text">Protect systems and networks from cyber threats and attacks.</p>
+                        <a href="https://www.cyberseek.org/pathway.html" class="btn btn-primary">Explore</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Cloud associate</h5>
+                        <p class="card-text">deploying, maintaining, and monitoring cloud applications and infrastructure, using cloud platforms like Google Cloud or AWS</p>
+                        <a href="https://www.techtarget.com/whatis/feature/Top-7-cloud-computing-careers-and-how-to-get-started" class="btn btn-primary">Explore</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Networking</h5>
+                        <p class="card-text"> Network architecture, network security, network administration, cloud networking, wireless networking.</p>
+                        <a href="https://www.comptia.org/content/it-careers-path-roadmap/it-networking-specialist" class="btn btn-primary">Explore</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">UI/UX</h5>
+                        <p class="card-text">create user-centered designs for digital products, focusing on enhancing user satisfaction and usability by improving accessibility, efficiency, and aesthetics</p>
+                        <a href="https://designlab.com/blog/ux-designer-career-path-options" class="btn btn-primary">Explore</a>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+
+    <div class="container mt-5">
+        <h3 class="text-center">Career Demand Trends</h3>
+        <canvas id="careerChart"></canvas>
+    </div>
+
+    <script>
+        const ctx = document.getElementById('careerChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Web Dev', 'Data Science', 'Cybersecurity', 'AI/ML', 'Cloud Computing', 'UI/UX', 'Networking'],
+                datasets: [{
+                    label: 'Job Demand (%)',
+                    data: [80, 85, 90, 95, 88,82, 79],
+                    backgroundColor: ['#007bff', '#28a745', '#dc3545', '#ffc107', '#17a2b8', '#17a2b9', '#9EC6F3']
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: { beginAtZero: true }
+                }
+            }
+        });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+
+
+
+career.html

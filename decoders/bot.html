@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Career Guidance with AI Assistant</title>
+    <style>
+        /* Chatbot styles */
+        .chatbot-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 350px;
+            z-index: 1000;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        .chatbot-header {
+            background: #4361ee;
+            color: white;
+            padding: 12px 15px;
+            border-radius: 10px 10px 0 0;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .chatbot-body {
+            background: white;
+            height: 400px;
+            display: flex;
+            flex-direction: column;
+            border-left: 1px solid #ddd;
+            border-right: 1px solid #ddd;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .chatbot-messages {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .message {
+            max-width: 80%;
+            padding: 8px 12px;
+            border-radius: 15px;
+            line-height: 1.4;
+        }
+        
+        .bot-message {
+            background: #f1f1f1;
+            align-self: flex-start;
+            border-bottom-left-radius: 5px;
+        }
+        
+        .user-message {
+            background: #4361ee;
+            color: white;
+            align-self: flex-end;
+            border-bottom-right-radius: 5px;
+        }
+        
+        .chatbot-input {
+            display: flex;
+            padding: 10px;
+            border-top: 1px solid #ddd;
+            background: #f9f9f9;
+        }
+        
+        .chatbot-input input {
+            flex: 1;
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            outline: none;
+        }
+        
+        .chatbot-input button {
+            background: #4361ee;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            margin-left: 8px;
+            cursor: pointer;
+        }
+        
+        .chatbot-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #4361ee;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            z-index: 999;
+        }
+        
+        .hidden {
+            height: 0 !important;
+            padding: 0 !important;
+            border: none !important;
+        }
+        
+        /* Predefined questions */
+        .quick-questions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+        
+        .quick-question {
+            background: #e9ecef;
+            border: none;
+            border-radius: 15px;
+            padding: 6px 12px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        
+        .quick-question:hover {
+            background: #dee2e6;
+        }
+    </style>
+</head>
+<body>
+    <!-- Add this to your home page -->
+    <div class="chatbot-toggle" id="chatbotToggle">
+        <i class="fas fa-robot" style="font-size: 24px;"></i>
+    </div>
+    
+    <div class="chatbot-container hidden" id="chatbotContainer">
+        <div class="chatbot-header" id="chatbotHeader">
+            <span>Career Guidance Assistant</span>
+            <span id="chatbotMinimize">−</span>
+        </div>
+        <div class="chatbot-body hidden" id="chatbotBody">
+            <div class="chatbot-messages" id="chatbotMessages">
+                <div class="message bot-message">
+                    Hello! I'm your Career Guidance Assistant. How can I help you today?
+                    <div class="quick-questions">
+                        <button class="quick-question" onclick="sendQuickQuestion(this)">What careers match my skills?</button>
+                        <button class="quick-question" onclick="sendQuickQuestion(this)">How to improve my resume?</button>
+                        <button class="quick-question" onclick="sendQuickQuestion(this)">What skills are in demand?</button>
+                    </div>
+                </div>
+            </div>
+            <div class="chatbot-input">
+                <input type="text" id="userInput" placeholder="Type your question..." onkeypress="handleKeyPress(event)">
+                <button onclick="sendMessage()"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <script>
+        // Toggle chatbot visibility
+        const chatbotToggle = document.getElementById('chatbotToggle');
+        const chatbotContainer = document.getElementById('chatbotContainer');
+        const chatbotBody = document.getElementById('chatbotBody');
+        const chatbotHeader = document.getElementById('chatbotHeader');
+        const chatbotMinimize = document.getElementById('chatbotMinimize');
+        
+        let isChatbotOpen = false;
+        
+        chatbotToggle.addEventListener('click', () => {
+            isChatbotOpen = !isChatbotOpen;
+            if (isChatbotOpen) {
+                chatbotContainer.classList.remove('hidden');
+                chatbotBody.classList.remove('hidden');
+                chatbotToggle.style.display = 'none';
+            }
+        });
+        
+        chatbotMinimize.addEventListener('click', (e) => {
+            e.stopPropagation();
+            chatbotBody.classList.add('hidden');
+            isChatbotOpen = false;
+            chatbotToggle.style.display = 'flex';
+        });
+        
+        chatbotHeader.addEventListener('click', () => {
+            if (chatbotBody.classList.contains('hidden')) {
+                chatbotBody.classList.remove('hidden');
+                isChatbotOpen = true;
+                chatbotToggle.style.display = 'none';
+            }
+        });
+
+        // Chatbot functionality
+        function sendMessage() {
+            const userInput = document.getElementById('userInput');
+            const message = userInput.value.trim();
+            
+            if (message) {
+                addMessage(message, 'user');
+                userInput.value = '';
+                
+                // Simulate bot thinking
+                setTimeout(() => {
+                    const botResponse = generateResponse(message);
+                    addMessage(botResponse, 'bot');
+                }, 800);
+            }
+        }
+        
+        function sendQuickQuestion(button) {
+            const question = button.textContent;
+            addMessage(question, 'user');
+            
+            setTimeout(() => {
+                const botResponse = generateResponse(question);
+                addMessage(botResponse, 'bot');
+            }, 800);
+        }
+        
+        function handleKeyPress(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        }
+        
+        function addMessage(text, sender) {
+            const messagesContainer = document.getElementById('chatbotMessages');
+            const messageElement = document.createElement('div');
+            messageElement.classList.add('message');
+            messageElement.classList.add(sender === 'user' ? 'user-message' : 'bot-message');
+            messageElement.textContent = text;
+            messagesContainer.appendChild(messageElement);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+        
+        // Simple response generation (in a real app, this would connect to an AI API)
+        function generateResponse(userMessage) {
+            const lowerMessage = userMessage.toLowerCase();
+            
+            if (lowerMessage.includes('career') || lowerMessage.includes('match') || lowerMessage.includes('skills')) {
+                return "Based on common career paths, I'd recommend looking into these fields: Software Development, Data Analysis, or Digital Marketing. Would you like me to analyze your specific skills?";
+            }
+            else if (lowerMessage.includes('resume') || lowerMessage.includes('cv')) {
+                return "To improve your resume: 1) Tailor it to each job, 2) Use action verbs, 3) Quantify achievements, 4) Keep it concise. Would you like a resume template?";
+            }
+            else if (lowerMessage.includes('skill') || lowerMessage.includes('demand')) {
+                return "Currently in-demand skills include: 1) Programming (Python, JavaScript), 2) Data Analysis, 3) Cloud Computing, 4) Digital Marketing, 5) UX/UI Design.";
+            }
+            else if (lowerMessage.includes('hello') || lowerMessage.includes('hi')) {
+                return "Hello! I'm here to help with career guidance. You can ask me about career paths, resume tips, or skill development.";
+            }
+            else {
+                return "I'm a career guidance assistant. I can help with career advice, resume tips, and skill recommendations. Could you clarify your question?";
+            }
+        }
+    </script>
+</body>
+</html>
