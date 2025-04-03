@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediRemind - My Medications</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <h1>MediRemind</h1>
+        </div>
+        <nav>
+            <a href="/">Home</a>
+            <a href="information.html">Information</a>
+            <a href="m2.html" class="active">My Medications</a>
+            <a href="r2.html">Reminders</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="medications">
+            <div class="med-header">
+                <h2>My Medications</h2>
+                <button id="add-med-btn" class="btn-primary">+ Add Medication</button>
+            </div>
+
+            <!-- Medication Form -->
+            <div id="med-form" class="form-container">
+                <h3>Add Medication</h3>
+                <form id="medication-form">
+                    <label>Name: <input type="text" name="name" required></label>
+                    <label>Dosage: <input type="text" name="dosage" required></label>
+                    <label>Times per day: <input type="number" name="frequency" min="1" max="12" required></label>
+                    <label>First dose time: <input type="time" name="first_dose" required></label>
+                    <label>Start date: <input type="date" name="start_date" required></label>
+                    <button type="submit" class="btn-success">Save</button>
+                </form>
+            </div>
+
+            <!-- Medication List -->
+            <div class="med-list">
+                <!-- Example Medication Card -->
+                <div class="med-card">
+                    <h3>Aspirin</h3>
+                    <p>Dosage: 100mg</p>
+                    <p>Frequency: 2 times daily</p>
+                    <p>Started on: 2023-04-01</p>
+                </div>
+
+                <div class="med-card">
+                    <h3>Vitamin D</h3>
+                    <p>Dosage: 2000 IU</p>
+                    <p>Frequency: Once daily</p>
+                    <p>Started on: 2023-01-15</p>
+                </div>
+
+                <!-- Dynamic cards will be added here from JavaScript -->
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2023 MediRemind. All Rights Reserved.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

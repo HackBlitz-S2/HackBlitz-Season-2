@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediRemind - Pill Reminders</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>MediRemind</h1>
+        <nav>
+            <a href="ii.html">Home</a>
+            <a href="information.html">Information</a>
+            <a href="m2.html">My Medications</a>
+            <a href="r2.html" class="active">Reminders</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="reminders">
+            <h2>Upcoming Pill Reminders</h2>
+            <div class="reminder-list">
+                <!-- Example Reminders -->
+                <div class="reminder-card">
+                    <h3>Morning Vitamin</h3>
+                    <p>Dosage: 1 Pill</p>
+                    <p>Time: 8:00 AM</p>
+                    <p>Status: <span class="status not-taken">Not Taken</span></p>
+                    <button class="mark-taken" data-id="morning-vitamin">Mark as Taken</button>
+                </div>
+                
+                <div class="reminder-card taken">
+                    <h3>Evening Aspirin</h3>
+                    <p>Dosage: 1 Pill</p>
+                    <p>Time: 7:00 PM</p>
+                    <p>Status: <span class="status taken">Taken</span></p>
+                    <button class="mark-taken" disabled>Already Taken</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2023 MediRemind</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
