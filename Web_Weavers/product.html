@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoSwap - Donate Product</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="home.css">
+    <link rel="stylesheet" href="navbar.css">
+    <link rel="stylesheet" href="logo.css">
+    <link rel="stylesheet" href="product.css">
+</head>
+<body>
+    <!-- Navbar with enhanced logo -->
+    <nav class="navbar">
+        <div class="nav-brand">
+            <a href="/" class="logo">
+                <span class="logo-eco">Eco</span><span class="logo-swap">Swap</span>
+                <i class="fas fa-leaf logo-icon"></i>
+            </a>
+        </div>
+
+        <div class="search-container">
+            <form class="search-form">
+                <input type="text" placeholder="Search causes..." class="search-input">
+                <button type="submit" class="search-btn">
+                    <i class="fas fa-search"></i>
+                </button>
+            </form>
+        </div>
+
+        <div class="nav-links">
+            <a href="home.html">Home</a>
+            <a href="C:\Users\rames\Desktop\HACKTHON\Aboutus.html">About Us</a>
+            <a href="product.html" class="active">Donate</a>
+            <a href="C:\Users\rames\Desktop\HACKTHON\contact.html">Contact Us</a>
+        </div>
+
+        <div class="auth-buttons">
+            <div class="auth-container">
+                <button class="auth-toggle" onclick="toggleAuthMenu()">
+                    <i class="fas fa-user"></i>
+                    <span>Account</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="auth-dropdown" id="authDropdown">
+                    <div class="auth-option" onclick="openModal('loginModal')">
+                        <i class="fas fa-sign-in-alt"></i>
+                        <span>Login</span>
+                    </div>
+                    <div class="auth-option" onclick="openModal('registerModal')">
+                        <i class="fas fa-user-plus"></i>
+                        <span>Register</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+  
+<!-- Product Donation Form Section -->
+<section class="product-section">
+    <div class="container">
+        <div class="banner">
+            <h1 class="section-title">Donate Your Item</h1>
+            <p class="section-description">Fill out the form below to donate your unused items to someone in need.</p>
+        </div>
+
+        <div class="form-container">
+            <form id="donationForm" class="donation-form">
+                <div class="form-row">
+                    <div class="form-column">
+                        <h3>Product Information</h3>
+                        <!-- Form Fields -->
+                        <div class="form-group">
+                            <label for="productName">Product Name*</label>
+                            <input type="text" id="productName" name="productName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="category">Category*</label>
+                            <select id="category" name="category" required>
+                                <option value="">Select a category</option>
+                                <option value="clothing">Clothing</option>
+                                <option value="electronics">Electronics</option>
+                                <option value="furniture">Furniture</option>
+                                <option value="books">Books</option>
+                                <option value="toys">Toys</option>
+                                <option value="household">Household Items</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="quantity">Quantity*</label>
+                            <input type="number" id="quantity" name="quantity" min="1" value="1" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="condition">Condition*</label>
+                            <select id="condition" name="condition" required>
+                                <option value="">Select condition</option>
+                                <option value="new">New</option>
+                                <option value="likeNew">Like New</option>
+                                <option value="good">Good</option>
+                                <option value="fair">Fair</option>
+                                <option value="used">Used</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="description">Description</label>
+                            <textarea id="description" name="description" rows="4" placeholder="Describe your item..."></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-column">
+                        <h3>Product Image</h3>
+                        <div class="image-upload-container">
+                            <div class="image-preview" id="imagePreview">
+                                <img src="https://via.placeholder.com/300x200?text=No+Image+Selected" alt="Preview" id="previewImg">
+                            </div>
+                            <div class="upload-controls">
+                                <label for="productImage" class="upload-btn">
+                                    <i class="fas fa-upload"></i> Choose Image
+                                </label>
+                                <input type="file" id="productImage" name="productImage" accept="image/*" hidden onchange="previewImage(event)">
+                                <p class="upload-info">Max size: 5MB. Formats: JPG, PNG, GIF</p>
+                            </div>
+                        </div>
+
+                        <h3>Personal Information</h3>
+                        <div class="form-group">
+                            <label for="fullName">Full Name*</label>
+                            <input type="text" id="fullName" name="fullName" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">Email*</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="phone">Phone Number*</label>
+                            <input type="tel" id="phone" name="phone" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="address">Address*</label>
+                            <textarea id="address" name="address" rows="3" required></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="form-submit">
+                    <button type="submit" class="submit-btn">Donate Now</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+<script>
+    // Handle image preview
+    function previewImage(event) {
+        const file = event.target.files[0]; // Get the file selected
+        const reader = new FileReader(); // Create FileReader object
+
+        reader.onload = function() {
+            // Update image preview
+            const previewImg = document.getElementById('previewImg');
+            previewImg.src = reader.result; // Set the src to the file URL
+        };
+
+        if (file) {
+            reader.readAsDataURL(file); // Read the image as data URL
+        }
+    }
+
+    // Handle form submission
+    document.getElementById('donationForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent the form from submitting normally
+
+        // Get the form values
+        const productName = document.getElementById('productName').value;
+        const category = document.getElementById('category').value;
+        const quantity = document.getElementById('quantity').value;
+        const condition = document.getElementById('condition').value;
+        const description = document.getElementById('description').value;
+        const fullName = document.getElementById('fullName').value;
+        const email = document.getElementById('email').value;
+        const phone = document.getElementById('phone').value;
+        const address = document.getElementById('address').value;
+        const productImageInput = document.getElementById('productImage');
+    const previewImage = document.getElementById('previewImg').src; // Get the image preview URL
+
+        // Save data to localStorage
+        localStorage.setItem('donationData', JSON.stringify({
+            productName,
+            category,
+            quantity,
+            condition,
+            description,
+            fullName,
+            email,
+            phone,
+            address,
+            productImage: previewImage // Base64 or URL
+
+        }));
+
+        // Redirect to the confirmation page
+        window.location.href = 'home.html'; // Change this to your target page
+    });
+</script>                  
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-row">
+                <div class="footer-col">
+                    <div class="footer-logo">
+                        <span class="logo-eco">Eco</span><span class="logo-swap">Swap</span>
+                        <i class="fas fa-leaf logo-icon"></i>
+                    </div>
+                    <p class="footer-about">EcoSwap is a platform dedicated to sustainable living through the exchange of pre-loved items, reducing waste and building community connections.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="home.html">Home</a></li>
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="product.html">Donate</a></li>
+                        <li><a href="#contact">Contact Us</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Get Help</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Shipping</a></li>
+                        <li><a href="#">Returns</a></li>
+                        <li><a href="#">Payment Options</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Contact Us</h4>
+                    <div class="contact-info">
+                        <p><i class="fas fa-map-marker-alt"></i> 123 Green Street, Eco City</p>
+                        <p><i class="fas fa-phone"></i> +1 234 567 8901</p>
+                        <p><i class="fas fa-envelope"></i> info@ecoswap.com</p>
+                    </div>
+                    <div class="newsletter">
+                        <form>
+                            <input type="email" placeholder="Your email address">
+                            <button type="submit"><i class="fas fa-paper-plane"></i></button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="footer-container">
+                <p class="copyright">© 2025 EcoSwap. All rights reserved.</p>
+                <div class="footer-bottom-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Cookie Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="navbar.js"></script>
+    <script src="product.js"></script>
+</body>
+</html>

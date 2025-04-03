@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us</title>
+    <link rel="stylesheet" href="home.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="home.css">
+    <link rel="stylesheet" href="navbar.css">
+    <link rel="stylesheet" href="logo.css">
+    <style>
+        /* Additional styles for contact page */
+        .contact-container {
+            display: flex;
+            flex-wrap: wrap;
+            margin: 120px auto 60px;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .contact-right {
+            flex: 1;
+            min-width: 300px;
+            padding: 50px;
+            text-align: left;
+        }
+        
+        .contact-form h2 {
+            margin-bottom: 10px;
+            font-size: 16px;
+            text-align: left;
+            font-weight: bold;
+        }
+        
+        .form-group {
+            margin-bottom: 12px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+            color: #555;
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 8px 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 13px;
+            transition: border-color 0.3s;
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: #4CAF50;
+            outline: none;
+        }
+        
+        .form-group textarea {
+            height: 100px;
+            resize: vertical;
+        }
+        
+        .submit-btn {
+            background: linear-gradient(135deg, #4CAF50, #2E7D32);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: inline-block;
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+        }
+        
+        @media (max-width: 768px) {
+            .contact-container {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>EcoSwap</title>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+            <link rel="stylesheet" href="home.css">
+            <link rel="stylesheet" href="navbar.css">
+            <link rel="stylesheet" href="logo.css">
+        </head>
+        <body>
+            <!-- Navbar with enhanced logo -->
+            <nav class="navbar">
+                <div class="nav-brand">
+                    <a href="/" class="logo">
+                        <span class="logo-eco">Eco</span><span class="logo-swap">Swap</span>
+                        <i class="fas fa-leaf logo-icon"></i>
+                    </a>
+                </div>
+        
+                <div class="search-container">
+                    <form class="search-form">
+                        <input type="text" placeholder="Search causes..." class="search-input">
+                        <button type="submit" class="search-btn">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </form>
+                </div>
+        
+                <div class="nav-links">
+                    <a href="home.html" class="active">Home</a>
+                    <a href="C:\Users\rames\Desktop\HACKTHON\Aboutus.html">About Us</a>
+                    <a href="C:\Users\rames\Desktop\HACKTHON\contact.html">Contact Us</a>
+                </div>
+        
+                <div class="auth-buttons">
+                    <div class="auth-container">
+                        <button class="auth-toggle" onclick="toggleAuthMenu()">
+                            <i class="fas fa-user"></i>
+                            <span>Account</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="auth-dropdown" id="authDropdown">
+                            <div class="auth-option" onclick="openModal('loginModal')">
+                                <i class="fas fa-sign-in-alt"></i>
+                                <span>Login</span>
+                            </div>
+                            <div class="auth-option" onclick="openModal('registerModal')">
+                                <i class="fas fa-user-plus"></i>
+                                <span>Register</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+           
+    </header>
+
+    <!-- Contact Section -->
+    <div class="container">
+        <div class="contact-container">
+            <!-- Right Part - Contact Form -->
+            <div class="contact-right">
+                <div class="contact-form">
+                    <h3>Send Us a Message</h3>
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="name">Your Name</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" name="phone">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message">Your Message</label>
+                            <textarea id="message" name="message" required></textarea>
+                        </div>
+                        
+                        <button type="submit" class="submit-btn">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-row">
+                <div class="footer-col">
+                    <div class="footer-logo">
+                        <span class="logo-eco">Eco</span><span class="logo-swap">Swap</span>
+                        <i class="fas fa-leaf logo-icon"></i>
+                    </div>
+                    <p class="footer-about">EcoSwap is a platform dedicated to sustainable living through the exchange of pre-loved items, reducing waste and building community connections.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#services">Services</a></li>
+                        <li><a href="#contact">Contact Us</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Get Help</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Shipping</a></li>
+                        <li><a href="#">Returns</a></li>
+                        <li><a href="#">Payment Options</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Contact Us</h4>
+                    <div class="contact-info">
+                        <p><i class="fas fa-map-marker-alt"></i> 123 Green Street, Eco City</p>
+                        <p><i class="fas fa-phone"></i> +1 234 567 8901</p>
+                        <p><i class="fas fa-envelope"></i> info@ecoswap.com</p>
+                    </div>
+                    <div class="newsletter">
+                        <form>
+                            <input type="email" placeholder="Your email address">
+                            <button type="submit"><i class="fas fa-paper-plane"></i></button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="footer-container">
+                <p class="copyright">© 2025 EcoSwap. All rights reserved.</p>
+                <div class="footer-bottom-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Cookie Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="navbar.js"></script>
+    <script src="home.js"></script>
+</body>
+</html>
+    <script src="navbar.js"></script>
+    <script src="home.js"></script>
+
+    <script>
+        // Mobile menu toggle
+        document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
+            document.querySelector('nav').classList.toggle('active');
+        });
+        
+        // Form submission
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Thank you for your message! We will get back to you soon.');
+            this.reset();
+        });
+    </script>
+</body>
+</html>
