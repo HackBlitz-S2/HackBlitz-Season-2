@@ -18,9 +18,7 @@ FinBuddy is an AI-driven financial management system designed to help users trac
 
 ### **1️⃣ Clone the Repository**  
 ```bash
-git clone https://github.com/yourusername/finbuddy.git  
-cd finbuddy  
-```
+git clone https://github.com/Piyushkharapkar/finbuddy.git  
 
 ---
 
@@ -28,7 +26,7 @@ cd finbuddy
 
 1️⃣ **Navigate to the backend folder:**  
    ```bash
-   cd finbuddy-backend  
+   cd finbuddy backend 
    ```
 
 2️⃣ **Set up a virtual environment (Recommended)**  
