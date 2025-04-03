@@ -1,0 +1,52 @@
+/* *{
+    background-image: url("https://tse2.mm.bing.net/th?id=OIP.tYuUJXjFJLPTgxu9BLU_YwHaFj&pid=Api&P=0&h=180");
+    background-size:cover;  */
+/* } */
+
+body {
+    background-color: rgba(13, 17, 1, 0.904);
+    font-family: Arial, sans-serif;
+    margin: 20px;
+  
+    text-align: center;
+}
+h2 {
+    color: #333;
+}
+#searchInput {
+    width: 50%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    font-size: 16px;
+}
+.table-container {
+    overflow-x: auto;
+    margin-top: 20px;
+}
+table {
+    width: 100%;
+    min-width: 1000px;
+    border-collapse: collapse;
+   
+}
+th, td {
+   
+    padding: 12px;
+    text-align: center;
+    white-space: nowrap;
+}
+th {
+    background-color: #4CAF50;
+    color: white;
+}
+tr:hover {
+    background-color: #f1f1f1;
+}
+a {
+    color: #020911;
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
+}
