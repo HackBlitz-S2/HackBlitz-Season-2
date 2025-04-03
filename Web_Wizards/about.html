@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About SkillMatch</title>
+    <style>
+        /* Simple CSS Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* About Section */
+        .about-section {
+            background-color: white;
+            border-radius: 10px;
+            padding: 40px;
+            margin: 50px 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .about-section h2 {
+            color: #4361ee;
+            margin-bottom: 20px;
+            font-size: 2rem;
+        }
+        
+        .about-section p {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+        
+        .mission-box {
+            background-color: #f8f9fe;
+            border-left: 4px solid #4361ee;
+            padding: 20px;
+            margin: 30px 0;
+        }
+        
+        .mission-box h3 {
+            color: #4361ee;
+            margin-bottom: 10px;
+        }
+        
+        /* Team Section */
+        .team-section {
+            text-align: center;
+            margin: 50px 0;
+        }
+        
+        .team-section h2 {
+            color: #4361ee;
+            margin-bottom: 30px;
+        }
+        
+        .team-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+        }
+        
+        .team-member {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            width: 250px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .team-member img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 15px;
+        }
+        
+        .team-member h3 {
+            color: #4361ee;
+            margin-bottom: 5px;
+        }
+        
+        .team-member p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .about-section {
+                padding: 30px 20px;
+            }
+            
+            .team-member {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <section class="about-section">
+            <h2>About SkillMatch</h2>
+            <p>SkillMatch is a career guidance platform that helps you discover the perfect career path based on your unique skills, interests, and current market trends.</p>
+            
+            <div class="mission-box">
+                <h3>Our Mission</h3>
+                <p>To empower individuals with personalized career recommendations and learning resources, while providing tools to showcase their skills through professional portfolios.</p>
+            </div>
+            
+            <p>Founded in 2023, SkillMatch combines artificial intelligence with human expertise to analyze your profile and match you with suitable career opportunities. Our platform continuously updates with the latest job market trends to ensure relevant recommendations.</p>
+            
+            <p>Whether you're a student choosing a career path, a professional looking to switch fields, or someone wanting to advance in your current role, SkillMatch provides the guidance and tools you need to succeed.</p>
+        </section>
+        
+        <section class="team-section">
+            <h2>Meet Our Team</h2>
+            <div class="team-grid">
+                <div class="team-member">
+                    <img src="https://randomuser.me/api/portraits/women/45.jpg" alt="Team Member">
+                    <h3>Sarah Johnson</h3>
+                    <p>Founder & CEO</p>
+                </div>
+                <div class="team-member">
+                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Team Member">
+                    <h3>Michael Chen</h3>
+                    <p>Lead Developer</p>
+                </div>
+                <div class="team-member">
+                    <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Team Member">
+                    <h3>Emily Rodriguez</h3>
+                    <p>Career Advisor</p>
+                </div>
+            </div>
+        </section>
+    </div>
+</body>
+</html>

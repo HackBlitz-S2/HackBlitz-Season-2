@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkillMatch - Portfolio Builder</title>
+    <style>
+        /* Basic Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* Header */
+        .portfolio-header {
+            text-align: center;
+            margin: 30px 0;
+        }
+        
+        .portfolio-header h1 {
+            color: #4361ee;
+            margin-bottom: 10px;
+        }
+        
+        /* Portfolio Builder Sections */
+        .portfolio-builder {
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+        }
+        
+        .section-title {
+            color: #4361ee;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        
+        .form-group input, 
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        /* Skills Section */
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .skill-tag {
+            background-color: #e0e7ff;
+            color: #4361ee;
+            padding: 5px 15px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .skill-tag button {
+            background: none;
+            border: none;
+            color: #4361ee;
+            margin-left: 8px;
+            cursor: pointer;
+        }
+        
+        /* Projects Section */
+        .project-item {
+            background-color: #f8f9fe;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+        
+        /* Preview Button */
+        .preview-btn {
+            background-color: #4361ee;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+        }
+        
+        .preview-btn:hover {
+            background-color: #3a56d4;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .portfolio-builder {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="portfolio-header">
+            <h1>Build Your Professional Portfolio</h1>
+            <p>Showcase your skills and projects to potential employers</p>
+        </header>
+        
+        <form class="portfolio-builder">
+            <!-- Personal Information -->
+            <div class="form-section">
+                <h2 class="section-title">Personal Information</h2>
+                
+                <div class="form-group">
+                    <label for="full-name">Full Name</label>
+                    <input type="text" id="full-name" placeholder="Enter your name">
+                </div>
+                
+                <div class="form-group">
+                    <label for="profession">Profession</label>
+                    <input type="text" id="profession" placeholder="Enter your profession">
+                </div>
+                
+                <div class="form-group">
+                    <label for="bio">Short Bio</label>
+                    <textarea id="bio" placeholder="Tell us about yourself and your career goals"></textarea>
+                </div>
+            </div>
+            
+            <!-- Skills Section -->
+            <div class="form-section">
+                <h2 class="section-title">Your Skills</h2>
+                
+                <div class="form-group">
+                    <label for="skills">Add Your Skills</label>
+                    <input type="text" id="skills" placeholder="Type a skill and press enter">
+                </div>
+                
+                <div class="skills-container" id="skills-list">
+                    <!-- Skills will be added here dynamically -->
+                    <div class="skill-tag">
+                        HTML <button type="button">×</button>
+                    </div>
+                    <div class="skill-tag">
+                        CSS <button type="button">×</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Projects Section -->
+            <div class="form-section">
+                <h2 class="section-title">Projects</h2>
+                
+                <div class="project-item">
+                    <div class="form-group">
+                        <label for="project-title">Project Title</label>
+                        <input type="text" id="project-title" placeholder="My Awesome Project">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="project-desc">Description</label>
+                        <textarea id="project-desc" placeholder="Describe your project"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="project-link">Project Link (optional)</label>
+                        <input type="url" id="project-link" placeholder="https://example.com">
+                    </div>
+                </div>
+                
+                <button type="button" class="btn-outline">+ Add Another Project</button>
+            </div>
+            
+            <!-- Education Section -->
+            <div class="form-section">
+                <h2 class="section-title">Education</h2>
+                
+                <div class="form-group">
+                    <label for="degree">Degree/Certificate</label>
+                    <input type="text" id="degree" placeholder="Bachelor of Computer Science">
+                </div>
+                
+                <div class="form-group">
+                    <label for="institution">Institution</label>
+                    <input type="text" id="institution" placeholder="University of Technology">
+                </div>
+            </div>
+            
+            <button type="submit" class="preview-btn">Preview Portfolio</button>
+        </form>
+    </div>
+</body>
+</html>
