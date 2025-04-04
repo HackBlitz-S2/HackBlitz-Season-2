@@ -1,0 +1,97 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login and Signup</title>
+    <link rel="stylesheet" href="styles.css">
+
+
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(to right, #ffffff, #c4dafa);
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            text-align: center;
+        }
+        .input-field {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .hidden {
+            display: none;
+        }
+        .btn {
+            width: 100%;
+            padding: 10px;
+            background: #6aa3f7;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .btn:hover {
+            background: #5858ff;
+        }
+        #toggle-text {
+            margin-top: 10px;
+        }
+        a {
+            color: #8996ef;
+            text-decoration: none;
+            font-weight: bold;
+        }
+    </style>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const form = document.getElementById("auth-form");
+            const formTitle = document.getElementById("form-title");
+            const toggleText = document.getElementById("toggle-text");
+            const toggleBtn = document.getElementById("toggle-btn");
+            const nameField = document.getElementById("name");
+
+            let isSignup = false;
+
+            toggleBtn.addEventListener("click", (e) => {
+                e.preventDefault();
+                isSignup = !isSignup;
+                formTitle.textContent = isSignup ? "Sign Up" : "Login";
+                toggleText.innerHTML = isSignup ? 'Already have an account? <a href="#" id="toggle-btn">Login</a>' : "Don't have an account? <a href='#' id='toggle-btn'>Sign up</a>";
+                nameField.classList.toggle("hidden", !isSignup);
+            });
+
+            form.addEventListener("submit", (e) => {
+                e.preventDefault();
+                alert(isSignup ? "Sign-up successful!" : "Login successful!");
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="form-box">
+            <h2 id="form-title">Login</h2>
+            <form id="auth-form">
+                <input type="text" id="name" placeholder="Full Name" class="input-field hidden">
+                <input type="email" id="email" placeholder="Email" class="input-field" required>
+                <input type="password" id="password" placeholder="Password" class="input-field" required>
+                <button type="submit" class="btn">Submit</button>
+            </form>
+            <p id="toggle-text">Don't have an account? <a href="" id="toggle-btn">Sign up</a></p>
+        </div>
+    </div>
+</body>
+</html> -->

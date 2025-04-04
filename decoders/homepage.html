@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkillMatch - Your Path to Professional Success</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f9f9f9;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+    
+        .header {
+            background-color: #fff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            padding: 15px 0;
+        }
+        
+        .logo {
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+        }
+        
+        .logo-text {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: #2c3e50;
+        }
+        
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .nav-list {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-item {
+            margin-left: 30px;
+        }
+        
+        .nav-link {
+            text-decoration: none;
+            color: #2c3e50;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-link:hover {
+            color: #3498db;
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .hero {
+            padding: 150px 0 80px;
+            background: linear-gradient(135deg, #3498db, #2c3e50);
+            color: white;
+        }
+        
+        .hero-content {
+            max-width: 600px;
+        }
+        
+        .hero-title {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+        
+        .hero-tagline {
+            font-size: 1.5rem;
+            margin-bottom: 25px;
+            font-weight: 300;
+        }
+        
+        .hero-description {
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 25px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary {
+            background-color: #fff;
+            color: #2c3e50;
+        }
+        
+        .btn-primary:hover {
+            background-color: #f1f1f1;
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background-color: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+        
+        .btn-secondary:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        /* Benefits Section */
+        .benefits-section {
+            padding: 80px 0;
+            background-color: #fff;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+            font-size: 2rem;
+            color: #2c3e50;
+        }
+        
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        
+        .benefit-card {
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .benefit-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .benefit-icon {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        
+        .benefit-title {
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+        
+        /* Flip Cards Section */
+        .features-section {
+            padding: 80px 0;
+            background-color: #f1f5f9;
+        }
+        
+        .card-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .flip-card {
+            perspective: 1000px;
+            height: 250px;
+        }
+        
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+        
+        .flip-card:hover .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+        
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 10px;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .flip-card-front {
+            background-color: #3498db;
+            color: white;
+        }
+        
+        .flip-card-back {
+            background-color: white;
+            color: #333;
+            transform: rotateY(180deg);
+        }
+        
+        .card-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+        
+        .card-title {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+        
+        /* Contact Section */
+        .contact-section {
+            padding: 80px 0;
+            background-color: #2c3e50;
+            color: white;
+        }
+        
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        input, textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border-radius: 5px;
+            border: none;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+        
+        /* Footer */
+        .footer {
+            background-color: #1a252f;
+            color: #ecf0f1;
+            padding: 50px 0 20px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-title {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: #3498db;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: #ecf0f1;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: #3498db;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        @media (max-width: 768px) {
+            .nav-list {
+                display: none;
+                position: absolute;
+                top: 80px;
+                left: 0;
+                width: 100%;
+                background-color: #fff;
+                flex-direction: column;
+                padding: 20px 0;
+                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+            }
+            
+            .nav-list.active {
+                display: flex;
+            }
+            
+            .nav-item {
+                margin: 0;
+                padding: 10px 20px;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .hero {
+                padding: 120px 0 60px;
+                text-align: center;
+            }
+            
+            .hero-content {
+                max-width: 100%;
+            }
+            
+            .cta-buttons {
+                justify-content: center;
+            }
+            
+            .hero-title {
+                font-size: 2rem;
+            }
+            
+            .hero-tagline {
+                font-size: 1.2rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .cta-buttons {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="logo-container">
+                <img src="C:\Users\swara\OneDrive\Desktop\Hackathon_prototype\firebaseproject\Logo.jpg" alt="SkillMatch Logo" class="logo">
+                <span class="logo-text">SkillMatch</span>
+            </div>
+            <nav class="nav">
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="homepage.html" class="nav-link">Home</a></li>
+                    <li class="nav-item"><a href="portfolio.html" class="nav-link">Portfolio Builder</a></li>
+                    <li class="nav-item"><a href="skilltest.html" class="nav-link">Skill Test</a></li>
+                    <li class="nav-item"><a href="carrerrec.html" class="nav-link">Career Reccomendation</a></li>
+                    <!-- <li class="nav-item"><a href="register.html" class="nav-link">Registration</a></li> -->
+                    <li class="nav-item"><a href="#contact" class="nav-link">Contact</a></li>
+                    <li class="nav-item"><a href="#about" class="nav-link">About Us</a></li>
+                    <!-- <li class="nav-item"><a href="bot.html" class="nav-link">AI Chatbot</a></li> -->
+                </ul>
+                <button class="mobile-menu-btn" aria-label="Toggle navigation">
+                    <span class="menu-icon">☰</span>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section id="home" class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <h1 class="hero-title">Welcome to Career Guidance Club</h1>
+                    <p class="hero-tagline">"SkillMatch: Your path to professional success."</p>
+                    <p class="hero-description">
+                        Career guidance is a process that helps individuals explore and understand their interests, 
+                        skills, and values to make informed decisions about their education, training, and career paths.
+                    </p>
+                    <div class="cta-buttons">
+                        <a href="#portfoliobuilder" class="btn btn-primary">Get Started</a>
+                        <a href="#about" class="btn btn-secondary">Learn More</a>
+                    </div>
+                </div>
+                        <!-- <div class="hero-image">
+                            <img src="C:\Users\swara\OneDrive\Desktop\Hackathon_prototype\firebaseproject\Illustration.jpg" alt="Career guidance illustration" loading="lazy">
+                        </div> -->
+                    <!-- </div> -->
+                </section>
+            </div>
+        </section>
+
+        <section class="benefits-section">
+            <div class="container">
+                <h2 class="section-title">Who Benefits from Career Guidance?</h2>
+                <div class="benefits-grid">
+                    <div class="benefit-card">
+                        <div class="benefit-icon">🎓</div>
+                        <h3 class="benefit-title">Students</h3>
+                        <p class="benefit-description">
+                            Helping them choose the right subjects, courses, and career paths.
+                        </p>
+                    </div>
+                    <div class="benefit-card">
+                        <div class="benefit-icon">🔍</div>
+                        <h3 class="benefit-title">Job Seekers</h3>
+                        <p class="benefit-description">
+                            Assisting them in finding suitable employment opportunities.
+                        </p>
+                    </div>
+                    <div class="benefit-card">
+                        <div class="benefit-icon">💼</div>
+                        <h3 class="benefit-title">Working Professionals</h3>
+                        <p class="benefit-description">
+                            Supporting career advancement, job changes, or new career paths.
+                        </p>
+                    </div>
+                    <div class="benefit-card">
+                        <div class="benefit-icon">🔄</div>
+                        <h3 class="benefit-title">Career Transitioners</h3>
+                        <p class="benefit-description">
+                            Helping navigate job losses, career changes, or other challenges.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="features" class="features-section">
+            <div class="container">
+                <h2 class="section-title">Key Features</h2>
+                <div class="card-container">
+                    <div class="flip-card">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front">
+                                <div class="card-icon">🎯</div>
+                                <h3 class="card-title">Purpose</h3>
+                            </div>
+                            <div class="flip-card-back">
+                                <p class="card-description">
+                                    Helps individuals understand their career trajectory, identify advancement opportunities, 
+                                    set goals, and acquire necessary skills and experiences.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flip-card">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front">
+                                <div class="card-icon">📈</div>
+                                <h3 class="card-title">Progression</h3>
+                            </div>
+                            <div class="flip-card-back">
+                                <p class="card-description">
+                                    Career paths can be linear (advancing within a single field) or non-linear 
+                                    (involving transitions across different industries or roles).
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flip-card">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front">
+                                <div class="card-icon">🏢</div>
+                                <h3 class="card-title">Organizational Paths</h3>
+                            </div>
+                            <div class="flip-card-back">
+                                <p class="card-description">
+                                    Some companies use career pathing to help employees plan their career progression 
+                                    within the organization, aligning individual goals with organizational needs.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="contact-section">
+            <div class="container">
+                <h2 class="section-title">Ready to Start Your Journey?</h2>
+                <form class="contact-form">
+                    <div class="form-group">
+                        <input type="text" id="name" name="name" placeholder="Your Name" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" id="email" name="email" placeholder="Your Email" required>
+                    </div>
+                    <div class="form-group">
+                        <textarea id="message" name="message" placeholder="How can we help you?" rows="4"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Send Message</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3 class="footer-title">SkillMatch</h3>
+                    <p>Your path to professional success.</p>
+                </div>
+                <div class="footer-section">
+                    <h3 class="footer-title">Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#portfoliobuilder">Portfolio Builder</a></li>
+                        <li><a href="#skilltest">Skill Test</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                        <li><a href="#about">About Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3 class="footer-title">Contact Us</h3>
+                    <p>Email: info@skillmatch.com</p>
+                    <p>Phone: (123) 456-7890</p>
+                </div>
+            </div>
+            <!-- <div class="footer-bottom">
+                <p>&copy; 2023 SkillMatch. All rights reserved.</p>
+            </div> -->
+        </div>
+    </footer>
+
+    <script>
+        document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
+            document.querySelector('.nav-list').classList.toggle('active');
+        });
+    </script>
+
+<style>
+    /* Chatbot styles */
+    .chatbot-container {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 350px;
+        z-index: 1000;
+        font-family: 'Arial', sans-serif;
+    }
+    
+    .chatbot-header {
+        background: #4361ee;
+        color: white;
+        padding: 12px 15px;
+        border-radius: 10px 10px 0 0;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .chatbot-body {
+        background: white;
+        height: 400px;
+        display: flex;
+        flex-direction: column;
+        border-left: 1px solid #ddd;
+        border-right: 1px solid #ddd;
+        overflow: hidden;
+        transition: all 0.3s ease;
+    }
+    
+    .chatbot-messages {
+        flex: 1;
+        padding: 15px;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .message {
+        max-width: 80%;
+        padding: 8px 12px;
+        border-radius: 15px;
+        line-height: 1.4;
+    }
+    
+    .bot-message {
+        background: #f1f1f1;
+        align-self: flex-start;
+        border-bottom-left-radius: 5px;
+    }
+    
+    .user-message {
+        background: #4361ee;
+        color: white;
+        align-self: flex-end;
+        border-bottom-right-radius: 5px;
+    }
+    
+    .chatbot-input {
+        display: flex;
+        padding: 10px;
+        border-top: 1px solid #ddd;
+        background: #f9f9f9;
+    }
+    
+    .chatbot-input input {
+        flex: 1;
+        padding: 8px 12px;
+        border: 1px solid #ddd;
+        border-radius: 20px;
+        outline: none;
+    }
+    
+    .chatbot-input button {
+        background: #4361ee;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 36px;
+        height: 36px;
+        margin-left: 8px;
+        cursor: pointer;
+    }
+    
+    .chatbot-toggle {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: #4361ee;
+        color: white;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        z-index: 999;
+    }
+    
+    .hidden {
+        height: 0 !important;
+        padding: 0 !important;
+        border: none !important;
+    }
+    
+    /* Predefined questions */
+    .quick-questions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 10px;
+    }
+    
+    .quick-question {
+        background: #e9ecef;
+        border: none;
+        border-radius: 15px;
+        padding: 6px 12px;
+        font-size: 12px;
+        cursor: pointer;
+        transition: background 0.2s;
+    }
+    
+    .quick-question:hover {
+        background: #dee2e6;
+    }
+</style>
+</head>
+<body>
+<!-- Add this to your home page -->
+<div class="chatbot-toggle" id="chatbotToggle">
+    <i class="fas fa-robot" style="font-size: 24px;"></i>
+</div>
+
+<div class="chatbot-container hidden" id="chatbotContainer">
+    <div class="chatbot-header" id="chatbotHeader">
+        <span>Career Guidance Assistant</span>
+        <span id="chatbotMinimize">-</span>
+    </div>
+    <div class="chatbot-body hidden" id="chatbotBody">
+        <div class="chatbot-messages" id="chatbotMessages">
+            <div class="message bot-message">
+                Hello! I'm your Career Guidance Assistant. How can I help you today?
+                <div class="quick-questions">
+                    <button class="quick-question" onclick="sendQuickQuestion(this)">What careers match my skills?</button>
+                    <button class="quick-question" onclick="sendQuickQuestion(this)">How to improve my resume?</button>
+                    <button class="quick-question" onclick="sendQuickQuestion(this)">What skills are in demand?</button>
+                </div>
+            </div>
+        </div>
+        <div class="chatbot-input">
+            <input type="text" id="userInput" placeholder="Type your question..." onkeypress="handleKeyPress(event)">
+            <button onclick="sendMessage()"><i class="fas fa-paper-plane"></i></button>
+        </div>
+    </div>
+</div>
+
+<!-- Font Awesome for icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+<script>
+    // Toggle chatbot visibility
+    const chatbotToggle = document.getElementById('chatbotToggle');
+    const chatbotContainer = document.getElementById('chatbotContainer');
+    const chatbotBody = document.getElementById('chatbotBody');
+    const chatbotHeader = document.getElementById('chatbotHeader');
+    const chatbotMinimize = document.getElementById('chatbotMinimize');
+    
+    let isChatbotOpen = false;
+    
+    chatbotToggle.addEventListener('click', () => {
+        isChatbotOpen = !isChatbotOpen;
+        if (isChatbotOpen) {
+            chatbotContainer.classList.remove('hidden');
+            chatbotBody.classList.remove('hidden');
+            chatbotToggle.style.display = 'none';
+        }
+    });
+    
+    chatbotMinimize.addEventListener('click', (e) => {
+        e.stopPropagation();
+        chatbotBody.classList.add('hidden');
+        isChatbotOpen = false;
+        chatbotToggle.style.display = 'flex';
+    });
+    
+    chatbotHeader.addEventListener('click', () => {
+        if (chatbotBody.classList.contains('hidden')) {
+            chatbotBody.classList.remove('hidden');
+            isChatbotOpen = true;
+            chatbotToggle.style.display = 'none';
+        }
+    });
+
+    // Chatbot functionality
+    function sendMessage() {
+        const userInput = document.getElementById('userInput');
+        const message = userInput.value.trim();
+        
+        if (message) {
+            addMessage(message, 'user');
+            userInput.value = '';
+            
+            // Simulate bot thinking
+            setTimeout(() => {
+                const botResponse = generateResponse(message);
+                addMessage(botResponse, 'bot');
+            }, 800);
+        }
+    }
+    
+    function sendQuickQuestion(button) {
+        const question = button.textContent;
+        addMessage(question, 'user');
+        
+        setTimeout(() => {
+            const botResponse = generateResponse(question);
+            addMessage(botResponse, 'bot');
+        }, 800);
+    }
+    
+    function handleKeyPress(e) {
+        if (e.key === 'Enter') {
+            sendMessage();
+        }
+    }
+    
+    function addMessage(text, sender) {
+        const messagesContainer = document.getElementById('chatbotMessages');
+        const messageElement = document.createElement('div');
+        messageElement.classList.add('message');
+        messageElement.classList.add(sender === 'user' ? 'user-message' : 'bot-message');
+        messageElement.textContent = text;
+        messagesContainer.appendChild(messageElement);
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    }
+    
+    // Simple response generation (in a real app, this would connect to an AI API)
+    function generateResponse(userMessage) {
+        const lowerMessage = userMessage.toLowerCase();
+        
+        if (lowerMessage.includes('career') || lowerMessage.includes('match') || lowerMessage.includes('skills')) {
+            return "Based on common career paths, I'd recommend looking into these fields: Software Development, Data Analysis, or Digital Marketing. Would you like me to analyze your specific skills?";
+        }
+        else if (lowerMessage.includes('resume') || lowerMessage.includes('cv')) {
+            return "To improve your resume: 1) Tailor it to each job, 2) Use action verbs, 3) Quantify achievements, 4) Keep it concise. Would you like a resume template?";
+        }
+        else if (lowerMessage.includes('skill') || lowerMessage.includes('demand')) {
+            return "Currently in-demand skills include: 1) Programming (Python, JavaScript), 2) Data Analysis, 3) Cloud Computing, 4) Digital Marketing, 5) UX/UI Design.";
+        }
+        else if (lowerMessage.includes('hello') || lowerMessage.includes('hi')) {
+            return "Hello! I'm here to help with career guidance. You can ask me about career paths, resume tips, or skill development.";
+        }
+        else {
+            return "I'm a career guidance assistant. I can help with career advice, resume tips, and skill recommendations. Could you clarify your question?";
+        }
+    }
+</script>
+
+// Add this to your existing JavaScript
+<!-- <script>
+const OPENAI_API_KEY = 'AIzaSyDyohZU2qipyocfmiUXlSwhVKZnxPX8Bvc'; 
+async function generateAIResponse(userMessage) {
+    try {
+        const response = await fetch('https://api.openai.com/v1/chat/completions', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${OPENAI_API_KEY}`
+            },
+            body: JSON.stringify({
+                model: "gpt-3.5-turbo",
+                messages: [
+                    {
+                        role: "system",
+                        content: "You are a career guidance assistant. Provide helpful, professional advice about careers, resumes, and skill development. Keep responses under 3 sentences unless more detail is requested."
+                    },
+                    {
+                        role: "user",
+                        content: userMessage
+                    }
+                ],
+                temperature: 0.7
+            })
+        });
+        
+        const data = await response.json();
+        return data.choices[0].message.content;
+    } catch (error) {
+        console.error("Error calling OpenAI API:", error);
+        return "I'm having trouble connecting to the career guidance service. Please try again later.";
+    }
+}
+
+// Modify the sendMessage function to use the API
+async function sendMessage() {
+    const userInput = document.getElementById('userInput');
+    const message = userInput.value.trim();
+    
+    if (message) {
+        addMessage(message, 'user');
+        userInput.value = '';
+        
+        // Show typing indicator
+        const typingIndicator = document.createElement('div');
+        typingIndicator.id = 'typingIndicator';
+        typingIndicator.classList.add('message', 'bot-message');
+        typingIndicator.innerHTML = '<i class="fas fa-ellipsis-h"></i>';
+        document.getElementById('chatbotMessages').appendChild(typingIndicator);
+        
+        try {
+            const botResponse = await generateAIResponse(message);
+            document.getElementById('typingIndicator').remove();
+            addMessage(botResponse, 'bot');
+        } catch (error) {
+            document.getElementById('typingIndicator').remove();
+            addMessage("Sorry, I encountered an error. Please try again.", 'bot');
+        }
+    }
+}
+</script> -->
+   
+</body>
+</html>

@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Builder </title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3f37c9;
+            --accent-color: #4895ef;
+            --dark-color: #2b2d42;
+            --light-color: #f8f9fa;
+            --success-color: #4cc9f0;
+            --warning-color: #f72585;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #dfe7f1 100%);
+            min-height: 100vh;
+            color: var(--dark-color);
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        h1, h2, h3 {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--dark-color);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(to right, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: var(--secondary-color);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--dark-color);
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: 'Poppins', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+        }
+
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin: 1rem 0;
+        }
+
+        .btn:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .preview-container {
+            margin-top: 3rem;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e9ecef;
+        }
+
+        .preview-header {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .preview-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .preview-btn {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .preview-btn i {
+            font-size: 1.2rem;
+        }
+
+        iframe {
+            width: 100%;
+            height: 600px;
+            border: none;
+            background-color: white;
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .skill-tag {
+            background-color: var(--accent-color);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .skill-tag .remove-tag {
+            cursor: pointer;
+            font-size: 0.7rem;
+        }
+
+        .theme-selector {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .theme-option {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .theme-option:hover {
+            transform: scale(1.1);
+        }
+
+        .theme-option.selected {
+            border-color: var(--dark-color);
+            transform: scale(1.1);
+        }
+
+        .section-toggle {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 24px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: var(--primary-color);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--success-color);
+            color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .notification.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+
+            .container {
+                padding: 1.5rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+            }
+        }
+
+        /* Animation for form elements */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .form-group {
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        .form-group:nth-child(1) { animation-delay: 0.1s; }
+        .form-group:nth-child(2) { animation-delay: 0.2s; }
+        .form-group:nth-child(3) { animation-delay: 0.3s; }
+        .form-group:nth-child(4) { animation-delay: 0.4s; }
+        .form-group:nth-child(5) { animation-delay: 0.5s; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Portfolio Builder </h1>
+        <p>Create your professional portfolio in minutes</p>
+
+        <div class="form-group">
+            <label for="name">Your Name</label>
+            <input type="text" id="name" placeholder="Your Name">
+        </div>
+
+        <div class="form-group">
+            <label for="title">Professional Title</label>
+            <input type="text" id="title" placeholder="Web Developer | UX Designer">
+        </div>
+
+        <div class="form-group">
+            <label for="bio">Professional Bio</label>
+            <textarea id="bio" placeholder="Tell people about yourself, your skills, and experience"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="skills">Skills</label>
+            <input type="text" id="skills" placeholder="HTML, CSS, JavaScript, React">
+            <div class="skill-tags" id="skillTags"></div>
+        </div>
+
+        <div class="form-group">
+            <label for="experience">Experience</label>
+            <input type="text" id="experience" placeholder="Frontend Developer at ABC Corp, Intern at XYZ Inc">
+            <div class="skill-tags" id="experienceTags"></div>
+        </div>
+
+        <div class="form-group">
+            <label for="contact">Contact Email</label>
+            <input type="email" id="contact" placeholder="your.email@example.com">
+        </div>
+
+        <div class="form-group">
+            <label>Portfolio Theme</label>
+            <div class="theme-selector">
+                <div class="theme-option selected" style="background: #4361ee;" data-theme="blue"></div>
+                <div class="theme-option" style="background: #4cc9f0;" data-theme="teal"></div>
+                <div class="theme-option" style="background: #7209b7;" data-theme="purple"></div>
+                <div class="theme-option" style="background: #f72585;" data-theme="pink"></div>
+                <div class="theme-option" style="background: #2b9348;" data-theme="green"></div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="section-toggle">
+                <label>Include Social Media Links</label>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="socialToggle" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+        </div>
+
+        <div id="socialMediaSection" class="form-group">
+            <label for="linkedin">LinkedIn</label>
+            <input type="url" id="linkedin" placeholder="https://linkedin.com/in/yourprofile">
+            
+            <label for="github" style="margin-top: 1rem;">GitHub</label>
+            <input type="url" id="github" placeholder="https://github.com/yourusername">
+            
+            <label for="twitter" style="margin-top: 1rem;">Twitter</label>
+            <input type="url" id="twitter" placeholder="https://twitter.com/yourhandle">
+        </div>
+
+        <button class="btn" onclick="generatePortfolio()">
+            <i class="fas fa-magic"></i> Generate Portfolio
+        </button>
+
+        <div class="preview-container">
+            <div class="preview-header">
+                <span>Portfolio Preview</span>
+                <div class="preview-actions">
+                    <button class="preview-btn" onclick="downloadPortfolio()">
+                        <i class="fas fa-download"></i> Download
+                    </button>
+                    <button class="preview-btn" onclick="sharePortfolio()">
+                        <i class="fas fa-share-alt"></i> Share
+                    </button>
+                </div>
+            </div>
+            <iframe id="preview"></iframe>
+        </div>
+    </div>
+
+    <div class="notification" id="notification">
+        <i class="fas fa-check-circle"></i>
+        <span id="notificationMessage">Portfolio generated successfully!</span>
+    </div>
+
+    <script>
+        // Current theme
+        let currentTheme = 'blue';
+        
+        // Initialize tag inputs
+        document.getElementById('skills').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter' || e.key === ',') {
+                addTag('skills', 'skillTags');
+                e.preventDefault();
+            }
+        });
+
+        document.getElementById('experience').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter' || e.key === ',') {
+                addTag('experience', 'experienceTags');
+                e.preventDefault();
+            }
+        });
+
+        // Toggle social media section
+        document.getElementById('socialToggle').addEventListener('change', function() {
+            document.getElementById('socialMediaSection').style.display = 
+                this.checked ? 'block' : 'none';
+        });
+
+        // Theme selection
+        document.querySelectorAll('.theme-option').forEach(option => {
+            option.addEventListener('click', function() {
+                document.querySelectorAll('.theme-option').forEach(opt => {
+                    opt.classList.remove('selected');
+                });
+                this.classList.add('selected');
+                currentTheme = this.getAttribute('data-theme');
+            });
+        });
+
+        function addTag(inputId, containerId) {
+            const input = document.getElementById(inputId);
+            const container = document.getElementById(containerId);
+            const value = input.value.trim();
+            
+            if (value && value !== ',') {
+                // Remove any trailing comma
+                const tagValue = value.endsWith(',') ? value.slice(0, -1) : value;
+                
+                const tag = document.createElement('div');
+                tag.className = 'skill-tag';
+                tag.innerHTML = `
+                    ${tagValue}
+                    <span class="remove-tag" onclick="this.parentElement.remove()">
+                        <i class="fas fa-times"></i>
+                    </span>
+                `;
+                container.appendChild(tag);
+                input.value = '';
+            }
+        }
+
+        function getAllTags(containerId) {
+            const container = document.getElementById(containerId);
+            return Array.from(container.children).map(tag => 
+                tag.textContent.trim().replace('×', '').trim()
+            );
+        }
+
+        function showNotification(message) {
+            const notification = document.getElementById('notification');
+            document.getElementById('notificationMessage').textContent = message;
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+
+        function generatePortfolio() {
+            const name = document.getElementById('name').value || 'Your Name';
+            const title = document.getElementById('title').value || 'Professional Title';
+            const bio = document.getElementById('bio').value || 'A short bio about yourself and your professional journey.';
+            const contact = document.getElementById('contact').value || '';
+            
+            const skills = getAllTags('skillTags');
+            const experiences = getAllTags('experienceTags');
+            
+            const includeSocial = document.getElementById('socialToggle').checked;
+            const linkedin = includeSocial ? document.getElementById('linkedin').value : '';
+            const github = includeSocial ? document.getElementById('github').value : '';
+            const twitter = includeSocial ? document.getElementById('twitter').value : '';
+            
+            // Theme colors
+            let primaryColor, secondaryColor, accentColor;
+            switch(currentTheme) {
+                case 'teal':
+                    primaryColor = '#4cc9f0';
+                    secondaryColor = '#4895ef';
+                    accentColor = '#4361ee';
+                    break;
+                case 'purple':
+                    primaryColor = '#7209b7';
+                    secondaryColor = '#560bad';
+                    accentColor = '#480ca8';
+                    break;
+                case 'pink':
+                    primaryColor = '#f72585';
+                    secondaryColor = '#b5179e';
+                    accentColor = '#7209b7';
+                    break;
+                case 'green':
+                    primaryColor = '#2b9348';
+                    secondaryColor = '#007f5f';
+                    accentColor = '#4361ee';
+                    break;
+                default: // blue
+                    primaryColor = '#4361ee';
+                    secondaryColor = '#3f37c9';
+                    accentColor = '#4895ef';
+            }
+
+            const portfolioHTML = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>${name}'s Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: ${primaryColor};
+            --secondary-color: ${secondaryColor};
+            --accent-color: ${accentColor};
+            --dark-color: #2b2d42;
+            --light-color: #f8f9fa;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: var(--dark-color);
+            background-color: #f8f9fa;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+            border-radius: 0 0 20px 20px;
+            margin-bottom: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        h1, h2, h3 {
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .title {
+            font-size: 1.5rem;
+            opacity: 0.9;
+            margin-bottom: 1.5rem;
+            font-weight: 400;
+        }
+
+        .bio {
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            font-size: 1.1rem;
+        }
+
+        .section {
+            margin-bottom: 3rem;
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .section-title {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background-color: var(--accent-color);
+        }
+
+        ul {
+            list-style-position: inside;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin-top: 1rem;
+        }
+
+        .skill {
+            background-color: var(--accent-color);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+
+        .contact-info {
+            margin-top: 1rem;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-link {
+            color: white;
+            font-size: 1.5rem;
+            transition: transform 0.3s;
+        }
+
+        .social-link:hover {
+            transform: translateY(-3px);
+            color: var(--accent-color);
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+            background-color: var(--dark-color);
+            color: white;
+            border-radius: 20px 20px 0 0;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .title {
+                font-size: 1.2rem;
+            }
+            
+            .section {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>${name}</h1>
+        <div class="title">${title}</div>
+        <div class="bio">${bio}</div>
+        ${contact ? `<div class="contact-info"><i class="fas fa-envelope"></i> ${contact}</div>` : ''}
+        ${includeSocial && (linkedin || github || twitter) ? `
+        <div class="social-links">
+            ${linkedin ? `<a href="${linkedin}" class="social-link" target="_blank"><i class="fab fa-linkedin"></i></a>` : ''}
+            ${github ? `<a href="${github}" class="social-link" target="_blank"><i class="fab fa-github"></i></a>` : ''}
+            ${twitter ? `<a href="${twitter}" class="social-link" target="_blank"><i class="fab fa-twitter"></i></a>` : ''}
+        </div>
+        ` : ''}
+    </header>
+
+    <div class="container">
+        <div class="section">
+            <h2 class="section-title">Skills</h2>
+            <div class="skills-container">
+                ${skills.map(skill => `<div class="skill">${skill}</div>`).join('')}
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">Experience</h2>
+            <ul>
+                ${experiences.map(exp => `<li>${exp}</li>`).join('')}
+            </ul>
+        </div>
+    </div>
+
+    <footer>
+        &copy; ${new Date().getFullYear()} ${name}'s Portfolio. All rights reserved.
+    </footer>
+</body>
+</html>
+            `;
+
+            const blob = new Blob([portfolioHTML], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+            document.getElementById('preview').src = url;
+            
+            showNotification('Portfolio generated successfully!');
+        }
+
+        function downloadPortfolio() {
+            const preview = document.getElementById('preview');
+            if (preview.src === 'about:blank' || preview.src === '') {
+                showNotification('Please generate your portfolio first');
+                return;
+            }
+
+            const a = document.createElement('a');
+            a.href = preview.src;
+            a.download = 'my-portfolio.html';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            
+            showNotification('Portfolio downloaded!');
+        }
+
+        function sharePortfolio() {
+            const preview = document.getElementById('preview');
+            if (preview.src === 'about:blank' || preview.src === '') {
+                showNotification('Please generate your portfolio first');
+                return;
+            }
+
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Check out my portfolio',
+                    text: 'I created this portfolio using Portfolio Builder Pro',
+                    url: preview.src
+                }).catch(err => {
+                    console.log('Error sharing:', err);
+                    showNotification('Sharing failed. Please try another method.');
+                });
+            } else {
+                // Fallback for browsers that don't support Web Share API
+                const tempInput = document.createElement('input');
+                tempInput.value = preview.src;
+                document.body.appendChild(tempInput);
+                tempInput.select();
+                document.execCommand('copy');
+                document.body.removeChild(tempInput);
+                showNotification('Link copied to clipboard!');
+            }
+        }
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+  
+    <title>Simple Portfolio Builder</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; margin: 50px; }
+        input, textarea, button { margin: 10px; padding: 10px; font-size: 16px; width: 80%; }
+    </style>
+</head>
+<body>
+    <h2>Portfolio Builder</h2>
+    <input type="text" id="name" placeholder="Your Name">
+    <input type="text" id="title" placeholder="Your Title (e.g., Web Developer)">
+    <textarea id="bio" placeholder="Short Bio"></textarea>
+    <input type="text" id="skills" placeholder="Skills (sepearate with coma)">
+    <input type="text" id="Experience" placeholder="Experience(sepearate with coma)">
+    <button onclick="generatePortfolio()">Generate Portfolio</button>
+
+    <h3>Preview:</h3>
+    <iframe id="preview" style="width: 100%; height: 400px;"></iframe>
+
+    <script>
+        function generatePortfolio() {
+            let name = document.getElementById("name").value;
+            let title = document.getElementById("title").value;
+            let bio = document.getElementById("bio").value;
+            let skills = document.getElementById("skills").value.split(",");
+            let Experience = document.getElementById("Experience").value.split(",");
+
+            let portfolioHTML = `
+                <html>
+                <head>
+                    <title>${name}'s Portfolio</title>
+                    <style>
+                        body { font-family: Arial, sans-serif; text-align: center; padding: 50px; }
+                        h1 { color: blue; }
+                    </style>
+                </head>
+                <body>
+                    <h1>${name}</h1>
+                    <h2>${title}</h2>
+                    <p>${bio}</p>
+                    <h3>Skills:</h3>
+                    <ul>${skills.map(skill => <li>${skill.trim()}</li>).join("")}</ul>
+                    <h3>Experience:</h3>
+                    <ul>${Experience.map(experience => <li>${experience.trim()}</li>).join("")}</ul>
+                    </body>
+                </html>
+            `;
+
+            let blob = new Blob([portfolioHTML], { type: "text/html" });
+            let url = URL.createObjectURL(blob);
+            document.getElementById("preview").src = url;
+        }
+    </script>
+</body>
+</html>
+ -->
