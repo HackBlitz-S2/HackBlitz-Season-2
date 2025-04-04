@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>fashion swap | Sustainable Item Exchange Platform</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css">
+    <link rel="stylesheet" href="final.css">
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.11.4/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.11.4/dist/ScrollTrigger.min.js"></script>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="particles" id="particles-js"></div>
+    
+    <!-- Floating Navigation -->
+    <nav class="floating-nav">
+        <div class="nav-container">
+            <div class="logo">
+                <div class="logo-circle">
+                    <i class="fas fa-infinity"></i>
+                </div>
+                <h1>fashion swap</h1>
+            </div>
+            <div class="nav-links">
+                <a href="#home" class="nav-link active" data-tooltip="Home">
+                    <i class="fas fa-home"></i>
+                </a>
+                <a href="#explore" class="nav-link" data-tooltip="Explore">
+                    <i class="fas fa-compass"></i>
+                </a>
+                <a href="#donate" class="nav-link" data-tooltip="Donate">
+                    <i class="fas fa-hands-helping"></i>
+                </a>
+                <a href="#community" class="nav-link" data-tooltip="Community">
+                    <i class="fas fa-users"></i>
+                </a>
+                <a href="#impact" class="nav-link" data-tooltip="Your Impact">
+                    <i class="fas fa-leaf"></i>
+                </a>
+            </div>
+            <div class="user-actions">
+                <button class="btn-notification">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-badge">3</span>
+                </button>
+                <div class="user-avatar">
+                    <img src="logo.png" alt="User">
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-section">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h2 class="hero-title">Give Items a <span class="highlight">New Life</span></h2>
+                <p class="hero-subtitle">Join the movement to reduce waste through sharing, swapping, and sustainable consumption</p>
+                <div class="hero-actions">
+                    <button class="btn-primary btn-glow">
+                        <i class="fas fa-rocket"></i> Get Started
+                    </button>
+                    <button class="btn-secondary">
+                        <i class="fas fa-play"></i> Watch Video
+                    </button>
+                </div>
+            </div>
+            <div class="hero-image">
+                <div class="floating-items">
+                    <div class="floating-item item1">
+                        <img src="https://images.unsplash.com/photo-1551232864-3f0890e580d9?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" alt="Clothing">
+                    </div>
+                    <div class="floating-item item2">
+                        <img src="https://images.unsplash.com/photo-1544947950-fa07a98d237f?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" alt="Books">
+                    </div>
+                    <div class="floating-item item3">
+                        <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" alt="Electronics">
+                    </div>
+                    <div class="eco-badge">
+                        <div class="badge-content">
+                            <i class="fas fa-award"></i>
+                            <span>Eco Warrior</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <div class="mouse">
+                <div class="wheel"></div>
+            </div>
+            <span>Scroll Down</span>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-section">
+        <div class="stat-card">
+            <div class="stat-icon">
+                <i class="fas fa-tshirt"></i>
+            </div>
+            <div class="stat-content">
+                <h3 class="stat-number" data-count="12453">0</h3>
+                <p class="stat-label">Clothing Items Shared</p>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">
+                <i class="fas fa-book"></i>
+            </div>
+            <div class="stat-content">
+                <h3 class="stat-number" data-count="8765">0</h3>
+                <p class="stat-label">Books Exchanged</p>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">
+                <i class="fas fa-laptop"></i>
+            </div>
+            <div class="stat-content">
+                <h3 class="stat-number" data-count="3210">0</h3>
+                <p class="stat-label">Electronics Repurposed</p>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">
+                <i class="fas fa-users"></i>
+            </div>
+            <div class="stat-content">
+                <h3 class="stat-number" data-count="15678">0</h3>
+                <p class="stat-label">Community Members</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Explore Section -->
+    <section id="explore" class="explore-section">
+        <div class="section-header">
+            <h2 class="section-title">Discover <span>Pre-Loved</span> Treasures</h2>
+            <p class="section-subtitle">Find items that match your style and values</p>
+            <div class="category-tabs"> 
+                <button class="category-tab" data-category="fashion"><a href="p1.html">Fashion</a></button>
+                <button class="category-tab" data-category="books"><a href="books.html">BOOK</a></button>
+                <button class="category-tab" data-category="electronics"><a href="tech.html">Tech</a><oks/button>
+                <button class="category-tab" data-category="home"><a href="home.html">Home</a></button>
+            </div>
+        </div>
+        
+        <div class="items-container">
+            <!-- Items will be loaded here via JavaScript -->
+        </div>
+        
+        <div class="view-more">
+            <button class="btn-load-more">
+                <i class="fas fa-sync-alt"></i> Load More
+            </button>
+        </div>
+    </section>
+
+    <!-- AI Recommendation Section -->
+    <section class="ai-section">
+        <div class="ai-container">
+            <div class="ai-image">
+                <div class="ai-phone-mockup">
+                    <div class="phone-screen">
+                        <div class="recommendation-carousel">
+                            <div class="recommendation-item active">
+                                <img src="https://images.unsplash.com/photo-1529374255404-311a2a4f1fd9?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" alt="Recommended Item">
+                                <div class="recommendation-details">
+                                    <h4>Based on your style</h4>
+                                    <p>Vintage Denim Jacket</p>
+                                </div>
+                            </div>
+                            <div class="recommendation-item">
+                                <img src="https://images.unsplash.com/photo-1544717305-2782549b5136?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" alt="Recommended Item">
+                                <div class="recommendation-details">
+                                    <h4>Trending in your area</h4>
+                                    <p>Classic Novels Collection</p>
+                                </div>
+                            </div>
+                            <div class="recommendation-item">
+                                <div class="recommendation-item">
+                                <div class="recommendation-details"></div>
+                                    <h4>Matches your wishlist</h4>
+                                    <p>Wireless Headphones</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="ai-content">
+                <h2 class="ai-title">Smart <span>Recommendations</span></h2>
+                <p class="ai-description">Our AI learns your preferences to suggest items you'll love while minimizing your environmental impact.</p>
+                <ul class="ai-features">
+                    <li>
+                        <i class="fas fa-brain"></i>
+                        <span>Personalized suggestions based on your style</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Local items to reduce carbon footprint</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-heart"></i>
+                        <span>Matches with your saved wishlist items</span>
+                    </li>
+                </ul>
+                <button class="btn-primary btn-gradient">
+                    <i class="fas fa-magic"></i> Try Smart Match
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Donation Section -->
+    <section id="donate" class="donate-section">
+        <div class="donate-container">
+            <div class="donate-content">
+                <h2 class="section-title">Give Items a <span>Second Chance</span></h2>
+                <p class="section-subtitle">List your gently used items in just a few clicks</p>
+                
+                <div class="donate-steps">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h4>Snap a Photo</h4>
+                            <p>Take pictures of your item from different angles</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h4>Add Details</h4>
+                            <p>Describe the item and set your preference</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h4>Choose Option</h4>
+                            <p>Donate, swap, or sell at sustainable price</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <button class="btn-primary btn-pulse">
+                    <i class="fas fa-plus"></i> List an Item Now
+                </button>
+            </div>
+            <div class="donate-image">
+                <div class="phone-mockup">
+                    <div class="phone-screen">
+                        <div class="upload-progress">
+                            <div class="upload-header">
+                                <h3>New Listing</h3>
+                                <div class="progress-bar">
+                                    <div class="progress" style="width: 70%"></div>
+                                </div>
+                            </div>
+                            <div class="upload-preview">
+                                <img src="https://images.unsplash.com/photo-1529374255404-311a2a4f1fd9?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" alt="Upload Preview">
+                                <div class="upload-actions">
+                                    <button class="btn-upload-action">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="btn-upload-action">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                    <button class="btn-upload-action">
+                                        <i class="fas fa-check"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="upload-form">
+                                <div class="form-group">
+                                    <label>Item Name</label>
+                                    <input type="text" placeholder="Vintage Denim Jacket">
+                                </div>
+                                <div class="form-group">
+                                    <label>Category</label>
+                                    <select>
+                                        <option>Clothing</option>
+                                        <option>Books</option>
+                                        <option>Electronics</option>
+                                        <option>Home Goods</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Community Section -->
+    <section id="community" class="community-section">
+        <div class="section-header">
+            <h2 class="section-title">Join Our <span>Sustainable</span> Community</h2>
+            <p class="section-subtitle">Connect with like-minded people who care about the planet</p>
+        </div>
+        
+        <div class="community-carousel swiper">
+            <div class="swiper-wrapper">
+                <div class="community-card swiper-slide">
+                    <div class="card-header">
+                        <div class="user-avatar">
+                            <img src="https://randomuser.me/api/portraits/women/32.jpg" alt="User">
+                        </div>
+                        <div class="user-info">
+                            <h4>Sarah Johnson</h4>
+                            <p>Eco Warrior <i class="fas fa-leaf"></i></p>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <p>"ReCircle helped me furnish my entire apartment sustainably! I've met amazing people in my community through item exchanges."</p>
+                    </div>
+                    <div class="card-stats">
+                        <div class="stat">
+                            <i class="fas fa-exchange-alt"></i>
+                            <span>42 Exchanges</span>
+                        </div>
+                        <div class="stat">
+                            <i class="fas fa-heart"></i>
+                            <span>128 Likes</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="community-card swiper-slide">
+                    <div class="card-header">
+                        <div class="user-avatar">
+                            <img src="https://randomuser.me/api/portraits/men/45.jpg" alt="User">
+                        </div>
+                        <div class="user-info">
+                            <h4>Michael Chen</h4>
+                            <p>Green Guru <i class="fas fa-seedling"></i></p>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <p>"As a student, ReCircle has been a lifesaver. I get quality items for free or low cost while reducing my environmental impact."</p>
+                    </div>
+                    <div class="card-stats">
+                        <div class="stat">
+                            <i class="fas fa-exchange-alt"></i>
+                            <span>27 Exchanges</span>
+                        </div>
+                        <div class="stat">
+                            <i class="fas fa-heart"></i>
+                            <span>89 Likes</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="community-card swiper-slide">
+                    <div class="card-header">
+                        <div class="user-avatar">
+                            <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="User">
+                        </div>
+                        <div class="user-info">
+                            <h4>Emma Rodriguez</h4>
+                            <p>Sustainability Coach <i class="fas fa-recycle"></i></p>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <p>"I love how ReCircle makes sustainability accessible. The community aspect makes giving and receiving items so much more meaningful."</p>
+                    </div>
+                    <div class="card-stats">
+                        <div class="stat">
+                            <i class="fas fa-exchange-alt"></i>
+                            <span>63 Exchanges</span>
+                        </div>
+                        <div class="stat">
+                            <i class="fas fa-heart"></i>
+                            <span>215 Likes</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
+        
+        <div class="community-actions">
+            <button class="btn-primary">
+                <i class="fas fa-users"></i> Join Community
+            </button>
+            <button class="btn-secondary">
+                <i class="fas fa-calendar-alt"></i> Events
+            </button>
+        </div>
+    </section>
+
+    <!-- Impact Section -->
+    <section id="impact" class="impact-section">
+        <div class="impact-container">
+            <div class="impact-visualization">
+                <div class="impact-circle">
+                    <div class="circle-progress" data-percent="75">
+                        <svg class="circle-chart" viewBox="0 0 36 36">
+                            <path class="circle-bg" d="M18 2.0845
+                                a 15.9155 15.9155 0 0 1 0 31.831
+                                a 15.9155 15.9155 0 0 1 0 -31.831"/>
+                            <path class="circle-fill" stroke-dasharray="75, 100" d="M18 2.0845
+                                a 15.9155 15.9155 0 0 1 0 31.831
+                                a 15.9155 15.9155 0 0 1 0 -31.831"/>
+                        </svg>
+                        <div class="circle-content">
+                            <span class="impact-percent">75%</span>
+                            <span class="impact-label">Circular Score</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="impact-badges">
+                    <div class="badge">
+                        <i class="fas fa-medal"></i>
+                        <span>Eco Starter</span>
+                    </div>
+                    <div class="badge">
+                        <i class="fas fa-trophy"></i>
+                        <span>5 Exchanges</span>
+                    </div>
+                    <div class="badge">
+                        <i class="fas fa-star"></i>
+                        <span>Community Hero</span>
+                    </div>
+                </div>
+            </div>
+            <div class="impact-details">
+                <h2 class="impact-title">Your <span>Sustainability</span> Impact</h2>
+                <p class="impact-description">Track how your participation in the circular economy is making a difference.</p>
+                
+                <div class="impact-metrics">
+                    <div class="metric">
+                        <div class="metric-icon">
+                            <i class="fas fa-weight-hanging"></i>
+                        </div>
+                        <div class="metric-content">
+                            <h3>24.5 kg</h3>
+                            <p>Waste Diverted</p>
+                        </div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-icon">
+                            <i class="fas fa-cloud"></i>
+                        </div>
+                        <div class="metric-content">
+                            <h3>58 kg CO₂</h3>
+                            <p>Emissions Saved</p>
+                        </div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-icon">
+                            <i class="fas fa-tint"></i>
+                        </div>
+                        <div class="metric-content">
+                            <h3>3,240 L</h3>
+                            <p>Water Conserved</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <button class="btn-primary btn-gradient">
+                    <i class="fas fa-chart-line"></i> View Full Report
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- App Download Section -->
+    <section class="app-section">
+        <div class="app-container">
+            <div class="app-content">
+                <h2 class="app-title">Get the <span>ReCircle</span> App</h2>
+                <p class="app-description">Available on iOS and Android for seamless sustainable shopping on the go.</p>
+                
+                <div class="app-features">
+                    <div class="feature">
+                        <i class="fas fa-bolt"></i>
+                        <span>Instant notifications for new items</span>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-map-marked-alt"></i>
+                        <span>Local item discovery</span>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-qrcode"></i>
+                        <span>Quick scan for fast exchanges</span>
+                    </div>
+                </div>
+                
+                <div class="download-buttons">
+                    <button class="btn-download">
+                        <i class="fab fa-apple"></i>
+                        <div class="download-text">
+                            <span>Download on the</span>
+                            <strong>App Store</strong>
+                        </div>
+                    </button>
+                    <button class="btn-download">
+                        <i class="fab fa-google-play"></i>
+                        <div class="download-text">
+                            <span>Get it on</span>
+                            <strong>Google Play</strong>
+                        </div>
+                    </button>
+                </div>
+            </div>
+            <div class="app-image">
+                <div class="phone-mockup">
+                    <div class="phone-screen">
+                        <div class="app-screen">
+                            <div class="app-header">
+                                <h3>Nearby Items</h3>
+                                <i class="fas fa-search"></i>
+                            </div>
+                            <div class="app-items">
+                                <div class="app-item">
+                                    <img src="https://images.unsplash.com/photo-1529374255404-311a2a4f1fd9?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" alt="Item">
+                                    <div class="item-info">
+                                        <h4>Denim Jacket</h4>
+                                        <p>0.5 mi away</p>
+                                    </div>
+                                    <i class="fas fa-heart"></i>
+                                </div>
+                                <div class="app-item">
+                                    <img src="https://images.unsplash.com/photo-1544717305-2782549b5136?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" alt="Item">
+                                    <div class="item-info">
+                                        <h4>Book Collection</h4>
+                                        <p>1.2 mi away</p>
+                                    </div>
+                                    <i class="far fa-heart"></i>
+                                </div>
+                                <div class="app-item">
+                                    <img src="https://images.unsplash.com/photo-1593642632823-8f785ba67e45?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" alt="Item">
+                                    <div class="item-info">
+                                        <h4>Wireless Headphones</h4>
+                                        <p>0.8 mi away</p>
+                                    </div>
+                                    <i class="far fa-heart"></i>
+                                </div>
+                            </div>
+                            <div class="app-nav">
+                                <i class="fas fa-home active"></i>
+                                <i class="fas fa-compass"></i>
+                                <i class="fas fa-plus-circle"></i>
+                                <i class="fas fa-comment-alt"></i>
+                                <i class="fas fa-user"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-main">
+                <div class="footer-brand">
+                    <div class="logo">
+                        <div class="logo-circle">
+                            <i class="fas fa-infinity"></i>
+                        </div>
+                        <h1>ReCircle</h1>
+                    </div>
+                    <p class="footer-description">Building a sustainable future through circular economy principles.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-tiktok"></i></a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <div class="link-group">
+                        <h3 class="link-title">Marketplace</h3>
+                        <ul>
+                            <li><a href="#">All Items</a></li>
+                            <li><a href="#">Clothing</a></li>
+                            <li><a href="#">Books</a></li>
+                            <li><a href="#">Electronics</a></li>
+                            <li><a href="#">Home Goods</a></li>
+                        </ul>
+                    </div>
+                    <div class="link-group">
+                        <h3 class="link-title">Community</h3>
+                        <ul>
+                            <li><a href="#">Events</a></li>
+                            <li><a href="#">Groups</a></li>
+                            <li><a href="#">Stories</a></li>
+                            <li><a href="#">Sustainability Tips</a></li>
+                            <li><a href="#">Volunteer</a></li>
+                        </ul>
+                    </div>
+                    <div class="link-group">
+                        <h3 class="link-title">Company</h3>
+                        <ul>
+                            <li><a href="#">About Us</a></li>
+                            <li><a href="#">Careers</a></li>
+                            <li><a href="#">Press</a></li>
+                            <li><a href="#">Impact</a></li>
+                            <li><a href="#">Partners</a></li>
+                        </ul>
+                    </div>
+                    <div class="link-group">
+                        <h3 class="link-title">Support</h3>
+                        <ul>
+                            <li><a href="#">Help Center</a></li>
+                            <li><a href="#">Safety</a></li>
+                            <li><a href="#">Guidelines</a></li>
+                            <li><a href="#">Contact Us</a></li>
+                            <li><a href="#">FAQ</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="footer-legal">
+                    <p>&copy; 2023 ReCircle. All rights reserved.</p>
+                    <div class="legal-links">
+                        <a href="#">Privacy Policy</a>
+                        <a href="#">Terms of Service</a>
+                        <a href="#">Cookie Policy</a>
+                    </div>
+                </div>
+                <div class="footer-newsletter">
+                    <h4>Stay Updated</h4>
+                    <div class="newsletter-form">
+                        <input type="email" placeholder="Your email address">
+                        <button class="btn-subscribe">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Item Modal -->
+    <div class="modal" id="item-modal">
+        <div class="modal-container">
+            <button class="modal-close">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="modal-content">
+                <!-- Content will be loaded here via JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div class="modal" id="login-modal">
+        <div class="modal-container auth-modal">
+            <button class="modal-close">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="auth-tabs">
+                <button class="auth-tab active" data-tab="login">Login</button>
+                <button class="auth-tab" data-tab="signup">Sign Up</button>
+            </div>
+            <div class="auth-content">
+                <div class="auth-form active" id="login-form">
+                    <h3>Welcome Back</h3>
+                    <p>Login to continue your sustainable journey</p>
+                    <form>
+                        <div class="form-group">
+                            <label for="login-email">Email</label>
+                            <input type="email" id="login-email" placeholder="your@email.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="login-password">Password</label>
+                            <input type="password" id="login-password" placeholder="••••••••">
+                        </div>
+                        <div class="form-options">
+                            <label class="checkbox">
+                                <input type="checkbox">
+                                <span>Remember me</span>
+                            </label>
+                            <a href="#" class="forgot-password">Forgot password?</a>
+                        </div>
+                        <button type="submit" class="btn-primary btn-block">
+                            <i class="fas fa-sign-in-alt"></i> Login
+                        </button>
+                        <div class="auth-divider">
+                            <span>or continue with</span>
+                        </div>
+                        <div class="social-auth">
+                            <button class="btn-social">
+                                <i class="fab fa-google"></i>
+                            </button>
+                            <button class="btn-social">
+                                <i class="fab fa-facebook-f"></i>
+                            </button>
+                            <button class="btn-social">
+                                <i class="fab fa-apple"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                <div class="auth-form" id="signup-form">
+                    <h3>Join ReCircle</h3>
+                    <p>Create an account to start sharing and saving</p>
+                    <form>
+                        <div class="form-group">
+                            <label for="signup-name">Full Name</label>
+                            <input type="text" id="signup-name" placeholder="Your name">
+                        </div>
+                        <div class="form-group">
+                            <label for="signup-email">Email</label>
+                            <input type="email" id="signup-email" placeholder="your@email.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="signup-password">Password</label>
+                            <input type="password" id="signup-password" placeholder="••••••••">
+                        </div>
+                        <div class="form-group">
+                            <label for="signup-location">Location</label>
+                            <input type="text" id="signup-location" placeholder="Your city">
+                        </div>
+                        <div class="form-options">
+                            <label class="checkbox">
+                                <input type="checkbox" required>
+                                <span>I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></span>
+                            </label>
+                        </div>
+                        <button type="submit" class="btn-primary btn-block">
+                            <i class="fas fa-user-plus"></i> Create Account
+                        </button>
+                        <div class="auth-divider">
+                            <span>or sign up with</span>
+                        </div>
+                        <div class="social-auth">
+                            <button class="btn-social">
+                                <i class="fab fa-google"></i>
+                            </button>
+                            <button class="btn-social">
+                                <i class="fab fa-facebook-f"></i>
+                            </button>
+                            <button class="btn-social">
+                                <i class="fab fa-apple"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

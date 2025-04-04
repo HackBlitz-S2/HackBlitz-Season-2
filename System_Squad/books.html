@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BookSwap - Book Exchange Platform</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Global Styles */
+        :root {
+            --primary-color: #8b4513;
+            --secondary-color: #654321;
+            --accent-color: #d2b48c;
+            --dark-color: #2c2c2c;
+            --light-color: #f5f5f0;
+            --gray-color: #6c757d;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Merriweather', Georgia, serif;
+        }
+        
+        body {
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header Styles */
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo i {
+            margin-right: 8px;
+        }
+        
+        .logo span {
+            color: var(--secondary-color);
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 25px;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark-color);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+        
+        .user-actions {
+            display: flex;
+            align-items: center;
+        }
+        
+        .user-actions a {
+            margin-left: 15px;
+            text-decoration: none;
+            color: var(--dark-color);
+        }
+        
+        .user-actions .btn {
+            padding: 8px 15px;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .btn-outline {
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+        }
+        
+        /* Main Content */
+        .main-content {
+            padding: 40px 0;
+        }
+        
+        .page-title {
+            font-size: 32px;
+            margin-bottom: 30px;
+            color: var(--dark-color);
+            font-family: 'Playfair Display', serif;
+        }
+        
+        /* Filter Section */
+        .filter-section {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .filter-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .filter-title {
+            font-size: 18px;
+            font-weight: 600;
+        }
+        
+        .reset-filters {
+            color: var(--primary-color);
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        .filter-group {
+            margin-bottom: 20px;
+        }
+        
+        .filter-group-title {
+            font-weight: 600;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .filter-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .filter-option {
+            padding: 6px 12px;
+            background-color: #f1f1f1;
+            border-radius: 20px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .filter-option:hover, .filter-option.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .format-options {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+        }
+        
+        .format-option {
+            width: 100%;
+            text-align: center;
+            padding: 8px 0;
+            background-color: #f1f1f1;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .format-option:hover, .format-option.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .price-range {
+            width: 100%;
+            margin-top: 15px;
+            accent-color: var(--primary-color);
+        }
+        
+        .price-inputs {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+        
+        .price-input {
+            width: 48%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        /* Product Grid */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+        }
+        
+        .product-card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .product-image {
+            height: 200px;
+            width: 100%;
+            object-fit: contain;
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .product-info {
+            padding: 15px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .product-category {
+            font-size: 12px;
+            color: var(--gray-color);
+            margin-bottom: 5px;
+            text-transform: uppercase;
+        }
+        
+        .product-title {
+            font-weight: 700;
+            margin-bottom: 8px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .product-author {
+            font-size: 14px;
+            color: var(--gray-color);
+            margin-bottom: 10px;
+            font-style: italic;
+        }
+        
+        .product-details {
+            font-size: 13px;
+            color: var(--gray-color);
+            margin-bottom: 10px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .product-price {
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            margin-top: auto;
+        }
+        
+        .product-condition {
+            display: inline-block;
+            padding: 3px 8px;
+            background-color: #f0e6d2;
+            color: var(--secondary-color);
+            border-radius: 4px;
+            font-size: 12px;
+            margin-bottom: 10px;
+        }
+        
+        .product-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: auto;
+        }
+        
+        .btn-favorite {
+            background: none;
+            border: none;
+            color: #ccc;
+            cursor: pointer;
+            font-size: 18px;
+        }
+        
+        .btn-favorite.active {
+            color: var(--accent-color);
+        }
+        
+        .btn-exchange {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        
+        .btn-exchange:hover {
+            background-color: var(--secondary-color);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                padding: 15px 0;
+            }
+            
+            .nav-links {
+                margin: 15px 0;
+            }
+            
+            .filter-options {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            .format-options {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            .product-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .product-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .format-options {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="container header-container">
+            <a href="#" class="logo"><i class="fas fa-book-open"></i>Book<span>Swap</span></a>
+            <ul class="nav-links">
+                <li><a href="#">Fiction</a></li>
+                <li><a href="#">Non-Fiction</a></li>
+                <li><a href="#">Textbooks</a></li>
+                <li><a href="#">Children's</a></li>
+                <li><a href="#">Rare Books</a></li>
+            </ul>
+            <div class="user-actions">
+                <a href="#"><i class="fas fa-search"></i></a>
+                <a href="#"><i class="fas fa-bookmark"></i></a>
+                <a href="#"><i class="fas fa-shopping-basket"></i></a>
+                <a href="#" class="btn btn-outline">Login</a>
+                <a href="#" class="btn btn-primary">Sign Up</a>
+            </div>
+        </div>
+    </header>
+    
+    <main class="main-content">
+        <div class="container">
+            <h1 class="page-title">Fiction Books for Exchange</h1>
+            
+            <div class="filter-section">
+                <div class="filter-header">
+                    <h2 class="filter-title">Filters</h2>
+                    <span class="reset-filters">Reset all</span>
+                </div>
+                
+                <div class="filter-group">
+                    <h3 class="filter-group-title">Category</h3>
+                    <div class="filter-options">
+                        <div class="filter-option active">All</div>
+                        <div class="filter-option">Fiction</div>
+                        <div class="filter-option">Non-Fiction</div>
+                        <div class="filter-option">Textbooks</div>
+                        <div class="filter-option">Children's</div>
+                        <div class="filter-option">Rare Books</div>
+                    </div>
+                </div>
+                
+                <div class="filter-group">
+                    <h3 class="filter-group-title">Genre</h3>
+                    <div class="filter-options">
+                        <div class="filter-option active">All</div>
+                        <div class="filter-option">Literary</div>
+                        <div class="filter-option">Mystery</div>
+                        <div class="filter-option">Sci-Fi</div>
+                        <div class="filter-option">Fantasy</div>
+                        <div class="filter-option">Romance</div>
+                        <div class="filter-option">Historical</div>
+                    </div>
+                </div>
+                
+                <div class="filter-group">
+                    <h3 class="filter-group-title">Condition</h3>
+                    <div class="filter-options">
+                        <div class="filter-option active">Any</div>
+                        <div class="filter-option">New</div>
+                        <div class="filter-option">Like New</div>
+                        <div class="filter-option">Good</div>
+                        <div class="filter-option">Fair</div>
+                        <div class="filter-option">Poor</div>
+                    </div>
+                </div>
+                
+                <div class="filter-group">
+                    <h3 class="filter-group-title">Format</h3>
+                    <div class="format-options">
+                        <div class="format-option active">All</div>
+                        <div class="format-option">Hardcover</div>
+                        <div class="format-option">Paperback</div>
+                        <div class="format-option">eBook</div>
+                        <div class="format-option">Audiobook</div>
+                    </div>
+                </div>
+                
+                <div class="filter-group">
+                    <h3 class="filter-group-title">Price Range</h3>
+                    <input type="range" class="price-range" min="0" max="100" value="50" step="5">
+                    <div class="price-inputs">
+                        <input type="number" class="price-input" placeholder="Min" value="0">
+                        <input type="number" class="price-input" placeholder="Max" value="100">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="product-grid">
+                <!-- Product Card 1 -->
+                <div class="product-card">
+                    <img src="https://images.unsplash.com/photo-1544947950-fa07a98d237f?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="The Great Gatsby" class="product-image">
+                    <div class="product-info">
+                        <p class="product-category">Fiction • Classic</p>
+                        <h3 class="product-title">The Great Gatsby</h3>
+                        <p class="product-author">by F. Scott Fitzgerald</p>
+                        <p class="product-details">Set in the Jazz Age on Long Island, the novel depicts narrator Nick Carraway's interactions with mysterious millionaire Jay Gatsby.</p>
+                        <span class="product-condition">Good</span>
+                        <p class="product-price">$12.50</p>
+                        <div class="product-actions">
+                            <button class="btn-favorite"><i class="far fa-heart"></i></button>
+                            <button class="btn-exchange">Exchange</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product Card 2 -->
+                <div class="product-card">
+                    <img src="https://images.unsplash.com/photo-1589998059171-988d887df646?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="To Kill a Mockingbird" class="product-image">
+                    <div class="product-info">
+                        <p class="product-category">Fiction • Classic</p>
+                        <h3 class="product-title">To Kill a Mockingbird</h3>
+                        <p class="product-author">by Harper Lee</p>
+                        <p class="product-details">The unforgettable novel of a childhood in a sleepy Southern town and the crisis of conscience that rocked it.</p>
+                        <span class="product-condition">Like New</span>
+                        <p class="product-price">$15.00</p>
+                        <div class="product-actions">
+                            <button class="btn-favorite"><i class="far fa-heart"></i></button>
+                            <button class="btn-exchange">Exchange</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product Card 3 -->
+                <div class="product-card">
+                    <img src="https://images.unsplash.com/photo-1531346878377-a5be20888e57?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="1984" class="product-image">
+                    <div class="product-info">
+                        <p class="product-category">Fiction • Dystopian</p>
+                        <h3 class="product-title">1984</h3>
+                        <p class="product-author">by George Orwell</p>
+                        <p class="product-details">Winston Smith toes the Party line, rewriting history to satisfy the demands of the Ministry of Truth. But when he's given a diary, he begins to question the Party.</p>
+                        <span class="product-condition">New</span>
+                        <p class="product-price">$18.75</p>
+                        <div class="product-actions">
+                            <button class="btn-favorite active"><i class="fas fa-heart"></i></button>
+                            <button class="btn-exchange">Exchange</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product Card 4 -->
+                <div class="product-card">
+                    <img src="https://images.unsplash.com/photo-1626618012641-bfbca5a31239?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="The Hobbit" class="product-image">
+                    <div class="product-info">
+                        <p class="product-category">Fiction • Fantasy</p>
+                        <h3 class="product-title">The Hobbit</h3>
+                        <p class="product-author">by J.R.R. Tolkien</p>
+                        <p class="product-details">Bilbo Baggins is a hobbit who enjoys a comfortable, unambitious life, rarely traveling farther than his pantry or cellar.</p>
+                        <span class="product-condition">Good</span>
+                        <p class="product-price">$14.00</p>
+                        <div class="product-actions">
+                            <button class="btn-favorite"><i class="far fa-heart"></i></button>
+                            <button class="btn-exchange">Exchange</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product Card 5 -->
+                <div class="product-card">
+                    <img src="https://images.unsplash.com/photo-1584824486539-53bb4646bdbc?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Pride and Prejudice" class="product-image">
+                    <div class="product-info">
+                        <p class="product-category">Fiction • Romance</p>
+                        <h3 class="product-title">Pride and Prejudice</h3>
+                        <p class="product-author">by Jane Austen</p>
+                        <p class="product-details">The romantic clash between the opinionated Elizabeth and her proud beau, Mr. Darcy, is a splendid performance of civilized sparring.</p>
+                        <span class="product-condition">Fair</span>
+                        <p class="product-price">$9.50</p>
+                        <div class="product-actions">
+                            <button class="btn-favorite"><i class="far fa-heart"></i></button>
+                            <button class="btn-exchange">Exchange</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product Card 6 -->
+                <div class="product-card">
+                    <img src="https://images.unsplash.com/photo-1510172951991-856a62a9e395?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="The Catcher in the Rye" class="product-image">
+                    <div class="product-info">
+                        <p class="product-category">Fiction • Coming-of-age</p>
+                        <h3 class="product-title">The Catcher in the Rye</h3>
+                        <p class="product-author">by J.D. Salinger</p>
+                        <p class="product-details">The hero-narrator of The Catcher in the Rye is an ancient child of sixteen, a native New Yorker named Holden Caulfield.</p>
+                        <span class="product-condition">Like New</span>
+                        <p class="product-price">$13.25</p>
+                        <div class="product-actions">
+                            <button class="btn-favorite"><i class="far fa-heart"></i></button>
+                            <button class="btn-exchange">Exchange</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <script>
+        // Simple interactive elements
+        document.addEventListener('DOMContentLoaded', function() {
+            // Toggle favorite button
+            const favoriteButtons = document.querySelectorAll('.btn-favorite');
+            favoriteButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    this.classList.toggle('active');
+                    const icon = this.querySelector('i');
+                    if (this.classList.contains('active')) {
+                        icon.classList.remove('far');
+                        icon.classList.add('fas');
+                    } else {
+                        icon.classList.remove('fas');
+                        icon.classList.add('far');
+                    }
+                });
+            });
+            
+            // Filter options selection
+            const filterOptions = document.querySelectorAll('.filter-option, .format-option');
+            filterOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    // For format options, only allow one active at a time
+                    if (this.parentElement.classList.contains('format-options')) {
+                        const siblings = Array.from(this.parentElement.children);
+                        siblings.forEach(sib => sib.classList.remove('active'));
+                    }
+                    
+                    // For other filter options, allow multiple selections
+                    if (!this.parentElement.classList.contains('format-options')) {
+                        if (this.textContent === 'All' || this.textContent === 'Any') {
+                            const siblings = Array.from(this.parentElement.children);
+                            siblings.forEach(sib => sib.classList.remove('active'));
+                        } else {
+                            // Find and deactivate any "All" or "Any" option
+                            const siblings = Array.from(this.parentElement.children);
+                            siblings.forEach(sib => {
+                                if (sib.textContent === 'All' || sib.textContent === 'Any') {
+                                    sib.classList.remove('active');
+                                }
+                            });
+                        }
+                    }
+                    
+                    this.classList.toggle('active');
+                });
+            });
+            
+            // Reset all filters
+            const resetButton = document.querySelector('.reset-filters');
+            resetButton.addEventListener('click', function() {
+                filterOptions.forEach(option => {
+                    option.classList.remove('active');
+                    // Reactivate default "All" or "Any" options
+                    if (option.textContent === 'All' || option.textContent === 'Any') {
+                        option.classList.add('active');
+                    }
+                });
+                
+                // Reset price range
+                const priceRange = document.querySelector('.price-range');
+                const priceInputs = document.querySelectorAll('.price-input');
+                priceRange.value = 50;
+                priceInputs[0].value = 0;
+                priceInputs[1].value = 100;
+            });
+            
+            // Sync price range slider with inputs
+            const priceRange = document.querySelector('.price-range');
+            const priceInputs = document.querySelectorAll('.price-input');
+            
+            priceRange.addEventListener('input', function() {
+                priceInputs[1].value = this.value;
+            });
+            
+            priceInputs.forEach(input => {
+                input.addEventListener('input', function() {
+                    if (this === priceInputs[1]) {
+                        priceRange.value = this.value;
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
