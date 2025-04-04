@@ -1,0 +1,335 @@
+/* Product Page Styles */
+.product-section {
+    padding: 80px 0;
+    background-color: #f9f9f9;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.section-title {
+    font-size: 2.5rem;
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px; /* Increased bottom margin for better spacing */
+    font-weight: 700;
+}
+
+.section-description {
+    text-align: center;
+    color: #666;
+    font-size: 1.1rem;
+    margin-bottom: 50px; /* Increased margin-bottom for better spacing */
+}
+
+.form-container {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+    margin-bottom: 60px; /* Increased margin-bottom for overall section spacing */
+}
+
+.donation-form {
+    width: 100%;
+}
+
+/* Added extra space between product and personal information sections */
+.form-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px; /* Increased gap for better spacing */
+    margin-bottom: 60px; /* Increased margin for more separation between sections */
+}
+
+/* Separate sections for Product Information and Personal Information */
+.product-info-section {
+    margin-bottom: 40px; /* Space after product info */
+}
+
+.personal-info-section {
+    margin-top: 40px; /* Space before personal info */
+}
+
+/* Form Columns */
+.form-column {
+    flex: 1;
+    min-width: 300px;
+}
+
+.form-column h3 {
+    font-size: 1.3rem;
+    color: #4CAF50;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+/* Form Group */
+.form-group {
+    margin-bottom: 25px; /* Increased space between individual form groups */
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 10px; /* Increased margin for better readability */
+    font-weight: 600;
+    color: #555;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: #4CAF50;
+    box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2);
+    outline: none;
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+/* Image upload styles */
+.image-upload-container {
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 50px; /* Increased bottom margin for more space */
+}
+
+.image-preview {
+    width: 100%;
+    height: 250px;
+    border: 2px dashed #ddd;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    margin-bottom: 20px; /* Added more space between image preview and upload controls */
+    background-color: #f0f0f0;
+}
+
+.image-preview img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.upload-controls {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.upload-btn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 25px; /* Slightly adjusted padding for button */
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: background-color 0.3s;
+}
+
+.upload-btn:hover {
+    background-color: #388E3C;
+}
+
+.upload-info {
+    font-size: 0.85rem;
+    color: #777;
+    margin-top: 10px;
+    text-align: center;
+}
+
+/* Form footer */
+.form-footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px; /* Increased gap between footer elements */
+    margin-top: 30px; /* Added margin-top for space above the footer */
+}
+
+.terms-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 12px; /* Slightly increased gap for better spacing */
+}
+
+.terms-checkbox input {
+    width: 18px;
+    height: 18px;
+}
+
+.terms-checkbox label {
+    font-size: 0.95rem;
+    color: #555;
+}
+
+.terms-checkbox a {
+    color: #4CAF50;
+    text-decoration: none;
+}
+
+.terms-checkbox a:hover {
+    text-decoration: underline;
+}
+
+.donate-btn {
+    background: linear-gradient(135deg, #4CAF50, #2196F3);
+    color: white;
+    border: none;
+    padding: 18px 45px; /* Adjusted padding for a larger button */
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 50px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: transform 0.3s, box-shadow 0.3s;
+    box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+}
+
+.donate-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
+}
+
+.donate-btn:active {
+    transform: translateY(0);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .form-row {
+        flex-direction: column;
+        gap: 30px; /* Adjusted gap for smaller screens */
+    }
+    
+    .form-column {
+        width: 100%;
+    }
+    
+    .section-title {
+        font-size: 2rem;
+    }
+    
+    .form-container {
+        padding: 25px;
+    }
+}
+
+@media (max-width: 480px) {
+    .section-title {
+        font-size: 1.8rem;
+    }
+    
+    .section-description {
+        font-size: 1rem;
+    }
+    
+    .form-container {
+        padding: 20px 15px;
+    }
+    
+    .donate-btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
+/* Banner Section */
+.banner-section {
+    background-color: #4CAF50; /* Green background to match eco-friendly theme */
+    color: white;
+    text-align: center;
+    padding: 40px 0;
+    margin-top: 20px;
+    width: 100%;
+}
+
+.banner-content h2 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.banner-content p {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+}
+
+.banner-btn {
+    background-color: #2196F3;
+    color: white;
+    padding: 12px 30px;
+    font-size: 1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.banner-btn:hover {
+    background-color: #1976D2;
+}
+/* Banner styling */
+.banner {
+    width: 100%;  /* Full width (100%) */
+    max-width: 1200px;  /* Adjust this value to make the banner wider */
+    height: 400px;  /* Adjust the height as per your need */
+    background-image: url('donate.png'); /* Use the correct image URL */
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: white;  /* Ensures default text color is white */
+    padding: 20px;
+    margin: 0 auto;  /* Centers the banner horizontally */
+}
+
+/* Text styling within the banner */
+.banner h2 {
+    font-size: 36px;
+    margin-bottom: 10px;
+    color: white;  /* Sets the color of the heading to white */
+}
+
+.banner h1 {
+    color: white;  /* Sets the color of the heading to white */
+    margin-top: 40px;  /* Move the heading 40px down */
+    font-size: 36px;
+}
+
+.banner p {
+    font-size: 18px;
+    max-width: 800px;  /* Limit the width of text */
+    margin: 20px auto 0;  /* Moves the paragraph 20px down from the heading */
+    line-height: 1.5;
+    color: white;  /* Sets the color of the paragraph text to white */
+}

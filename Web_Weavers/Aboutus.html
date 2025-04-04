@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us</title>
+    <link rel="stylesheet" href="home.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="about.css">
+    <link rel="stylesheet" href="navbar.css">
+    <link rel="stylesheet" href="logo.css">
+</head>
+<body>
+    <!-- Navbar with enhanced logo -->
+    <nav class="navbar">
+        <div class="nav-brand">
+            <a href="/" class="logo">
+                <span class="logo-eco">Eco</span><span class="logo-swap">Swap</span>
+                <i class="fas fa-leaf logo-icon"></i>
+            </a>
+        </div>
+
+        <div class="search-container">
+            <form class="search-form">
+                <input type="text" placeholder="Search causes..." class="search-input">
+                <button type="submit" class="search-btn">
+                    <i class="fas fa-search"></i>
+                </button>
+            </form>
+        </div>
+
+        <div class="nav-links">
+            <a href="home.html" class="active">Home</a>
+            <a href="Aboutus.html">About Us</a>
+            <a href="contact.html">Contact Us</a>
+        </div>
+
+        <div class="auth-buttons">
+            <div class="auth-container">
+                <button class="auth-toggle" onclick="toggleAuthMenu()">
+                    <i class="fas fa-user"></i>
+                    <span>Account</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="auth-dropdown" id="authDropdown">
+                    <div class="auth-option" onclick="openModal('loginModal')">
+                        <i class="fas fa-sign-in-alt"></i>
+                        <span>Login</span>
+                    </div>
+                    <div class="auth-option" onclick="openModal('registerModal')">
+                        <i class="fas fa-user-plus"></i>
+                        <span>Register</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- About Section -->
+    <section class="about">
+        <div class="container">
+            <div class="section-title">
+                <h2>About Us</h2>
+                <p>Learn more about our organization and our mission to make a difference.</p>
+            </div>
+            
+            <div class="about-content">
+                <div class="about-image">
+                    <img src="C:\Users\rames\Desktop\HACKTHON\concept-environmental-cooperation-charitable-organizations-600nw-2472668909.webp" alt="About Us">
+                </div>
+                
+                <div class="about-text">
+                    <h2>Our Story</h2>
+                    <p>Founded in 2010, our organization has been dedicated to providing exceptional services to our community. We started with a small team of passionate individuals who shared a common vision.</p>
+                    <p>Over the years, we have grown into a trusted name in the industry, known for our commitment to quality, innovation, and customer satisfaction. Our journey has been marked by continuous learning and adaptation to meet the evolving needs of those we serve.</p>
+                    <p>Today, we are proud to have a diverse team of professionals who bring their unique skills and perspectives to our work, enabling us to deliver comprehensive solutions to complex challenges.</p>
+                    
+                    <div class="about-stats">
+                        <div class="stat-item">
+                            <div class="stat-number">10+</div>
+                            <div class="stat-label">Years of Experience</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">500+</div>
+                            <div class="stat-label">Projects Completed</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">50+</div>
+                            <div class="stat-label">Team Members</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">98%</div>
+                            <div class="stat-label">Client Satisfaction</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission & Vision Section -->
+    <section class="features">
+        <div class="container">
+            <div class="section-title">
+                <h2>Our Mission & Values</h2>
+                <p>What drives us and shapes our approach to everything we do.</p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-bullseye"></i>
+                    </div>
+                    <h3>Our Mission</h3>
+                    <p>To empower communities through innovative solutions that address real-world challenges and create lasting positive impact.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                    <h3>Our Vision</h3>
+                    <p>To be a leading organization recognized for excellence, integrity, and transformative contributions to society.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <h3>Core Values</h3>
+                    <p>Integrity, innovation, collaboration, excellence, and social responsibility guide all our actions and decisions.</p>
+                </div>
+            </div>
+        </div>
+        <section class="cta-section">
+            <div class="container">
+                <h2>Ready to Work With Us?</h2>
+                <p>Contact our team today to learn more about our services and how we can help you achieve your goals.</p>
+                <a href="contact.html" class="cta-button">Get in Touch</a>
+            </div>
+        </section>
+    </section>
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-row">
+                <div class="footer-col">
+                    <div class="footer-logo">
+                        <span class="logo-eco">Eco</span><span class="logo-swap">Swap</span>
+                        <i class="fas fa-leaf logo-icon"></i>
+                    </div>
+                    <p class="footer-about">EcoSwap is a platform dedicated to sustainable living through the exchange of pre-loved items, reducing waste and building community connections.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                
+                
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#services">Services</a></li>
+                        <li><a href="#contact">Contact Us</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Get Help</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Shipping</a></li>
+                        <li><a href="#">Returns</a></li>
+                        <li><a href="#">Payment Options</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Contact Us</h4>
+                    <div class="contact-info">
+                        <p><i class="fas fa-map-marker-alt"></i> 123 Green Street, Eco City</p>
+                        <p><i class="fas fa-phone"></i> +1 234 567 8901</p>
+                        <p><i class="fas fa-envelope"></i> info@ecoswap.com</p>
+                    </div>
+                    <div class="newsletter">
+                        <form>
+                            <input type="email" placeholder="Your email address">
+                            <button type="submit"><i class="fas fa-paper-plane"></i></button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="footer-container">
+                <p class="copyright">© 2025 EcoSwap. All rights reserved.</p>
+                <div class="footer-bottom-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Cookie Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="navbar.js"></script>
+    <script src="home.js"></script>
+
+   
+
+    <script>
+        // Mobile menu toggle
+        document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
+            document.querySelector('nav').classList.toggle('active');
+        });
+    </script>
+</body>
+</html>

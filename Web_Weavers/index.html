@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+</head>
+<body>
+    <div class="container">
+        <div class="form-container">
+            <h1>Login</h1>
+            <div class="tabs">
+                <button class="tab active" onclick="showMobileLogin()">Mobile</button>
+                <button class="tab" onclick="showGoogleLogin()">Google</button>
+            </div>
+            
+            <div id="mobile-login" class="login-section">
+                <form id="login-form">
+                    <div class="input-group">
+                        <label for="phone">Phone Number</label>
+                        <div class="phone-input">
+                            <span class="country-code">+91</span>
+                            <input type="tel" id="phone" name="phone" pattern="[0-9]{10}" maxlength="10" required>
+                        </div>
+                    </div>
+                    <button type="button" id="send-otp-btn" class="btn primary-btn">Send OTP</button>
+                    
+                    <div id="otp-section" class="hidden">
+                        <div class="input-group">
+                            <label for="otp">Enter OTP</label>
+                            <div class="otp-inputs">
+                                <input type="text" maxlength="1" class="otp-input" data-index="1">
+                                <input type="text" maxlength="1" class="otp-input" data-index="2">
+                                <input type="text" maxlength="1" class="otp-input" data-index="3">
+                                <input type="text" maxlength="1" class="otp-input" data-index="4">
+                                <input type="text" maxlength="1" class="otp-input" data-index="5">
+                                <input type="text" maxlength="1" class="otp-input" data-index="6">
+                            </div>
+                        </div>
+                        <button type="submit" class="btn primary-btn" onclick="redirectToPage()">Login</button>
+
+<script>
+  function redirectToPage() {
+    window.location.href = 'products.html';  // Yahan par apne desired URL daalein
+  }
+</script>
+
+                    </div>
+                </form>
+            </div>
+            
+            <div id="google-login" class="login-section hidden">
+                <div id="g_id_onload"
+                     data-client_id="YOUR_GOOGLE_CLIENT_ID"
+                     data-callback="handleGoogleLogin">
+                </div>
+                <div class="g_id_signin" data-type="standard"></div>
+            </div>
+            
+            <div class="form-footer">
+                <p>Don't have an account? <a href="signup.html">Sign Up</a></p>
+            </div>
+        </div>
+    </div>
+    
+    <script src="login.js"></script>
+</body>
+</html>
