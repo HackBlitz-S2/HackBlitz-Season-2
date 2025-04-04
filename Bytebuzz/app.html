@@ -1,0 +1,1157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Med Guard - Smart Medicine Reminder</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8fafc;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%);
+        }
+        
+        .medicine-card {
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        
+        .medicine-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .notification-bell {
+            animation: ring 2s infinite;
+        }
+        
+        @keyframes ring {
+            0% { transform: rotate(0deg); }
+            5% { transform: rotate(15deg); }
+            10% { transform: rotate(-15deg); }
+            15% { transform: rotate(15deg); }
+            20% { transform: rotate(-15deg); }
+            25% { transform: rotate(0deg); }
+            100% { transform: rotate(0deg); }
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+        
+        /* Pulse animation for urgent reminders */
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+        }
+        
+        .pulse-urgent {
+            animation: pulse 2s infinite;
+        }
+        
+        /* Custom checkbox */
+        .custom-checkbox {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #d1d5db;
+            border-radius: 4px;
+            outline: none;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .custom-checkbox:checked {
+            background-color: #3b82f6;
+            border-color: #3b82f6;
+        }
+        
+        .custom-checkbox:checked::after {
+            content: '\f00c';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gray-50">
+    <div class="container mx-auto px-4 py-8 max-w-6xl">
+        <!-- Header -->
+        <header class="flex justify-between items-center mb-8">
+            <div class="flex items-center">
+                <div class="gradient-bg p-3 rounded-full mr-4 text-white">
+                    <i class="fas fa-shield-alt text-2xl"></i>
+                </div>
+                <h1 class="text-3xl font-bold text-gray-800">Med <span class="text-blue-600">Guard</span></h1>
+            </div>
+            <div class="flex items-center space-x-4">
+                <button id="notificationBtn" class="relative p-2 rounded-full bg-white shadow-sm hover:bg-gray-100">
+                    <i class="fas fa-bell text-gray-600 notification-bell"></i>
+                    <span id="notificationCount" class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center hidden">3</span>
+                </button>
+                <div class="h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center">
+                    <i class="fas fa-user text-blue-600"></i>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <!-- Left Sidebar -->
+            <div class="lg:col-span-1 space-y-6">
+                <!-- Add Medicine Form -->
+                <div class="bg-white rounded-xl shadow-sm p-6 medicine-card">
+                    <h2 class="text-xl font-semibold text-gray-800 mb-4">Add New Reminder</h2>
+                    <form id="medicineForm" class="space-y-4">
+                        <div>
+                            <label for="medicineName" class="block text-sm font-medium text-gray-700 mb-1">Medicine Name</label>
+                            <input type="text" id="medicineName" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="e.g. Paracetamol" required>
+                        </div>
+                        
+                        <div>
+                            <label for="medicineType" class="block text-sm font-medium text-gray-700 mb-1">Medicine Type</label>
+                            <select id="medicineType" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                <option value="tablet">Tablet</option>
+                                <option value="capsule">Capsule</option>
+                                <option value="syrup">Syrup</option>
+                                <option value="injection">Injection</option>
+                                <option value="drops">Drops</option>
+                                <option value="inhaler">Inhaler</option>
+                                <option value="cream">Cream/Ointment</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label for="dosage" class="block text-sm font-medium text-gray-700 mb-1">Dosage</label>
+                            <div class="flex space-x-2">
+                                <input type="number" id="dosageAmount" class="w-1/2 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Amount" min="1" required>
+                                <select id="dosageUnit" class="w-1/2 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                    <option value="mg">mg</option>
+                                    <option value="g">g</option>
+                                    <option value="ml">ml</option>
+                                    <option value="tablet">tablet(s)</option>
+                                    <option value="capsule">capsule(s)</option>
+                                    <option value="drop">drop(s)</option>
+                                    <option value="puff">puff(s)</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label for="frequency" class="block text-sm font-medium text-gray-700 mb-1">Frequency</label>
+                            <select id="frequency" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                <option value="once">Once a day</option>
+                                <option value="twice">Twice a day</option>
+                                <option value="thrice">Three times a day</option>
+                                <option value="every4">Every 4 hours</option>
+                                <option value="every6">Every 6 hours</option>
+                                <option value="every8">Every 8 hours</option>
+                                <option value="weekly">Weekly</option>
+                                <option value="monthly">Monthly</option>
+                                <option value="asneeded">As needed</option>
+                                <option value="custom">Custom</option>
+                            </select>
+                        </div>
+                        
+                        <div id="timeSelection" class="space-y-2">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Reminder Times</label>
+                            <div class="flex items-center space-x-2">
+                                <input type="time" class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" value="08:00">
+                                <button type="button" class="text-red-500 hover:text-red-700">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                            <button type="button" id="addTimeBtn" class="text-blue-600 text-sm font-medium flex items-center">
+                                <i class="fas fa-plus-circle mr-1"></i> Add another time
+                            </button>
+                        </div>
+                        
+                        <div>
+                            <label for="foodRelation" class="block text-sm font-medium text-gray-700 mb-1">Take With</label>
+                            <select id="foodRelation" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                <option value="any">Anytime</option>
+                                <option value="before">Before food</option>
+                                <option value="after">After food</option>
+                                <option value="empty">Empty stomach</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label for="startDate" class="block text-sm font-medium text-gray-700 mb-1">Start Date</label>
+                            <input type="date" id="startDate" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
+                        </div>
+                        
+                        <div>
+                            <label for="duration" class="block text-sm font-medium text-gray-700 mb-1">Duration</label>
+                            <div class="flex space-x-2">
+                                <input type="number" id="durationAmount" class="w-1/2 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="7" min="1" required>
+                                <select id="durationUnit" class="w-1/2 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                    <option value="days">days</option>
+                                    <option value="weeks">weeks</option>
+                                    <option value="months">months</option>
+                                    <option value="ongoing">ongoing</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label for="urgency" class="block text-sm font-medium text-gray-700 mb-1">Urgency Level</label>
+                            <select id="urgency" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                <option value="low">Low</option>
+                                <option value="medium">Medium</option>
+                                <option value="high">High</option>
+                                <option value="critical">Critical</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label for="notes" class="block text-sm font-medium text-gray-700 mb-1">Notes (Optional)</label>
+                            <textarea id="notes" rows="2" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Special instructions, side effects to watch for..."></textarea>
+                        </div>
+                        
+                        <div class="flex items-center">
+                            <input type="checkbox" id="refillReminder" class="custom-checkbox mr-2">
+                            <label for="refillReminder" class="text-sm text-gray-700">Enable refill reminder</label>
+                        </div>
+                        
+                        <button type="submit" class="w-full gradient-bg hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition duration-200 flex items-center justify-center">
+                            <i class="fas fa-plus-circle mr-2"></i> Add Reminder
+                        </button>
+                    </form>
+                </div>
+                
+                <!-- Statistics -->
+                <div class="bg-white rounded-xl shadow-sm p-6 medicine-card">
+                    <h2 class="text-xl font-semibold text-gray-800 mb-4">Today's Stats</h2>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="bg-green-50 p-4 rounded-lg">
+                            <div class="text-green-600 mb-1">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <h3 class="font-medium text-gray-700">Taken</h3>
+                            <p class="text-2xl font-bold text-gray-800" id="statTaken">2</p>
+                        </div>
+                        <div class="bg-red-50 p-4 rounded-lg">
+                            <div class="text-red-600 mb-1">
+                                <i class="fas fa-times-circle"></i>
+                            </div>
+                            <h3 class="font-medium text-gray-700">Missed</h3>
+                            <p class="text-2xl font-bold text-gray-800" id="statMissed">0</p>
+                        </div>
+                        <div class="bg-yellow-50 p-4 rounded-lg">
+                            <div class="text-yellow-600 mb-1">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <h3 class="font-medium text-gray-700">Pending</h3>
+                            <p class="text-2xl font-bold text-gray-800" id="statPending">1</p>
+                        </div>
+                        <div class="bg-blue-50 p-4 rounded-lg">
+                            <div class="text-blue-600 mb-1">
+                                <i class="fas fa-pills"></i>
+                            </div>
+                            <h3 class="font-medium text-gray-700">Total</h3>
+                            <p class="text-2xl font-bold text-gray-800" id="statTotal">3</p>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-4 pt-4 border-t border-gray-200">
+                        <h3 class="font-medium text-gray-700 mb-2">Medication Adherence</h3>
+                        <div class="w-full bg-gray-200 rounded-full h-2.5">
+                            <div class="bg-green-500 h-2.5 rounded-full" style="width: 85%"></div>
+                        </div>
+                        <p class="text-sm text-gray-600 mt-1">85% adherence rate this week</p>
+                    </div>
+                </div>
+                
+                <!-- Quick Actions -->
+                <div class="bg-white rounded-xl shadow-sm p-6 medicine-card">
+                    <h2 class="text-xl font-semibold text-gray-800 mb-4">Quick Actions</h2>
+                    <div class="grid grid-cols-2 gap-3">
+                        <button class="flex items-center justify-center p-3 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 transition">
+                            <i class="fas fa-history mr-2"></i> History
+                        </button>
+                        <button class="flex items-center justify-center p-3 bg-green-50 text-green-600 rounded-lg hover:bg-green-100 transition">
+                            <i class="fas fa-file-prescription mr-2"></i> Prescriptions
+                        </button>
+                        <button class="flex items-center justify-center p-3 bg-purple-50 text-purple-600 rounded-lg hover:bg-purple-100 transition">
+                            <i class="fas fa-user-md mr-2"></i> Doctors
+                        </button>
+                        <button class="flex items-center justify-center p-3 bg-yellow-50 text-yellow-600 rounded-lg hover:bg-yellow-100 transition">
+                            <i class="fas fa-notes-medical mr-2"></i> Reports
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Right Content -->
+            <div class="lg:col-span-2 space-y-6">
+                <!-- Urgent Reminders -->
+                <div class="bg-red-50 border border-red-200 rounded-xl shadow-sm p-6 pulse-urgent">
+                    <div class="flex items-center justify-between mb-4">
+                        <h2 class="text-xl font-semibold text-red-800 flex items-center">
+                            <i class="fas fa-exclamation-triangle mr-2"></i> Urgent Reminders
+                        </h2>
+                        <span class="bg-red-100 text-red-800 text-xs font-medium px-2.5 py-0.5 rounded-full">Critical</span>
+                    </div>
+                    
+                    <div class="space-y-3" id="urgentReminders">
+                        <div class="flex items-center justify-between p-4 bg-white rounded-lg border border-red-300">
+                            <div class="flex items-center">
+                                <div class="bg-red-100 p-3 rounded-full mr-4">
+                                    <i class="fas fa-pills text-red-600"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-medium text-gray-800">Insulin Injection</h3>
+                                    <p class="text-sm text-gray-600">40 units</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center space-x-4">
+                                <div class="text-right">
+                                    <p class="font-medium text-gray-800">NOW</p>
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
+                                        Overdue
+                                    </span>
+                                </div>
+                                <div class="w-px h-10 bg-gray-200"></div>
+                                <button class="text-green-600 hover:text-green-800">
+                                    <i class="fas fa-check-circle"></i> Mark as taken
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Upcoming Reminders -->
+                <div class="bg-white rounded-xl shadow-sm p-6 medicine-card">
+                    <div class="flex justify-between items-center mb-4">
+                        <h2 class="text-xl font-semibold text-gray-800">Upcoming Reminders</h2>
+                        <div class="flex space-x-2">
+                            <button class="px-3 py-1 text-sm bg-gray-100 hover:bg-gray-200 rounded-lg">Today</button>
+                            <button class="px-3 py-1 text-sm bg-blue-600 text-white hover:bg-blue-700 rounded-lg">All</button>
+                            <button class="px-3 py-1 text-sm bg-gray-100 hover:bg-gray-200 rounded-lg">
+                                <i class="fas fa-filter"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-3" id="upcomingReminders">
+                        <!-- Sample reminders will be added here by JavaScript -->
+                    </div>
+                </div>
+                
+                <!-- Medicine List -->
+                <div class="bg-white rounded-xl shadow-sm p-6 medicine-card">
+                    <div class="flex justify-between items-center mb-4">
+                        <h2 class="text-xl font-semibold text-gray-800">Your Medicines</h2>
+                        <div class="flex space-x-2">
+                            <div class="relative">
+                                <input type="text" placeholder="Search medicines..." class="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+                            </div>
+                            <button class="p-2 bg-gray-100 hover:bg-gray-200 rounded-lg">
+                                <i class="fas fa-sort"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Medicine</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Dosage</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Schedule</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200" id="medicineTableBody">
+                                <!-- Sample medicines will be added here by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="mt-4 flex justify-between items-center">
+                        <div class="text-sm text-gray-500">
+                            Showing <span class="font-medium">1</span> to <span class="font-medium">3</span> of <span class="font-medium">3</span> medicines
+                        </div>
+                        <div class="flex space-x-1">
+                            <button class="px-3 py-1 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200">
+                                <i class="fas fa-chevron-left"></i>
+                            </button>
+                            <button class="px-3 py-1 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                                1
+                            </button>
+                            <button class="px-3 py-1 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200">
+                                <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Modal -->
+    <div id="notificationModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-xl shadow-xl w-full max-w-md max-h-[80vh] overflow-y-auto">
+            <div class="p-4 border-b border-gray-200 flex justify-between items-center">
+                <h3 class="text-lg font-semibold text-gray-800">Notifications</h3>
+                <div class="flex space-x-2">
+                    <button class="text-blue-600 text-sm">Mark all as read</button>
+                    <button id="closeNotificationModal" class="text-gray-500 hover:text-gray-700">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="divide-y divide-gray-200" id="notificationList">
+                <!-- Notifications will be added here by JavaScript -->
+            </div>
+            <div class="p-4 border-t border-gray-200 text-center">
+                <button class="text-blue-600 text-sm font-medium">View all notifications</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Refill Reminder Modal -->
+    <div id="refillModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-xl shadow-xl w-full max-w-md p-6">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-lg font-semibold text-gray-800">Refill Reminder</h3>
+                <button id="closeRefillModal" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="mb-6">
+                <p class="text-gray-700 mb-4">You're running low on <span class="font-semibold">Paracetamol (500mg)</span>. Would you like to set a reminder to refill?</p>
+                
+                <div class="mb-4">
+                    <label for="refillDate" class="block text-sm font-medium text-gray-700 mb-1">Reminder Date</label>
+                    <input type="date" id="refillDate" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                </div>
+                
+                <div class="mb-4">
+                    <label for="pharmacy" class="block text-sm font-medium text-gray-700 mb-1">Pharmacy</label>
+                    <select id="pharmacy" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                        <option value="">Select pharmacy</option>
+                        <option value="1">Local Pharmacy</option>
+                        <option value="2">CVS</option>
+                        <option value="3">Walgreens</option>
+                        <option value="4">Other</option>
+                    </select>
+                </div>
+            </div>
+            <div class="flex justify-end space-x-3">
+                <button id="cancelRefill" class="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50">
+                    Cancel
+                </button>
+                <button id="confirmRefill" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                    Set Reminder
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sample data for medicines
+        let sampleMedicines = [
+            {
+                id: 1,
+                name: "Paracetamol",
+                type: "tablet",
+                dosage: "500 mg",
+                frequency: "Twice a day",
+                times: ["08:00", "20:00"],
+                foodRelation: "after",
+                startDate: "2023-06-01",
+                duration: "7 days",
+                urgency: "medium",
+                status: "active",
+                notes: "Take after meals",
+                refillReminder: true
+            },
+            {
+                id: 2,
+                name: "Vitamin C",
+                type: "tablet",
+                dosage: "1 tablet",
+                frequency: "Once a day",
+                times: ["09:00"],
+                foodRelation: "any",
+                startDate: "2023-06-05",
+                duration: "30 days",
+                urgency: "low",
+                status: "active",
+                notes: "",
+                refillReminder: false
+            },
+            {
+                id: 3,
+                name: "Ibuprofen",
+                type: "tablet",
+                dosage: "200 mg",
+                frequency: "As needed",
+                times: [],
+                foodRelation: "after",
+                startDate: "2023-05-20",
+                duration: "15 days",
+                urgency: "medium",
+                status: "inactive",
+                notes: "Only take for pain",
+                refillReminder: false
+            }
+        ];
+
+        // Sample data for reminders
+        let sampleReminders = [
+            {
+                id: 1,
+                medicineId: 1,
+                medicineName: "Paracetamol",
+                dosage: "500 mg",
+                time: "08:00",
+                status: "taken",
+                urgency: "medium"
+            },
+            {
+                id: 2,
+                medicineId: 2,
+                medicineName: "Vitamin C",
+                dosage: "1 tablet",
+                time: "09:00",
+                status: "pending",
+                urgency: "low"
+            },
+            {
+                id: 3,
+                medicineId: 1,
+                medicineName: "Paracetamol",
+                dosage: "500 mg",
+                time: "20:00",
+                status: "upcoming",
+                urgency: "medium"
+            }
+        ];
+
+        // Sample data for notifications
+        let sampleNotifications = [
+            {
+                id: 1,
+                message: "Time to take Paracetamol (500 mg)",
+                time: "10 minutes ago",
+                read: false,
+                type: "reminder"
+            },
+            {
+                id: 2,
+                message: "Vitamin C (1 tablet) was marked as taken",
+                time: "2 hours ago",
+                read: true,
+                type: "confirmation"
+            },
+            {
+                id: 3,
+                message: "You're running low on Ibuprofen (200 mg)",
+                time: "Yesterday",
+                read: true,
+                type: "refill"
+            },
+            {
+                id: 4,
+                message: "Your prescription for Amoxicillin is ready for pickup",
+                time: "2 days ago",
+                read: true,
+                type: "prescription"
+            }
+        ];
+
+        // DOM Elements
+        const medicineForm = document.getElementById('medicineForm');
+        const medicineTableBody = document.getElementById('medicineTableBody');
+        const upcomingReminders = document.getElementById('upcomingReminders');
+        const urgentReminders = document.getElementById('urgentReminders');
+        const notificationBtn = document.getElementById('notificationBtn');
+        const notificationModal = document.getElementById('notificationModal');
+        const closeNotificationModal = document.getElementById('closeNotificationModal');
+        const notificationList = document.getElementById('notificationList');
+        const notificationCount = document.getElementById('notificationCount');
+        const addTimeBtn = document.getElementById('addTimeBtn');
+        const timeSelection = document.getElementById('timeSelection');
+        const refillModal = document.getElementById('refillModal');
+        const closeRefillModal = document.getElementById('closeRefillModal');
+        const cancelRefill = document.getElementById('cancelRefill');
+        const confirmRefill = document.getElementById('confirmRefill');
+
+        // Stats
+        const statTaken = document.getElementById('statTaken');
+        const statMissed = document.getElementById('statMissed');
+        const statPending = document.getElementById('statPending');
+        const statTotal = document.getElementById('statTotal');
+
+        // Initialize the app
+        document.addEventListener('DOMContentLoaded', function() {
+            renderMedicineTable();
+            renderUpcomingReminders();
+            renderNotifications();
+            updateStats();
+            
+            // Set today's date as default for start date
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('startDate').value = today;
+            
+            // Check for refill reminders
+            checkRefillReminders();
+        });
+
+        // Function to update the statistics
+        function updateStats() {
+            let taken = sampleReminders.filter(reminder => reminder.status === 'taken').length;
+            let missed = sampleReminders.filter(reminder => reminder.status === 'missed').length;
+            let pending = sampleReminders.filter(reminder => reminder.status === 'pending').length;
+            let total = sampleReminders.length;
+
+            statTaken.textContent = taken;
+            statMissed.textContent = missed;
+            statPending.textContent = pending;
+            statTotal.textContent = total;
+        }
+
+        // Render medicine table
+        function renderMedicineTable() {
+            medicineTableBody.innerHTML = '';
+            
+            sampleMedicines.forEach(medicine => {
+                const row = document.createElement('tr');
+                row.className = 'hover:bg-gray-50';
+                
+                const statusClass = medicine.status === 'active' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800';
+                const statusText = medicine.status === 'active' ? 'Active' : 'Inactive';
+                
+                // Determine icon based on medicine type
+                let medicineIcon;
+                switch(medicine.type) {
+                    case 'tablet':
+                        medicineIcon = 'fa-pills';
+                        break;
+                    case 'capsule':
+                        medicineIcon = 'fa-capsules';
+                        break;
+                    case 'syrup':
+                        medicineIcon = 'fa-bottle-droplet';
+                        break;
+                    case 'injection':
+                        medicineIcon = 'fa-syringe';
+                        break;
+                    case 'drops':
+                        medicineIcon = 'fa-droplet';
+                        break;
+                    case 'inhaler':
+                        medicineIcon = 'fa-wind';
+                        break;
+                    case 'cream':
+                        medicineIcon = 'fa-jar';
+                        break;
+                    default:
+                        medicineIcon = 'fa-pills';
+                }
+                
+                row.innerHTML = `
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0 h-10 w-10 bg-blue-100 rounded-full flex items-center justify-center">
+                                <i class="fas ${medicineIcon} text-blue-600"></i>
+                            </div>
+                            <div class="ml-4">
+                                <div class="text-sm font-medium text-gray-900">${medicine.name}</div>
+                                <div class="text-sm text-gray-500">${medicine.notes || 'No notes'}</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm text-gray-900">${medicine.dosage}</div>
+                        <div class="text-xs text-gray-500">${medicine.type}</div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm text-gray-900">${medicine.frequency}</div>
+                        <div class="text-sm text-gray-500">${medicine.times.join(', ')}</div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${statusClass}">
+                            ${statusText}
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        <button class="text-blue-600 hover:text-blue-900 mr-3" onclick="editMedicine(${medicine.id})">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="text-red-600 hover:text-red-900" onclick="deleteMedicine(${medicine.id})">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                        ${medicine.refillReminder ? '<i class="fas fa-bell text-yellow-500 ml-2"></i>' : ''}
+                    </td>
+                `;
+                
+                medicineTableBody.appendChild(row);
+            });
+        }
+
+        // Render upcoming reminders
+        function renderUpcomingReminders() {
+            upcomingReminders.innerHTML = '';
+            
+            // Sort reminders by time and status
+            const sortedReminders = [...sampleReminders].sort((a, b) => {
+                // Urgent reminders first
+                if (a.urgency === 'critical' && b.urgency !== 'critical') return -1;
+                if (b.urgency === 'critical' && a.urgency !== 'critical') return 1;
+                
+                // Then by status (pending first)
+                if (a.status === 'pending' && b.status !== 'pending') return -1;
+                if (b.status === 'pending' && a.status !== 'pending') return 1;
+                
+                // Then by time
+                return a.time.localeCompare(b.time);
+            });
+            
+            sortedReminders.forEach(reminder => {
+                if (reminder.urgency === 'critical') return; // Skip critical as they're shown separately
+                
+                let statusClass, statusText, actionBtn;
+                
+                if (reminder.status === 'taken') {
+                    statusClass = 'bg-green-100 text-green-800';
+                    statusText = 'Taken';
+                    actionBtn = `<button class="text-gray-400 cursor-not-allowed" disabled>
+                                    <i class="fas fa-check-circle"></i> Marked
+                                </button>`;
+                } else if (reminder.status === 'pending') {
+                    statusClass = 'bg-yellow-100 text-yellow-800';
+                    statusText = 'Pending';
+                    actionBtn = `<button class="text-blue-600 hover:text-blue-800" onclick="markAsTaken(${reminder.id})">
+                                    <i class="fas fa-check-circle"></i> Mark as taken
+                                </button>`;
+                } else if (reminder.status === 'missed') {
+                    statusClass = 'bg-red-100 text-red-800';
+                    statusText = 'Missed';
+                    actionBtn = `<button class="text-gray-400 cursor-not-allowed" disabled>
+                                    <i class="fas fa-times-circle"></i> Missed
+                                </button>`;
+                } else {
+                    statusClass = 'bg-blue-100 text-blue-800';
+                    statusText = 'Upcoming';
+                    actionBtn = `<button class="text-gray-400 cursor-not-allowed" disabled>
+                                    <i class="fas fa-clock"></i> Waiting
+                                </button>`;
+                }
+                
+                // Add urgency indicator
+                let urgencyBadge = '';
+                if (reminder.urgency === 'high') {
+                    urgencyBadge = '<span class="ml-2 px-1.5 py-0.5 text-xs bg-red-100 text-red-800 rounded-full">High</span>';
+                } else if (reminder.urgency === 'medium') {
+                    urgencyBadge = '<span class="ml-2 px-1.5 py-0.5 text-xs bg-yellow-100 text-yellow-800 rounded-full">Medium</span>';
+                }
+                
+                const reminderElement = document.createElement('div');
+                reminderElement.className = 'flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:bg-gray-50';
+                
+                reminderElement.innerHTML = `
+                    <div class="flex items-center">
+                        <div class="bg-blue-100 p-3 rounded-full mr-4">
+                            <i class="fas fa-pills text-blue-600"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-medium text-gray-800">${reminder.medicineName} ${urgencyBadge}</h3>
+                            <p class="text-sm text-gray-600">${reminder.dosage}</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <div class="text-right">
+                            <p class="font-medium text-gray-800">${reminder.time}</p>
+                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${statusClass}">
+                                ${statusText}
+                            </span>
+                        </div>
+                        <div class="w-px h-10 bg-gray-200"></div>
+                        ${actionBtn}
+                    </div>
+                `;
+                
+                upcomingReminders.appendChild(reminderElement);
+            });
+        }
+
+        // Render notifications
+        function renderNotifications() {
+            notificationList.innerHTML = '';
+            
+            const unreadCount = sampleNotifications.filter(n => !n.read).length;
+            if (unreadCount > 0) {
+                notificationCount.textContent = unreadCount;
+                notificationCount.classList.remove('hidden');
+            } else {
+                notificationCount.classList.add('hidden');
+            }
+            
+            // Sort notifications with unread first
+            const sortedNotifications = [...sampleNotifications].sort((a, b) => {
+                if (!a.read && b.read) return -1;
+                if (a.read && !b.read) return 1;
+                return 0;
+            });
+            
+            sortedNotifications.forEach(notification => {
+                const notificationElement = document.createElement('div');
+                notificationElement.className = `p-4 ${notification.read ? 'bg-white' : 'bg-blue-50'}`;
+                
+                // Determine icon based on notification type
+                let icon, iconColor;
+                switch(notification.type) {
+                    case 'reminder':
+                        icon = 'fa-bell';
+                        iconColor = 'text-blue-600';
+                        break;
+                    case 'confirmation':
+                        icon = 'fa-check-circle';
+                        iconColor = 'text-green-600';
+                        break;
+                    case 'refill':
+                        icon = 'fa-prescription-bottle';
+                        iconColor = 'text-yellow-600';
+                        break;
+                    case 'prescription':
+                        icon = 'fa-file-prescription';
+                        iconColor = 'text-purple-600';
+                        break;
+                    default:
+                        icon = 'fa-bell';
+                        iconColor = 'text-blue-600';
+                }
+                
+                notificationElement.innerHTML = `
+                    <div class="flex">
+                        <div class="flex-shrink-0 mr-3">
+                            <div class="h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center">
+                                <i class="fas ${icon} ${iconColor}"></i>
+                            </div>
+                        </div>
+                        <div>
+                            <p class="text-sm font-medium text-gray-900">${notification.message}</p>
+                            <p class="text-xs text-gray-500 mt-1">${notification.time} ${!notification.read ? '<span class="ml-2 px-1.5 py-0.5 bg-blue-100 text-blue-800 text-xs rounded-full">New</span>' : ''}</p>
+                        </div>
+                    </div>
+                `;
+                
+                notificationList.appendChild(notificationElement);
+            });
+        }
+
+        // Function to handle form submission for adding new medicine
+        medicineForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const medicineName = document.getElementById('medicineName').value;
+            const medicineType = document.getElementById('medicineType').value;
+            const dosageAmount = document.getElementById('dosageAmount').value;
+            const dosageUnit = document.getElementById('dosageUnit').value;
+            const frequency = document.getElementById('frequency').value;
+            const foodRelation = document.getElementById('foodRelation').value;
+            const startDate = document.getElementById('startDate').value;
+            const durationAmount = document.getElementById('durationAmount').value;
+            const durationUnit = document.getElementById('durationUnit').value;
+            const urgency = document.getElementById('urgency').value;
+            const notes = document.getElementById('notes').value;
+            const refillReminder = document.getElementById('refillReminder').checked;
+            
+            // Create new medicine object
+            const newMedicine = {
+                id: sampleMedicines.length + 1,
+                name: medicineName,
+                type: medicineType,
+                dosage: `${dosageAmount} ${dosageUnit}`,
+                frequency: document.getElementById('frequency').options[document.getElementById('frequency').selectedIndex].text,
+                times: getTimeInputs(),
+                foodRelation: foodRelation,
+                startDate: startDate,
+                duration: `${durationAmount} ${durationUnit}`,
+                urgency: urgency,
+                status: 'active',
+                notes: notes,
+                refillReminder: refillReminder
+            };
+            
+            // Add new medicine to sampleMedicines array
+            sampleMedicines.push(newMedicine);
+            
+            // Create reminders for the new medicine
+            createReminders(newMedicine);
+            
+            // Re-render medicine table and upcoming reminders
+            renderMedicineTable();
+            renderUpcomingReminders();
+            
+            // Reset the form
+            medicineForm.reset();
+            
+            // Set today's date as default for start date
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('startDate').value = today;
+            
+            // Update stats
+            updateStats();
+            
+            // Show success notification
+            const newNotification = {
+                id: sampleNotifications.length + 1,
+                message: `Added new reminder for ${newMedicine.name} (${newMedicine.dosage})`,
+                time: 'Just now',
+                read: false,
+                type: 'confirmation'
+            };
+            sampleNotifications.unshift(newNotification);
+            renderNotifications();
+            
+            // Show refill reminder modal if enabled
+            if (refillReminder) {
+                setTimeout(() => {
+                    refillModal.classList.remove('hidden');
+                }, 1000);
+            }
+        });
+
+        // Function to get the times from time inputs
+        function getTimeInputs() {
+            const timeInputs = timeSelection.querySelectorAll('input[type="time"]');
+            const times = Array.from(timeInputs).map(input => input.value);
+            return times;
+        }
+
+        // Function to create reminders for a medicine
+        function createReminders(medicine) {
+            medicine.times.forEach(time => {
+                const newReminder = {
+                    id: sampleReminders.length + 1,
+                    medicineId: medicine.id,
+                    medicineName: medicine.name,
+                    dosage: medicine.dosage,
+                    time: time,
+                    status: 'upcoming',
+                    urgency: medicine.urgency
+                };
+                sampleReminders.push(newReminder);
+            });
+        }
+
+        // Check for medicines that need refill reminders
+        function checkRefillReminders() {
+            sampleMedicines.forEach(medicine => {
+                if (medicine.refillReminder) {
+                    // In a real app, you would check the remaining quantity and expiration date
+                    // Here we just show the modal for demo purposes
+                    // setTimeout(() => {
+                    //     refillModal.classList.remove('hidden');
+                    // }, 2000);
+                }
+            });
+        }
+
+        // Add time button functionality
+        addTimeBtn.addEventListener('click', function() {
+            const timeInput = document.createElement('div');
+            timeInput.className = 'flex items-center space-x-2';
+            timeInput.innerHTML = `
+                <input type="time" class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" value="12:00">
+                <button type="button" class="text-red-500 hover:text-red-700 remove-time-btn">
+                    <i class="fas fa-times"></i>
+                </button>
+            `;
+            
+            timeSelection.insertBefore(timeInput, addTimeBtn);
+            
+            // Add event listener to the remove button
+            const removeBtn = timeInput.querySelector('.remove-time-btn');
+            removeBtn.addEventListener('click', function() {
+                timeInput.remove();
+            });
+        });
+
+        // Notification modal functionality
+        notificationBtn.addEventListener('click', function() {
+            notificationModal.classList.remove('hidden');
+            
+            // Mark all notifications as read when opening modal
+            sampleNotifications.forEach(n => n.read = true);
+            renderNotifications();
+        });
+
+        closeNotificationModal.addEventListener('click', function() {
+            notificationModal.classList.add('hidden');
+        });
+
+        // Refill modal functionality
+        closeRefillModal.addEventListener('click', function() {
+            refillModal.classList.add('hidden');
+        });
+
+        cancelRefill.addEventListener('click', function() {
+            refillModal.classList.add('hidden');
+        });
+
+        confirmRefill.addEventListener('click', function() {
+            // In a real app, you would save the refill reminder
+            alert('Refill reminder set successfully!');
+            refillModal.classList.add('hidden');
+        });
+
+        // Close modals when clicking outside
+        [notificationModal, refillModal].forEach(modal => {
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    modal.classList.add('hidden');
+                }
+            });
+        });
+
+        // Sample functions for medicine actions
+        function editMedicine(id) {
+            const medicine = sampleMedicines.find(m => m.id === id);
+            
+            // Populate form with medicine data
+            document.getElementById('medicineName').value = medicine.name;
+            document.getElementById('medicineType').value = medicine.type;
+            
+            const dosageParts = medicine.dosage.split(' ');
+            document.getElementById('dosageAmount').value = dosageParts[0];
+            document.getElementById('dosageUnit').value = dosageParts[1];
+            
+            document.getElementById('frequency').value = medicine.frequency.toLowerCase().includes('once') ? 'once' : 
+                                                         medicine.frequency.toLowerCase().includes('twice') ? 'twice' :
+                                                         medicine.frequency.toLowerCase().includes('three') ? 'thrice' : 'custom';
+            
+            // Clear existing time inputs
+            const timeInputs = timeSelection.querySelectorAll('div.flex.items-center.space-x-2');
+            timeInputs.forEach((input, index) => {
+                if (index > 0) input.remove(); // Keep the first one
+            });
+            
+            // Set times
+            const firstTimeInput = timeSelection.querySelector('input[type="time"]');
+            if (medicine.times.length > 0) {
+                firstTimeInput.value = medicine.times[0];
+                
+                // Add additional time inputs
+                for (let i = 1; i < medicine.times.length; i++) {
+                    const timeInput = document.createElement('div');
+                    timeInput.className = 'flex items-center space-x-2';
+                    timeInput.innerHTML = `
+                        <input type="time" class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" value="${medicine.times[i]}">
+                        <button type="button" class="text-red-500 hover:text-red-700 remove-time-btn">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    `;
+                    
+                    timeSelection.insertBefore(timeInput, addTimeBtn);
+                    
+                    // Add event listener to the remove button
+                    const removeBtn = timeInput.querySelector('.remove-time-btn');
+                    removeBtn.addEventListener('click', function() {
+                        timeInput.remove();
+                    });
+                }
+            }
+            
+            document.getElementById('foodRelation').value = medicine.foodRelation;
+            document.getElementById('startDate').value = medicine.startDate;
+            
+            const durationParts = medicine.duration.split(' ');
+            document.getElementById('durationAmount').value = durationParts[0];
+            document.getElementById('durationUnit').value = durationParts[1];
+            
+            document.getElementById('urgency').value = medicine.urgency;
+            document.getElementById('notes').value = medicine.notes;
+            document.getElementById('refillReminder').checked = medicine.refillReminder;
+            
+            // Scroll to form
+            document.getElementById('medicineForm').scrollIntoView({ behavior: 'smooth' });
+            
+            // In a real app, you would have a way to handle the update
+            alert(`Editing medicine: ${medicine.name}. In a real app, you would update the medicine here.`);
+        }
+
+        function deleteMedicine(id) {
+            if (confirm('Are you sure you want to delete this medicine?')) {
+                // Remove medicine and its reminders
+                sampleMedicines = sampleMedicines.filter(m => m.id !== id);
+                sampleReminders = sampleReminders.filter(r => r.medicineId !== id);
+                
+                renderMedicineTable();
+                renderUpcomingReminders();
+                updateStats();
+                
+                // Show notification
+                const newNotification = {
+                    id: sampleNotifications.length + 1,
+                    message: `Medicine has been deleted`,
+                    time: 'Just now',
+                    read: false,
+                    type: 'confirmation'
+                };
+                sampleNotifications.unshift(newNotification);
+                renderNotifications();
+            }
+        }
+
+        function markAsTaken(reminderId) {
+            const reminder = sampleReminders.find(r => r.id === reminderId);
+            if (reminder) {
+                reminder.status = 'taken';
+                renderUpcomingReminders();
+                
+                // Add notification
+                const newNotification = {
+                    id: sampleNotifications.length + 1,
+                    message: `${reminder.medicineName} (${reminder.dosage}) was marked as taken`,
+                    time: 'Just now',
+                    read: false,
+                    type: 'confirmation'
+                };
+                sampleNotifications.unshift(newNotification);
+                renderNotifications();
+                
+                // Update stats
+                updateStats();
+            }
+        }
+    </script>
+</body>
+</html>
