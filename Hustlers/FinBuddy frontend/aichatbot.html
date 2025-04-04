@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Chatbot for Financial Queries - FinBuddy</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Global Styling */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* Chatbox container */
+        .chatbox {
+            width: 100%;
+            max-width: 600px;
+            background-color: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            animation: fadeIn 1s ease-out;
+        }
+
+        /* Header Styling */
+        .chatbox-header {
+            background: #2575fc;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Body Styling */
+        .chatbox-body {
+            padding: 20px;
+            height: 350px;
+            overflow-y: auto;
+            background-color: #f9f9f9;
+        }
+
+        /* Footer Styling */
+        .chatbox-footer {
+            display: flex;
+            padding: 15px;
+            background: #ffffff;
+            box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Input and Send Button Styling */
+        .user-input {
+            width: 85%;
+            padding: 12px;
+            font-size: 16px;
+            border-radius: 20px;
+            border: 2px solid #2575fc;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .user-input:focus {
+            border-color: #6a11cb;
+            box-shadow: 0 0 10px rgba(37, 117, 252, 0.5);
+        }
+
+        .send-btn {
+            width: 12%;
+            padding: 12px;
+            font-size: 16px;
+            background-color: #2575fc;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .send-btn:hover {
+            background-color: #6a11cb;
+        }
+
+        /* Message Styling */
+        .message {
+            margin-bottom: 15px;
+            padding: 12px;
+            border-radius: 15px;
+            max-width: 70%;
+            font-size: 16px;
+            background-color: #f1f1f1;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .message.bot {
+            background-color: #e0f7fa;
+            align-self: flex-start;
+        }
+
+        .message.user {
+            background-color: #dcedc8;
+            align-self: flex-end;
+        }
+
+        /* Animations for Message */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Footer Text */
+        .footer-text {
+            text-align: center;
+            font-size: 14px;
+            color: #333;
+            margin-top: 15px;
+        }
+
+        .footer-text a {
+            text-decoration: none;
+            color: #2575fc;
+        }
+
+        /* Media Query for Responsiveness */
+        @media (max-width: 600px) {
+            .chatbox {
+                width: 100%;
+            }
+
+            .send-btn {
+                width: 15%;
+            }
+
+            .user-input {
+                width: 75%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="chatbox">
+    <div class="chatbox-header">
+        FinBuddy AI - Financial Assistant
+    </div>
+    <div class="chatbox-body" id="chatbox-body">
+        <!-- Messages will be dynamically added here -->
+    </div>
+    <div class="chatbox-footer">
+        <input type="text" id="user-input" class="user-input" placeholder="Ask me anything about finance..." />
+        <button class="send-btn" id="send-btn">Send</button>
+    </div>
+</div>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    // Dummy financial data (for demonstration purposes)
+    const financialData = {
+        'stocks': {
+            'AAPL': 145.09,
+            'TSLA': 650.12,
+            'AMZN': 3385.12
+        },
+        'crypto': {
+            'BTC': 48000,
+            'ETH': 3500
+        }
+    };
+
+    // Function to send a message to the chatbox
+    function sendMessage(content, sender) {
+        const chatboxBody = document.getElementById('chatbox-body');
+        const message = document.createElement('div');
+        message.classList.add('message', sender);
+        message.textContent = content;
+        chatboxBody.appendChild(message);
+        chatboxBody.scrollTop = chatboxBody.scrollHeight; // Scroll to the bottom
+    }
+
+    // Function to generate a response from the AI (mock function)
+    function getAIResponse(query) {
+        if (query.toLowerCase().includes("stock") || query.toLowerCase().includes("price")) {
+            const stockSymbol = query.toUpperCase().split(" ").pop();
+            if (financialData.stocks[stockSymbol]) {
+                return `The current price of ${stockSymbol} is $${financialData.stocks[stockSymbol]}.`;
+            } else {
+                return "Sorry, I couldn't find information about that stock.";
+            }
+        }
+        if (query.toLowerCase().includes("crypto")) {
+            const cryptoSymbol = query.toUpperCase().split(" ").pop();
+            if (financialData.crypto[cryptoSymbol]) {
+                return `The current price of ${cryptoSymbol} is $${financialData.crypto[cryptoSymbol]}.`;
+            } else {
+                return "Sorry, I couldn't find information about that cryptocurrency.";
+            }
+        }
+        return "I'm sorry, I couldn't understand that. Can you please ask something else related to finance?";
+    }
+
+    // Event listener for the send button
+    document.getElementById('send-btn').addEventListener('click', () => {
+        const userInput = document.getElementById('user-input').value.trim();
+        if (userInput) {
+            sendMessage(userInput, 'user');
+            document.getElementById('user-input').value = ''; // Clear the input field
+            const response = getAIResponse(userInput);
+            setTimeout(() => sendMessage(response, 'bot'), 1000); // Simulate a small delay before response
+        }
+    });
+
+    // Allow sending the message by pressing the Enter key
+    document.getElementById('user-input').addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            document.getElementById('send-btn').click();
+        }
+    });
+
+    // Initial greeting message
+    window.onload = () => {
+        sendMessage("Hello! I am your AI Financial Assistant. How can I help you today?", 'bot');
+    };
+</script>
+
+</body>
+</html>

@@ -1,0 +1,292 @@
+      /* Reset and base styles */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+        background-color: #f5f5f5;
+        color: #333;
+        padding: 20        px;
+    }
+
+    /* Card styles */
+    .card {
+        max-width: 800px;
+        margin: 0 auto;
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+    }
+
+    .card-header {
+        padding: 24px;
+        background-color: #f8f9fa;
+        border-bottom: 1px solid #eee;
+    }
+
+    .card-title {
+        font-size: 24px;
+        font-weight: 600;
+        margin-bottom: 8px;
+    }
+
+    .card-description {
+        color: #666;
+        font-size: 14px;
+    }
+
+    .card-content {
+        padding: 24px;
+    }
+
+    /* Form elements */
+    .form-group {
+        margin-bottom: 24px;
+    }
+
+    label {
+        display: block;
+        font-size: 14px;
+        font-weight: 500;
+        margin-bottom: 8px;
+    }
+
+    select, input {
+        width: 100%;
+        padding: 8px 12px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 14px;
+    }
+
+    select {
+        appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 12px center;
+        background-size: 16px;
+    }
+
+    .period-select {
+        max-width: 200px;
+    }
+
+    /* Budget categories */
+    .budget-categories {
+        margin-top: 24px;
+    }
+
+    .category-header {
+        font-weight: 600;
+        margin-bottom: 12px;
+    }
+
+    .grid-header {
+        display: grid;
+        grid-template-columns: 5fr 3fr 3fr 1fr;
+        gap: 8px;
+        padding: 8px 0;
+        border-bottom: 1px solid #eee;
+        font-size: 14px;
+        font-weight: 500;
+        color: #666;
+    }
+
+    .category-item {
+        display: grid;
+        grid-template-columns: 5fr 3fr 3fr 1fr;
+        gap: 8px;
+        padding: 12px 0;
+        align-items: center;
+        border-bottom: 1px solid #f5f5f5;
+    }
+
+    .category-color {
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        display: inline-block;
+        margin-right: 8px;
+        vertical-align: middle;
+    }
+
+    .category-name {
+        display: inline-flex;
+        align-items: center;
+    }
+
+    .amount-input {
+        display: flex;
+        align-items: center;
+    }
+
+    .amount-input span {
+        margin-right: 8px;
+    }
+
+    .amount-input input {
+        flex: 1;
+    }
+
+    .spent-display {
+        display: flex;
+        align-items: center;
+        color: #666;
+    }
+
+    .progress-bar {
+        margin-left: 8px;
+        height: 8px;
+        width: 64px;
+        background-color: #f1f1f1;
+        border-radius: 4px;
+        overflow: hidden;
+    }
+
+    .progress-fill {
+        height: 100%;
+        border-radius: 4px;
+    }
+
+    /* Buttons */
+    .btn {
+        padding: 8px 16px;
+        border-radius: 4px;
+        border: none;
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s;
+    }
+
+    .btn-icon {
+        width: 32px;
+        height: 32px;
+        padding: 0;
+        background: transparent;
+        color: #666;
+    }
+
+    .btn-icon:hover {
+        background-color: #f5f5f5;
+    }
+
+    .btn-delete:hover {
+        color: #e53e3e;
+    }
+
+    .btn-add:hover {
+        color: #38a169;
+    }
+
+    .btn-primary {
+        background-color: #3182ce;
+        color: white;
+    }
+
+    .btn-primary:hover {
+        background-color: #2c5282;
+    }
+
+    .btn-icon svg {
+        width: 16px;
+        height: 16px;
+    }
+
+    /* New category row */
+    .new-category-row {
+        display: grid;
+        grid-template-columns: 5fr 3fr 3fr 1fr;
+        gap: 8px;
+        padding: 12px 0;
+        align-items: center;
+        border-top: 1px solid #eee;
+        margin-top: 8px;
+    }
+
+    /* Total budget section */
+    .total-budget {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 16px;
+        margin-top: 16px;
+        border-top: 1px solid #eee;
+    }
+
+    .total-label {
+        font-weight: 500;
+    }
+
+    .total-amount {
+        font-size: 20px;
+        font-weight: 700;
+        margin-left: 8px;
+    }
+
+    /* Alert */
+    .alert {
+        padding: 12px 16px;
+        border-radius: 4px;
+        margin-top: 16px;
+        background-color: #ebf8ff;
+        border: 1px solid #bee3f8;
+        color: #2b6cb0;
+        display: none;
+    }
+
+    .alert-success {
+        background-color: #f0fff4;
+        border-color: #c6f6d5;
+        color: #2f855a;
+    }
+
+    @media (max-width: 768px) {
+        .category-item,
+        .grid-header,
+        .new-category-row {
+            grid-template-columns: 5fr 3fr 1fr;
+        }
+        
+        .spent-display {
+            display: none;
+        }
+        
+        .total-budget {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 16px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .category-item,
+        .grid-header,
+        .new-category-row {
+            grid-template-columns: 1fr auto;
+            gap: 4px;
+        }
+        
+        .amount-input {
+            grid-column: 1;
+            grid-row: 2;
+            margin-top: 8px;
+        }
+        
+        .category-name {
+            grid-column: 1;
+            grid-row: 1;
+        }
+        
+        .btn-icon {
+            grid-column: 2;
+            grid-row: 1;
+        }
+    }
