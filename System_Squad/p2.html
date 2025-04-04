@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ReCircle - Sustainable Item Exchange</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="p2.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-recycle"></i>
+                <h1>ReCircle</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#browse">Browse</a></li>
+                <li><a href="#donate">Donate</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="auth-buttons">
+                <button id="login-btn">Login</button>
+                <button id="signup-btn">Sign Up</button>
+            </div>
+            <div class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h2>Give Items a Second Life</h2>
+                <p>Join our community to exchange or donate gently used items and reduce waste.</p>
+                <div class="hero-buttons">
+                    <button class="btn-primary">Browse Items</button>
+                    <button class="btn-secondary">How It Works</button>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="https://images.unsplash.com/photo-1604176354204-9268737828e4?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Sustainable living">
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats">
+        <div class="container">
+            <div class="stat-item">
+                <i class="fas fa-tshirt"></i>
+                <h3><span class="counter" data-target="12453">0</span>+</h3>
+                <p>Clothing Items Shared</p>
+            </div>
+            <div class="stat-item">
+                <i class="fas fa-book"></i>
+                <h3><span class="counter" data-target="8765">0</span>+</h3>
+                <p>Books Exchanged</p>
+            </div>
+            <div class="stat-item">
+                <i class="fas fa-laptop"></i>
+                <h3><span class="counter" data-target="3210">0</span>+</h3>
+                <p>Electronics Repurposed</p>
+            </div>
+            <div class="stat-item">
+                <i class="fas fa-users"></i>
+                <h3><span class="counter" data-target="15678">0</span>+</h3>
+                <p>Community Members</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Browse Section -->
+    <section id="browse" class="browse">
+        <div class="container">
+            <h2 class="section-title">Browse Available Items</h2>
+            <p class="section-subtitle">Find what you need or discover something new</p>
+            
+            <div class="filter-controls">
+                <select id="category-filter">
+                    <option value="all">All Categories</option>
+                    <option value="clothing">Clothing</option>
+                    <option value="books">Books</option>
+                    <option value="electronics">Electronics</option>
+                    <option value="furniture">Furniture</option>
+                </select>
+                <select id="location-filter">
+                    <option value="all">All Locations</option>
+                    <option value="new-york">New York</option>
+                    <option value="los-angeles">Los Angeles</option>
+                    <option value="chicago">Chicago</option>
+                </select>
+                <button id="search-btn" class="btn-primary">Search</button>
+            </div>
+            
+            <div class="items-grid" id="items-container">
+                <!-- Items will be loaded here via JavaScript -->
+            </div>
+            
+            <button id="load-more" class="btn-secondary">Load More Items</button>
+        </div>
+    </section>
+
+    <!-- Donate Section -->
+    <section id="donate" class="donate">
+        <div class="container">
+            <div class="donate-form">
+                <h2 class="section-title">List an Item</h2>
+                <form id="donate-form">
+                    <div class="form-group">
+                        <label for="item-name">Item Name</label>
+                        <input type="text" id="item-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="item-category">Category</label>
+                        <select id="item-category" required>
+                            <option value="">Select a category</option>
+                            <option value="clothing">Clothing</option>
+                            <option value="books">Books</option>
+                            <option value="electronics">Electronics</option>
+                            <option value="furniture">Furniture</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="item-condition">Condition</label>
+                        <select id="item-condition" required>
+                            <option value="">Select condition</option>
+                            <option value="new">New</option>
+                            <option value="like-new">Like New</option>
+                            <option value="good">Good</option>
+                            <option value="fair">Fair</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="item-description">Description</label>
+                        <textarea id="item-description" rows="4" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="item-location">Location</label>
+                        <input type="text" id="item-location" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="item-image">Upload Image</label>
+                        <input type="file" id="item-image" accept="image/*">
+                    </div>
+                    <div class="form-group radio-group">
+                        <label>Listing Type:</label>
+                        <div>
+                            <input type="radio" id="donation" name="item-type" value="donation" checked>
+                            <label for="donation">Donation (free)</label>
+                        </div>
+                        <div>
+                            <input type="radio" id="exchange" name="item-type" value="exchange">
+                            <label for="exchange">Exchange</label>
+                        </div>
+                        <div>
+                            <input type="radio" id="sale" name="item-type" value="sale">
+                            <label for="sale">Sale</label>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-primary">List Item</button>
+                </form>
+            </div>
+            <div class="donate-info">
+                <h3>Why Participate?</h3>
+                <ul>
+                    <li><i class="fas fa-check"></i> Reduce environmental impact</li>
+                    <li><i class="fas fa-check"></i> Help others in your community</li>
+                    <li><i class="fas fa-check"></i> Free up space in your home</li>
+                    <li><i class="fas fa-check"></i> Find items you need without buying new</li>
+                </ul>
+                <div class="testimonial">
+                    <p>"I've furnished my apartment through ReCircle! It's amazing what people are willing to give away."</p>
+                    <p>- Sarah K., Member since 2022</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="about-content">
+                <h2 class="section-title">About ReCircle</h2>
+                <p>ReCircle was founded with a mission to keep usable items out of landfills by connecting people who have things they no longer need with people who can use them.</p>
+                <p>We believe in the power of community to create sustainable solutions. Every item exchanged or donated represents resources saved and connections made between neighbors.</p>
+                <div class="mission-stats">
+                    <div class="mission-stat">
+                        <i class="fas fa-leaf"></i>
+                        <h4>Reduce Waste</h4>
+                        <p>Keeping items in circulation longer</p>
+                    </div>
+                    <div class="mission-stat">
+                        <i class="fas fa-hands-helping"></i>
+                        <h4>Build Community</h4>
+                        <p>Connecting people through sharing</p>
+                    </div>
+                    <div class="mission-stat">
+                        <i class="fas fa-globe"></i>
+                        <h4>Promote Sustainability</h4>
+                        <p>Encouraging conscious consumption</p>
+                    </div>
+                </div>
+            </div>
+            <div class="about-image">
+                <img src="https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Community sharing">
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 class="section-title">Contact Us</h2>
+            <p class="section-subtitle">Have questions? Get in touch with our team</p>
+            
+            <div class="contact-container">
+                <form id="contact-form">
+                    <div class="form-group">
+                        <label for="contact-name">Name</label>
+                        <input type="text" id="contact-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="contact-email">Email</label>
+                        <input type="email" id="contact-email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="contact-subject">Subject</label>
+                        <input type="text" id="contact-subject" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="contact-message">Message</label>
+                        <textarea id="contact-message" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="btn-primary">Send Message</button>
+                </form>
+                
+                <div class="contact-info">
+                    <h3>Our Information</h3>
+                    <div class="info-item">
+                        <i class="fas fa-envelope"></i>
+                        <p>hello@recircle.org</p>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-phone"></i>
+                        <p>(555) 123-4567</p>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <p>123 Green Street, Eco City, EC 12345</p>
+                    </div>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="logo">
+                        <i class="fas fa-recycle"></i>
+                        <h3>ReCircle</h3>
+                    </div>
+                    <p>Promoting sustainable living through item sharing and community connections.</p>
+                    <div class="footer-social">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#browse">Browse</a></li>
+                        <li><a href="#donate">Donate</a></li>
+                        <li><a href="#about">About</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Categories</h4>
+                    <ul>
+                        <li><a href="#browse">Clothing</a></li>
+                        <li><a href="#browse">Books</a></li>
+                        <li><a href="#browse">Electronics</a></li>
+                        <li><a href="#browse">Furniture</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Newsletter</h4>
+                    <p>Subscribe to our newsletter for updates</p>
+                    <form id="newsletter-form">
+                        <input type="email" placeholder="Your email address" required>
+                        <button type="submit" class="btn-primary">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 ReCircle. All rights reserved.</p>
+                <div class="footer-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modals -->
+    <div id="login-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Login to ReCircle</h2>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="login-email">Email</label>
+                    <input type="email" id="login-email" required>
+                </div>
+                <div class="form-group">
+                    <label for="login-password">Password</label>
+                    <input type="password" id="login-password" required>
+                </div>
+                <button type="submit" class="btn-primary">Login</button>
+                <p>Don't have an account? <a href="#" id="switch-to-signup">Sign up</a></p>
+            </form>
+        </div>
+    </div>
+
+    <div id="signup-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Create an Account</h2>
+            <form id="signup-form">
+                <div class="form-group">
+                    <label for="signup-name">Full Name</label>
+                    <input type="text" id="signup-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="signup-email">Email</label>
+                    <input type="email" id="signup-email" required>
+                </div>
+                <div class="form-group">
+                    <label for="signup-password">Password</label>
+                    <input type="password" id="signup-password" required>
+                </div>
+                <div class="form-group">
+                    <label for="signup-location">Location</label>
+                    <input type="text" id="signup-location" required>
+                </div>
+                <button type="submit" class="btn-primary">Sign Up</button>
+                <p>Already have an account? <a href="#" id="switch-to-login">Login</a></p>
+            </form>
+        </div>
+    </div>
+
+    <div id="item-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div id="item-modal-content">
+                <!-- Item details will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
