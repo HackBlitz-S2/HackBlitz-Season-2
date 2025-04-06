@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechSwap - Technology Exchange Platform</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Global Styles */
+        :root {
+            --primary-color: #4285f4;
+            --secondary-color: #34a853;
+            --accent-color: #ea4335;
+            --dark-color: #202124;
+            --light-color: #f8f9fa;
+            --gray-color: #5f6368;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', Arial, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header Styles */
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo i {
+            margin-right: 8px;
+        }
+        
+        .logo span {
+            color: var(--accent-color);
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 25px;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark-color);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+        
+        .user-actions {
+            display: flex;
+            align-items: center;
+        }
+        
+        .user-actions a {
+            margin-left: 15px;
+            text-decoration: none;
+            color: var(--dark-color);
+        }
+        
+        .user-actions .btn {
+            padding: 8px 15px;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .btn-outline {
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+        }
+        
+        /* Main Content */
+        .main-content {
+            padding: 40px 0;
+        }
+        
+        .page-title {
+            font-size: 32px;
+            margin-bottom: 30px;
+            color: var(--dark-color);
+        }
+        
+        /* Filter Section */
+        .filter-section {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .filter-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .filter-title {
+            font-size: 18px;
+            font-weight: 600;
+        }
+        
+        .reset-filters {
+            color: var(--primary-color);
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        .filter-group {
+            margin-bottom: 20px;
+        }
+        
+        .filter-group-title {
+            font-weight: 600;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .filter-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .filter-option {
+            padding: 6px 12px;
+            background-color: #f1f1f1;
+            border-radius: 20px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .filter-option:hover, .filter-option.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .spec-options {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+        }
+        
+        .spec-option {
+            width: 100%;
+            text-align: center;
+            padding: 8px 0;
+            background-color: #f1f1f1;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .spec-option:hover, .spec-option.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .price-range {
+            width: 100%;
+            margin-top: 15px;
+            accent-color: var(--primary-color);
+        }
+        
+        .price-inputs {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+        
+        .price-input {
+            width: 48%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        /* Product Grid */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+        }
+        
+        .product-card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .product-image {
+            height: 200px;
+            width: 100%;
+            object-fit: contain;
+            background-color: #f8f9fa;
+            padding: 20px;
+        }
+        
+        .product-info {
+            padding: 15px;
+            border-top: 1px solid #eee;
+        }
+        
+        .product-category {
+            font-size: 12px;
+            color: var(--gray-color);
+            margin-bottom: 5px;
+            text-transform: uppercase;
+        }
+        
+        .product-name {
+            font-weight: 600;
+            margin-bottom: 10px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .product-specs {
+            font-size: 13px;
+            color: var(--gray-color);
+            margin-bottom: 10px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .product-price {
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+        
+        .product-condition {
+            display: inline-block;
+            padding: 3px 8px;
+            background-color: #e6f4ea;
+            color: var(--secondary-color);
+            border-radius: 4px;
+            font-size: 12px;
+            margin-bottom: 10px;
+        }
+        
+        .product-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .btn-favorite {
+            background: none;
+            border: none;
+            color: #ccc;
+            cursor: pointer;
+            font-size: 18px;
+        }
+        
+        .btn-favorite.active {
+            color: var(--accent-color);
+        }
+        
+        .btn-exchange {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        
+        .btn-exchange:hover {
+            background-color: #3367d6;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                padding: 15px 0;
+            }
+            
+            .nav-links {
+                margin: 15px 0;
+            }
+            
+            .filter-options {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            .spec-options {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            .product-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .product-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .spec-options {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-container">
+            <a href="#" class="logo"><i class="fas fa-sync-alt"></i>Tech<span>Swap</span></a>
+            <ul class="nav-links">
+                <li><a href="#">Smartphones</a></li>
+                <li><a href="#">Laptops</a></li>
+                <li><a href="#">Tablets</a></li>
+                <li><a href="#">Cameras</a></li>
+                <li><a href="#">Accessories</a></li>
+            </ul>
+            <div class="user-actions">
+                <a href="#"><i class="fas fa-search"></i></a>
+                <a href="#"><i class="fas fa-bell"></i></a>
+                <a href="#"><i class="fas fa-shopping-cart"></i></a>
+                <a href="#" class="btn btn-outline">Login</a>
+                <a href="#" class="btn btn-primary">Sign Up</a>
+            </div>
+        </div>
+    </header>
+    
+    <main class="main-content">
+        <div class="container">
+            <h1 class="page-title">Smartphones for Exchange</h1>
+            
+            <div class="filter-section">
+                <div class="filter-header">
+                    <h2 class="filter-title">Filters</h2>
+                    <span class="reset-filters">Reset all</span>
+                </div>
+                
+                <div class="filter-group">
+                    <h3 class="filter-group-title">Category</h3>
+                    <div class="filter-options">
+                        <div class="filter-option active">All</div>
+                        <div class="filter-option">Smartphones</div>
+                        <div class="filter-option">Laptops</div>
+                        <div class="filter-option">Tablets</div>
+                        <div class="filter-option">Cameras</div>
+                        <div class="filter-option">Accessories</div>
+                    </div>
+                </div>
+                
+                <div class="filter-group">
+                    <h3 class="filter-group-title">Brand</h3>
+                    <div class="filter-options">
+                        <div class="filter-option active">All</div>
+                        <div class="filter-option">Apple</div>
+                        <div class="filter-option">Samsung</div>
+                        <div class="filter-option">Google</div>
+                        <div class="filter-option">OnePlus</div>
+                        <div class="filter-option">Xiaomi</div>
+                        <div class="filter-option">Huawei</div>
+                    </div>
+                </div>
+                
+                <div class="filter-group">
+                    <h3 class="filter-group-title">Condition</h3>
+                    <div class="filter-options">
+                        <div class="filter-option active">Any</div>
+                        <div class="filter-option">New</div>
+                        <div class="filter-option">Like New</div>
+                        <div class="filter-option">Good</div>
+                        <div class="filter-option">Fair</div>
+                    </div>
+                </div>
+                
+                <div class="filter-group">
+                    <h3 class="filter-group-title">Storage</h3>
+                    <div class="spec-options">
+                        <div class="spec-option">64GB</div>
+                        <div class="spec-option active">128GB</div>
+                        <div class="spec-option">256GB</div>
+                        <div class="spec-option">512GB</div>
+                        <div class="spec-option">1TB</div>
+                    </div>
+                </div>
+                
+                <div class="filter-group">
+                    <h3 class="filter-group-title">RAM</h3>
+                    <div class="spec-options">
+                        <div class="spec-option">4GB</div>
+                        <div class="spec-option active">6GB</div>
+                        <div class="spec-option">8GB</div>
+                        <div class="spec-option">12GB</div>
+                        <div class="spec-option">16GB</div>
+                    </div>
+                </div>
+                
+                <div class="filter-group">
+                    <h3 class="filter-group-title">Price Range</h3>
+                    <input type="range" class="price-range" min="0" max="2000" value="1000" step="50">
+                    <div class="price-inputs">
+                        <input type="number" class="price-input" placeholder="Min" value="0">
+                        <input type="number" class="price-input" placeholder="Max" value="2000">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="product-grid">
+                <!-- Product Card 1 -->
+                <div class="product-card">
+                    <img src="https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="iPhone 13 Pro" class="product-image">
+                    <div class="product-info">
+                        <p class="product-category">Smartphone</p>
+                        <h3 class="product-name">iPhone 13 Pro 128GB</h3>
+                        <p class="product-specs">6.1" Super Retina XDR, A15 Bionic, 5G</p>
+                        <span class="product-condition">Like New</span>
+                        <p class="product-price">$699.00</p>
+                        <div class="product-actions">
+                            <button class="btn-favorite"><i class="far fa-heart"></i></button>
+                            <button class="btn-exchange">Exchange</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product Card 2 -->
+                <div class="product-card">
+                    <img src="https://images.unsplash.com/photo-1610792516307-ea5acd9c3b00?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Samsung Galaxy S21" class="product-image">
+                    <div class="product-info">
+                        <p class="product-category">Smartphone</p>
+                        <h3 class="product-name">Samsung Galaxy S21 Ultra</h3>
+                        <p class="product-specs">6.8" Dynamic AMOLED, Snapdragon 888, 256GB</p>
+                        <span class="product-condition">Good</span>
+                        <p class="product-price">$599.00</p>
+                        <div class="product-actions">
+                            <button class="btn-favorite"><i class="far fa-heart"></i></button>
+                            <button class="btn-exchange">Exchange</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product Card 3 -->
+                <div class="product-card">
+                    <img src="https://images.unsplash.com/photo-1598327105666-5b893731aff5?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Google Pixel 6" class="product-image">
+                    <div class="product-info">
+                        <p class="product-category">Smartphone</p>
+                        <h3 class="product-name">Google Pixel 6 Pro</h3>
+                        <p class="product-specs">6.7" LTPO OLED, Google Tensor, 128GB</p>
+                        <span class="product-condition">New</span>
+                        <p class="product-price">$749.00</p>
+                        <div class="product-actions">
+                            <button class="btn-favorite active"><i class="fas fa-heart"></i></button>
+                            <button class="btn-exchange">Exchange</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product Card 4 -->
+                <div class="product-card">
+                    <img src="https://images.unsplash.com/photo-1592899677977-9c10ca588bbd?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="OnePlus 9 Pro" class="product-image">
+                    <div class="product-info">
+                        <p class="product-category">Smartphone</p>
+                        <h3 class="product-name">OnePlus 9 Pro 256GB</h3>
+                        <p class="product-specs">6.7" Fluid AMOLED, Snapdragon 888, 12GB RAM</p>
+                        <span class="product-condition">Like New</span>
+                        <p class="product-price">$549.00</p>
+                        <div class="product-actions">
+                            <button class="btn-favorite"><i class="far fa-heart"></i></button>
+                            <button class="btn-exchange">Exchange</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product Card 5 -->
+                <div class="product-card">
+                    <img src="https://images.unsplash.com/photo-1595941069915-4ebc5197c14a?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="MacBook Pro" class="product-image">
+                    <div class="product-info">
+                        <p class="product-category">Laptop</p>
+                        <h3 class="product-name">MacBook Pro 14" M1 Pro</h3>
+                        <p class="product-specs">M1 Pro, 16GB RAM, 512GB SSD</p>
+                        <span class="product-condition">Good</span>
+                        <p class="product-price">$1599.00</p>
+                        <div class="product-actions">
+                            <button class="btn-favorite"><i class="far fa-heart"></i></button>
+                            <button class="btn-exchange">Exchange</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product Card 6 -->
+                <div class="product-card">
+                    <img src="https://images.unsplash.com/photo-1629131726692-1accd0c53ce0?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="iPad Pro" class="product-image">
+                    <div class="product-info">
+                        <p class="product-category">Tablet</p>
+                        <h3 class="product-name">iPad Pro 12.9" 128GB</h3>
+                        <p class="product-specs">M1 chip, Liquid Retina XDR, 5G</p>
+                        <span class="product-condition">Like New</span>
+                        <p class="product-price">$899.00</p>
+                        <div class="product-actions">
+                            <button class="btn-favorite"><i class="far fa-heart"></i></button>
+                            <button class="btn-exchange">Exchange</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <script>
+        // Simple interactive elements
+        document.addEventListener('DOMContentLoaded', function() {
+            // Toggle favorite button
+            const favoriteButtons = document.querySelectorAll('.btn-favorite');
+            favoriteButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    this.classList.toggle('active');
+                    const icon = this.querySelector('i');
+                    if (this.classList.contains('active')) {
+                        icon.classList.remove('far');
+                        icon.classList.add('fas');
+                    } else {
+                        icon.classList.remove('fas');
+                        icon.classList.add('far');
+                    }
+                });
+            });
+            
+            // Filter options selection
+            const filterOptions = document.querySelectorAll('.filter-option, .spec-option');
+            filterOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    // For spec options, only allow one active at a time
+                    if (this.parentElement.classList.contains('spec-options')) {
+                        const siblings = Array.from(this.parentElement.children);
+                        siblings.forEach(sib => sib.classList.remove('active'));
+                    }
+                    
+                    // For other filter options, allow multiple selections
+                    if (!this.parentElement.classList.contains('spec-options')) {
+                        if (this.textContent === 'All' || this.textContent === 'Any') {
+                            const siblings = Array.from(this.parentElement.children);
+                            siblings.forEach(sib => sib.classList.remove('active'));
+                        } else {
+                            // Find and deactivate any "All" or "Any" option
+                            const siblings = Array.from(this.parentElement.children);
+                            siblings.forEach(sib => {
+                                if (sib.textContent === 'All' || sib.textContent === 'Any') {
+                                    sib.classList.remove('active');
+                                }
+                            });
+                        }
+                    }
+                    
+                    this.classList.toggle('active');
+                });
+            });
+            
+            // Reset all filters
+            const resetButton = document.querySelector('.reset-filters');
+            resetButton.addEventListener('click', function() {
+                filterOptions.forEach(option => {
+                    option.classList.remove('active');
+                    // Reactivate default "All" or "Any" options
+                    if (option.textContent === 'All' || option.textContent === 'Any') {
+                        option.classList.add('active');
+                    }
+                    // Reactivate default specs
+                    if (option.textContent === '128GB' && option.parentElement.classList.contains('spec-options')) {
+                        option.classList.add('active');
+                    }
+                    if (option.textContent === '6GB' && option.parentElement.classList.contains('spec-options')) {
+                        option.classList.add('active');
+                    }
+                });
+                
+                // Reset price range
+                const priceRange = document.querySelector('.price-range');
+                const priceInputs = document.querySelectorAll('.price-input');
+                priceRange.value = 1000;
+                priceInputs[0].value = 0;
+                priceInputs[1].value = 2000;
+            });
+            
+            // Sync price range slider with inputs
+            const priceRange = document.querySelector('.price-range');
+            const priceInputs = document.querySelectorAll('.price-input');
+            
+            priceRange.addEventListener('input', function() {
+                priceInputs[1].value = this.value;
+            });
+            
+            priceInputs.forEach(input => {
+                input.addEventListener('input', function() {
+                    if (this === priceInputs[1]) {
+                        priceRange.value = this.value;
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

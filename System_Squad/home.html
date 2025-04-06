@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KitchenSwap - Exchange Kitchen Appliances</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* CSS Styles */
+        :root {
+            --primary: #FF6B6B;
+            --secondary: #4ECDC4;
+            --dark: #292F36;
+            --light: #F7FFF7;
+            --accent: #FFE66D;
+            --gray: #6C757D;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            color: var(--dark);
+        }
+
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo i {
+            color: var(--primary);
+            font-size: 2rem;
+        }
+
+        .logo h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        nav a:hover {
+            color: var(--primary);
+        }
+
+        nav a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            bottom: -5px;
+            left: 0;
+            transition: width 0.3s;
+        }
+
+        nav a:hover:after {
+            width: 100%;
+        }
+
+        .user-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline {
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            background: transparent;
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background: #ff5252;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(255, 107, 107, 0.3);
+        }
+
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1556911220-bff31c812dba?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 5rem 0;
+            text-align: center;
+        }
+
+        .hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+
+        .filter-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-top: -3rem;
+            position: relative;
+            z-index: 10;
+        }
+
+        .filter-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .filter-group {
+            margin-bottom: 1rem;
+        }
+
+        .filter-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .filter-group select, 
+        .filter-group input {
+            width: 100%;
+            padding: 0.7rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .main-content {
+            padding: 3rem 0;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--dark);
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--primary);
+        }
+
+        .items-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .item-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .item-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+        }
+
+        .item-image {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .item-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .item-card:hover .item-image img {
+            transform: scale(1.1);
+        }
+
+        .item-details {
+            padding: 1.5rem;
+        }
+
+        .item-title {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+
+        .item-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        .item-price {
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 1.2rem;
+        }
+
+        .item-location {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            color: var(--gray);
+            margin-bottom: 1rem;
+        }
+
+        .item-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .item-type {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+
+        .type-exchange {
+            background: #E3F2FD;
+            color: #1976D2;
+        }
+
+        .type-sale {
+            background: #E8F5E9;
+            color: #388E3C;
+        }
+
+        .type-donation {
+            background: #FFF3E0;
+            color: #E64A19;
+        }
+
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 3rem 0;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-column a {
+            color: #ddd;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-column a:hover {
+            color: var(--accent);
+            padding-left: 5px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 35px;
+            height: 35px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            nav ul {
+                gap: 1rem;
+            }
+
+            .hero h2 {
+                font-size: 2rem;
+            }
+
+            .filter-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .user-actions {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .hero {
+                padding: 3rem 0;
+            }
+
+            .hero h2 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-exchange-alt"></i>
+                    <h1>KitchenSwap</h1>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">Browse</a></li>
+                        <li><a href="#">Sell/Exchange</a></li>
+                        <li><a href="#">About</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </nav>
+                <div class="user-actions">
+                    <button class="btn btn-outline">Login</button>
+                    <button class="btn btn-primary">Sign Up</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h2>Exchange or Buy Pre-Loved Kitchen Appliances</h2>
+            <p>Find quality used kitchen equipment or give your unused appliances a new home in our sustainable community.</p>
+        </div>
+    </section>
+
+    <section class="filter-section">
+        <div class="container">
+            <div class="filter-grid">
+                <div class="filter-group">
+                    <label for="category">Category</label>
+                    <select id="category">
+                        <option value="all">All Categories</option>
+                        <option value="cooking">Cooking Appliances</option>
+                        <option value="prep">Food Prep</option>
+                        <option value="storage">Storage</option>
+                        <option value="small">Small Appliances</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="condition">Condition</label>
+                    <select id="condition">
+                        <option value="all">Any Condition</option>
+                        <option value="new">New</option>
+                        <option value="like-new">Like New</option>
+                        <option value="good">Good</option>
+                        <option value="fair">Fair</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="location">Location</label>
+                    <select id="location">
+                        <option value="all">Any Location</option>
+                        <option value="ny">New York</option>
+                        <option value="la">Los Angeles</option>
+                        <option value="ch">Chicago</option>
+                        <option value="sf">San Francisco</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="type">Listing Type</label>
+                    <select id="type">
+                        <option value="all">All Types</option>
+                        <option value="exchange">Exchange Only</option>
+                        <option value="sale">For Sale</option>
+                        <option value="donation">Free Donation</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="price">Max Price ($)</label>
+                    <input type="number" id="price" placeholder="No limit">
+                </div>
+                <div class="filter-group">
+                    <button class="btn btn-primary" style="margin-top: 1.5rem; width: 100%;">
+                        <i class="fas fa-filter"></i> Apply Filters
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="main-content">
+        <div class="container">
+            <h2 class="section-title">Available Kitchen Appliances</h2>
+            
+            <div class="items-grid">
+                <!-- Item 1 -->
+                <div class="item-card">
+                    <div class="item-image">
+                        <img src="https://images.unsplash.com/photo-1583778176476-4a8b02b64d00?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Stand Mixer">
+                    </div>
+                    <div class="item-details">
+                        <span class="item-type type-exchange">For Exchange</span>
+                        <h3 class="item-title">KitchenAid Stand Mixer</h3>
+                        <div class="item-meta">
+                            <span>Like New</span>
+                            <span class="item-price">$150</span>
+                        </div>
+                        <div class="item-location">
+                            <i class="fas fa-map-marker-alt"></i> Brooklyn, NY
+                        </div>
+                        <div class="item-actions">
+                            <button class="btn btn-outline" style="flex: 1;">Details</button>
+                            <button class="btn btn-primary" style="flex: 1;">Contact</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Item 2 -->
+                <div class="item-card">
+                    <div class="item-image">
+                        <img src="https://images.unsplash.com/photo-1596178065887-1198b6148b2b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Blender">
+                    </div>
+                    <div class="item-details">
+                        <span class="item-type type-sale">For Sale</span>
+                        <h3 class="item-title">Vitamix Professional Blender</h3>
+                        <div class="item-meta">
+                            <span>Good</span>
+                            <span class="item-price">$120</span>
+                        </div>
+                        <div class="item-location">
+                            <i class="fas fa-map-marker-alt"></i> Chicago, IL
+                        </div>
+                        <div class="item-actions">
+                            <button class="btn btn-outline" style="flex: 1;">Details</button>
+                            <button class="btn btn-primary" style="flex: 1;">Contact</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Item 3 -->
+                <div class="item-card">
+                    <div class="item-image">
+                        <img src="coffee.jpg" alt="Coffee Maker">
+                    </div>
+                    <div class="item-details">
+                        <span class="item-type type-donation">Free</span>
+                        <h3 class="item-title">Espresso Coffee Machine</h3>
+                        <div class="item-meta">
+                            <span>Fair</span>
+                            <span class="item-price">$0</span>
+                        </div>
+                        <div class="item-location">
+                            <i class="fas fa-map-marker-alt"></i> Los Angeles, CA
+                        </div>
+                        <div class="item-actions">
+                            <button class="btn btn-outline" style="flex: 1;">Details</button>
+                            <button class="btn btn-primary" style="flex: 1;">Contact</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Item 4 -->
+                <div class="item-card">
+                    <div class="item-image">
+                        <img src="toster.jpg" alt="Toaster">
+                    </div>
+                    <div class="item-details">
+                        <span class="item-type type-exchange">For Exchange</span>
+                        <h3 class="item-title">4-Slice Stainless Steel Toaster</h3>
+                        <div class="item-meta">
+                            <span>Like New</span>
+                            <span class="item-price">$40</span>
+                        </div>
+                        <div class="item-location">
+                            <i class="fas fa-map-marker-alt"></i> Seattle, WA
+                        </div>
+                        <div class="item-actions">
+                            <button class="btn btn-outline" style="flex: 1;">Details</button>
+                            <button class="btn btn-primary" style="flex: 1;">Contact</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Item 5 -->
+                <div class="item-card">
+                    <div class="item-image">
+                        <img src="airfire.jpg" alt="Air Fryer">
+                    </div>
+                    <div class="item-details">
+                        <span class="item-type type-sale">For Sale</span>
+                        <h3 class="item-title">Digital Air Fryer</h3>
+                        <div class="item-meta">
+                            <span>New</span>
+                            <span class="item-price">$60</span>
+                        </div>
+                        <div class="item-location">
+                            <i class="fas fa-map-marker-alt"></i> Austin, TX
+                        </div>
+                        <div class="item-actions">
+                            <button class="btn btn-outline" style="flex: 1;">Details</button>
+                            <button class="btn btn-primary" style="flex: 1;">Contact</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Item 6 -->
+                <div class="item-card">
+                    <div class="item-image">
+                        <img src="https://images.unsplash.com/photo-1571805618149-3a772570eb4d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Food Processor">
+                    </div>
+                    <div class="item-details">
+                        <span class="item-type type-exchange">For Exchange</span>
+                        <h3 class="item-title">Cuisinart Food Processor</h3>
+                        <div class="item-meta">
+                            <span>Good</span>
+                            <span class="item-price">$75</span>
+                        </div>
+                        <div class="item-location">
+                            <i class="fas fa-map-marker-alt"></i> Denver, CO
+                        </div>
+                        <div class="item-actions">
+                            <button class="btn btn-outline" style="flex: 1;">Details</button>
+                            <button class="btn btn-primary" style="flex: 1;">Contact</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>KitchenSwap</h3>
+                    <p>Sustainable kitchen appliance exchange platform helping reduce waste and save money.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">Browse Items</a></li>
+                        <li><a href="#">List an Item</a></li>
+                        <li><a href="#">How It Works</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Categories</h3>
+                    <ul>
+                        <li><a href="#">Mixers & Blenders</a></li>
+                        <li><a href="#">Coffee Makers</a></li>
+                        <li><a href="#">Toasters & Ovens</a></li>
+                        <li><a href="#">Food Processors</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Support</h3>
+                    <ul>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">FAQs</a></li>
+                        <li><a href="#">Safety Tips</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 KitchenSwap. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // JavaScript for filtering functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Filter button click event
+            document.querySelector('.btn-primary').addEventListener('click', function() {
+                const category = document.getElementById('category').value;
+                const condition = document.getElementById('condition').value;
+                const location = document.getElementById('location').value;
+                const type = document.getElementById('type').value;
+                const price = document.getElementById('price').value;
+                
+                // In a real application, this would filter items from a database
+                // For this demo, we'll just log the filter values
+                console.log('Filters applied:', {
+                    category,
+                    condition,
+                    location,
+                    type,
+                    maxPrice: price
+                });
+                
+                alert('Filters applied! In a real app, this would update the item listings.');
+            });
+            
+            // Item card click events
+            document.querySelectorAll('.item-card').forEach(card => {
+                card.addEventListener('click', function(e) {
+                    if (!e.target.classList.contains('btn')) {
+                        const title = this.querySelector('.item-title').textContent;
+                        alert(`Showing details for: ${title}`);
+                    }
+                });
+            });
+            
+            // Contact button events
+            document.querySelectorAll('.btn-primary').forEach(btn => {
+                if (btn.textContent.includes('Contact')) {
+                    btn.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        alert('Contact form would open here');
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
